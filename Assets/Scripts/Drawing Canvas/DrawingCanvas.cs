@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class DrawingCanvas : MonoBehaviour
 {
-    public GameObject linePrefab;
-    public GameObject linesParent;
-    public LayerMask cantDrawOverLayer;
-    int cantDrawOverLayerIndex;
+    // Cofiguration parameters
+    [SerializeField] GameObject linePrefab;
+    [SerializeField] GameObject linesParent;
+    [SerializeField] LayerMask cantDrawOverLayer;
+    [SerializeField] int minLineLength = 2;
 
-    [Header ("Line Properties")] 
-    public bool affectedByGravity = false;
-    public Gradient lineColor;
-    public float linePointsMinDistance = 0.05f;
-    public float lineWidth = 0.05f;
-    public int minLineLength = 2;
+    [Header ("Line Physics Properties")] 
+    [SerializeField] bool affectedByGravity = false;
+    [SerializeField] float lineMass = 6.0f;
+    [SerializeField] float lineLinearDrag = 1.2f;
+    [SerializeField] float lineAngularDrag = 0.4f;
 
+    // Cached components
     Line currentLine;
     Camera cam;
 
-    Collider2D canvasCollider;
-
+    
     void Start() {
         cam = Camera.main;
     }
@@ -40,26 +40,21 @@ public class DrawingCanvas : MonoBehaviour
         BeginDraw();
     }
 
-    // Begin Draw ----------------------------------------------
+    // Begins adding points to a new line
     void BeginDraw() {
         // Instantiate a new line
         currentLine = Instantiate(linePrefab, this.transform).GetComponent<Line>();
 
         // Make it a child of the drawer's "Lines" (for organization)
         currentLine.transform.parent = linesParent.transform;
-        
-        // Set line properties
-        currentLine.SetLineColor(lineColor);
-        currentLine.SetPointsMinDistance(linePointsMinDistance);
-        currentLine.SetLineWidth(lineWidth);
-
     }
 
+    // Adds a point to the line
     void Draw() {
         Vector2 canvasPosition = transform.position;
         Vector2 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
         
-        RaycastHit2D hit = Physics2D.CircleCast(mousePosition, lineWidth / 3f, Vector2.zero, 1f, cantDrawOverLayer);
+        RaycastHit2D hit = Physics2D.CircleCast(mousePosition, currentLine.getWidth() / 2f, Vector2.zero, 1f, cantDrawOverLayer);
 
         if (hit)
             EndDraw();
@@ -67,6 +62,7 @@ public class DrawingCanvas : MonoBehaviour
             currentLine.AddPoint(mousePosition - canvasPosition);    // Account for canvas position
     }
 
+    // Stops adding points to the line to terminate the line
     void EndDraw () {
         if (currentLine != null) {
             
@@ -78,8 +74,28 @@ public class DrawingCanvas : MonoBehaviour
             else 
             {
                 // Make the line dynamic (affected by gravity) if desired.
+                Rigidbody2D currentLineRigidbody = currentLine.GetComponent<Rigidbody2D>();
+
+                // If the line supposed to be affected by gravity
                 if (affectedByGravity)
-                    currentLine.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                {
+                    // Set body type to dynamic
+                    currentLineRigidbody.bodyType = RigidbodyType2D.Dynamic;
+
+                    // Make the collision mode continuous.
+                    // Yields more accurate but also more computationally expensive collision.
+                    currentLineRigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                    currentLineRigidbody.mass = lineMass;
+                    currentLineRigidbody.drag = lineLinearDrag;
+                    currentLineRigidbody.angularDrag = lineAngularDrag;
+                    currentLineRigidbody.gravityScale = 1.0f;
+                }
+
+                // Else, set body type to static
+                else
+                {
+                    currentLineRigidbody.bodyType = RigidbodyType2D.Static;
+                }
 
                 // Make currentLine null. We're done with this line.
                 currentLine = null;
