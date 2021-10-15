@@ -76,7 +76,7 @@ public class Line : MonoBehaviour
     }
 
     // Returns the line width
-    public float getWidth()
+    public float GetWidth()
     {
         return lineWidth;
     }

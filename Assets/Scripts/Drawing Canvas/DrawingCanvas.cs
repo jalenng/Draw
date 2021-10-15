@@ -5,7 +5,7 @@ using UnityEngine;
 public class DrawingCanvas : MonoBehaviour
 {
     // Cofiguration parameters
-    [SerializeField] GameObject linePrefab;
+    [SerializeField] Line linePrefab;
     [SerializeField] GameObject linesParent;
     [SerializeField] LayerMask cantDrawOverLayer;
     [SerializeField] int minLineLength = 2;
@@ -35,13 +35,9 @@ public class DrawingCanvas : MonoBehaviour
             EndDraw();
     }
 
-    // Invoked when the player clicks inside the canvas's collider
-    private void OnMouseDown() {
-        BeginDraw();
-    }
 
     // Begins adding points to a new line
-    void BeginDraw() {
+    public void BeginDraw() {
         // Instantiate a new line
         currentLine = Instantiate(linePrefab, this.transform).GetComponent<Line>();
 
@@ -54,12 +50,15 @@ public class DrawingCanvas : MonoBehaviour
         Vector2 canvasPosition = transform.position;
         Vector2 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
         
-        RaycastHit2D hit = Physics2D.CircleCast(mousePosition, currentLine.getWidth() / 2f, Vector2.zero, 1f, cantDrawOverLayer);
+        float lineRadius = currentLine.GetWidth() / 2f;
 
-        if (hit)
-            EndDraw();
-        else
+        RaycastHit2D hitCantDraw = Physics2D.CircleCast(mousePosition, lineRadius, Vector2.zero, 1f, cantDrawOverLayer);
+        RaycastHit2D hitDrawingArea = Physics2D.CircleCast(mousePosition, lineRadius, Vector2.zero, 1f, LayerMask.GetMask("Drawing Area"));
+        
+        if (!hitCantDraw && hitDrawingArea)
             currentLine.AddPoint(mousePosition - canvasPosition);    // Account for canvas position
+        else
+            EndDraw();
     }
 
     // Stops adding points to the line to terminate the line
