@@ -33,10 +33,7 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         // Wait for scene to finish loading before activation
-        while (asyncLoad.progress < 0.9f)
-        {
-            yield return null;
-        }
+        yield return new WaitUntil(() => asyncLoad.progress >= 0.9f);
         asyncLoad.allowSceneActivation = true;
     }
 }
