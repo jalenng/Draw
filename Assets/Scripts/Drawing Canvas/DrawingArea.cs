@@ -19,6 +19,11 @@ public class DrawingArea : MonoBehaviour
         // Disable sprite renderer component, as we only need it to show the collider in the scene view
         Destroy(GetComponent<SpriteRenderer>());
 
+        SetUpBorderOutline();
+    }
+
+    private void SetUpBorderOutline()
+    {
         // Get the collision box size
         Vector2 collisionBoundsSize = boxCollider.size;
         float halfWidth = collisionBoundsSize.x / 2f;
