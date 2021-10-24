@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256590537258906865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: -1.25, z: 0}
+  m_LocalPosition: {x: 0, y: -0.842, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1256590538338902088}
@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 1256590538338902091}
   - component: {fileID: 1256590538338902089}
   - component: {fileID: 5605374159818950362}
-  - component: {fileID: 1380246177}
   m_Layer: 8
   m_Name: Stickman
   m_TagString: Untagged
@@ -78,8 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba6a4e3db9184083be23f88b0769fa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  jumpForce: 5
+  speed: 3
+  jumpForce: 4
   movementSmoothing: 0.05
   groundCheck: {fileID: 1256590537258907406}
   overlap: 0.03
@@ -172,21 +171,5 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.05, y: 2.45}
-  m_Direction: 0
---- !u!70 &1380246177
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1256590538338902090}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.05, y: 2.45}
+  m_Size: {x: 0.7, y: 1.6333333}
   m_Direction: 0
