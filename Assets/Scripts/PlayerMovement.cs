@@ -16,14 +16,18 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 m_Velocity = Vector3.zero;
     private float horizontal;
     private bool jump;
+    
+    private Animator anim;
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+        anim.SetFloat("Speed",Mathf.Abs(horizontal * speed));
         if (Input.GetButtonDown("Jump"))
         {
             jump = true;
@@ -49,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         if (onGround && jump)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
+            anim.SetBool("isJumping",true);
         }
     }
 }
