@@ -5,18 +5,22 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D rb2d;
+    // Configuration parameters
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float movementSmoothing = 0.05f;
-    private bool onGround;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float overlap;
     [SerializeField] private LayerMask ground;
+
+    // Cached components
+    private Rigidbody2D rb2d;
+
+    // State variables
     private Vector3 m_Velocity = Vector3.zero;
     private float horizontal;
+    private bool onGround;
     private bool jump;
-    
     private Animator anim;
     private void Awake()
     {
