@@ -31,11 +31,21 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+        if (horizontal < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else if (horizontal > 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
         anim.SetFloat("Speed",Mathf.Abs(horizontal * speed));
         if (Input.GetButtonDown("Jump"))
         {
             jump = true;
         }
+
+
     }
 
     private void FixedUpdate()
@@ -44,6 +54,10 @@ public class PlayerMovement : MonoBehaviour
         if (jump) Jump();
         else onGround = Physics2D.OverlapCircle(groundCheck.position, overlap, ground);
         jump = false;
+        if (rb2d.velocity.y == 0)
+        {
+            anim.SetBool("isJumping",false);
+        }
     }
 
 
