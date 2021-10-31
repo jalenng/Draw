@@ -62,6 +62,9 @@ public class PlayerMovement : MonoBehaviour
             if (jump) Jump();
             else onGround = Physics2D.OverlapCircle(groundCheck.position, overlap, ground);
             jump = false;
+
+            anim.SetBool("isTouchingGround", onGround);
+
             if (rb2d.velocity.y <= 0 && onGround)
             {
                 anim.SetBool("isJumping", false);
