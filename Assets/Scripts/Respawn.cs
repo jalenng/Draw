@@ -10,8 +10,7 @@ public class Respawn : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            other.transform.position = respawn.transform.position;
+            other.gameObject.GetComponent<PlayerMovement>().Die(respawn);
         }
     }
 }
