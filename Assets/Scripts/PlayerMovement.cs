@@ -62,7 +62,6 @@ public class PlayerMovement : MonoBehaviour
             if (jump) Jump();
             else onGround = Physics2D.OverlapCircle(groundCheck.position, overlap, ground);
             jump = false;
-            Debug.Log(rb2d.velocity.y);
             if (rb2d.velocity.y <= 0 && onGround)
             {
                 anim.SetBool("isJumping", false);
@@ -87,7 +86,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Die(Transform respawn)
     {
-        Debug.Log("Dead " + isDead);
         if(!isDead)
         {
             isDead = true;
