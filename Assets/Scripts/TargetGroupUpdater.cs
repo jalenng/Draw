@@ -56,8 +56,6 @@ public class TargetGroupUpdater : MonoBehaviour
             }
         }
         
-        Debug.Log(closestDistance);
-        
         // If a drawing area within the threshold is found, set it as a target
         if (closestTransform != null)
         {
