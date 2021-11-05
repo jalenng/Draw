@@ -5,16 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField] int mainMenuBuildIndex = 0;
     public Animator levelTransitionAnimator;
 
     bool isLoading = false;
+
+    public void LoadMainMenu()
+    {
+        // Ensure only one scene gets loaded
+        if (isLoading) return;
+        isLoading = true;
+
+        StartCoroutine(BeginTransition(mainMenuBuildIndex));
+    }
 
     public void LoadNextScene()
     {
         // Ensure only one scene gets loaded
         if (isLoading) return;
-
         isLoading = true;
+
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         StartCoroutine(BeginTransition(currentSceneIndex + 1));
     }
