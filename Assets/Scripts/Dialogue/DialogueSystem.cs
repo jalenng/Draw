@@ -22,10 +22,12 @@ public class DialogueSystem : MonoBehaviour
     {
         this.dialogue = dialogue; 
         this.entryIndex = 0;  
+        
+        SetTextboxVisibility(true);
         StartCoroutine(DisplayDialogue());
     }
 
-    IEnumerator DisplayDialogue()
+    private IEnumerator DisplayDialogue()
     {
         while (true)
         {
@@ -35,22 +37,27 @@ public class DialogueSystem : MonoBehaviour
             // Update the textbox properties
             textbox.setAvatar(dialogueEntry.avatar);
             textbox.setText(dialogueEntry.content);
-            if (dialogueEntry.useCPS)
+            if (dialogueEntry.useCPS)   // If the dialogue entry uses custom CPS, use it.
                 textbox.setCPS(dialogueEntry.CPS);
-            else
+            else                        // Otherwise, use the default CPS.
                 textbox.setCPS(dialogue.CPS);
 
             // Show the content text
             yield return textbox.Say();
 
-            entryIndex++;
-
-            if (entryIndex >= dialogue.entries.Count)
+            // Move to the next entry, or end the dialogue if we're at the end
+            if (++entryIndex >= dialogue.entries.Count)
             {
                 textbox.Clear();
+                SetTextboxVisibility(false);
                 break;
             }
         }
+    }
+
+    private void SetTextboxVisibility(bool visible)
+    {
+        textbox.gameObject.SetActive(visible);
     }
 
 }
