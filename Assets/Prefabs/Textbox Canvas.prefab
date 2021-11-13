@@ -110,6 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6178720148569494608}
   - component: {fileID: 1743173846837283768}
+  - component: {fileID: 5765884262979472123}
   - component: {fileID: 7816385597124795643}
   - component: {fileID: 918997195008004296}
   - component: {fileID: 7738514693144438565}
@@ -153,10 +154,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7517b9a3f45792e419eae20677490078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatarImage: {fileID: 0}
-  dialogueContentTMP: {fileID: 7898678277256354673}
-  targetText: 
-  charactersPerSecond: 30
+  contentTMP: {fileID: 7898678277256354673}
+  avatarImage: {fileID: 5116996537743089198}
+--- !u!114 &5765884262979472123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219167158979956642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffed4749569d745409c8cb0b6fb5e7bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue: {fileID: 0}
 --- !u!222 &7816385597124795643
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -355,7 +367,6 @@ GameObject:
   - component: {fileID: 712630706688381673}
   - component: {fileID: 1365633661119622137}
   - component: {fileID: 5116996537743089198}
-  - component: {fileID: 4188048023222096294}
   m_Layer: 5
   m_Name: Avatar
   m_TagString: Untagged
@@ -420,18 +431,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4188048023222096294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6087954010399085846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 5, y: 5}
-  m_UseGraphicAlpha: 1
