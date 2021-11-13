@@ -10,25 +10,30 @@ public class Textbox : MonoBehaviour
     // Configuration parameters    
     [SerializeField] Image avatarImage;
     [SerializeField] TextMeshProUGUI dialogueContentTMP;
-    [Range(1, 120)] [SerializeField] int charactersPerSecond = 30;
+    [Range(0, 120)] [Tooltip("Set to 0 to disable typewriting effect")]
+    [SerializeField] int charactersPerSecond = 30;
+
+    [SerializeField] DialogueEntry testEntry;
 
     // State variables
-    [Header("For debugging purposes only")]
-    [TextArea(5, 5)] 
-    [SerializeField] string targetText;
+    string targetText;
 
     bool isSpeaking = false;
 
     // Start is called before the first frame update
     void Start()
     {   
-        StartCoroutine(Say());
+        StartCoroutine(Say(testEntry));
     }
 
-    // Updates the target text, then updates the textbox
-    IEnumerator Say(string targetText)
+    // Unpacks the dialogue entry to get the dialogue properties, then updates the textbox
+    IEnumerator Say(DialogueEntry dialogue)
     {
-        this.targetText = targetText;
+        // Unpack the dialogue entry
+        this.avatarImage = dialogue.avatar;
+        this.targetText = dialogue.content;
+        this.charactersPerSecond = dialogue.charactersPerSecond;
+
         yield return Say();
     }
 
@@ -38,14 +43,23 @@ public class Textbox : MonoBehaviour
         // Update flag
         isSpeaking = true;
 
-        // Get the number of characters
-        int totalCharacters = targetText.Length;
-
-        // At every interval, update the textbox text to achieve a typewriter effect
-        for (int i = 0; i < totalCharacters; i++)
+        // If typewriting effect is enabled
+        if (charactersPerSecond > 0)
         {
-            dialogueContentTMP.text = targetText.Substring(0, i);
-            yield return new WaitForSeconds(1.0f / charactersPerSecond);
+            // Get the number of characters
+            int totalCharacters = targetText.Length;
+
+            // At every interval, update the textbox text to achieve a typewriter effect
+            for (int i = 0; i <= totalCharacters; i++)
+            {
+                dialogueContentTMP.text = targetText.Substring(0, i);
+                yield return new WaitForSeconds(1.0f / charactersPerSecond);
+            }
+        }
+        // Else, don't typewrite the text.
+        else
+        {
+            dialogueContentTMP.text = targetText;
         }
 
         // Update flag
