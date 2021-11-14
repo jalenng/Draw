@@ -4,31 +4,32 @@ using UnityEngine;
 
 public class DialogueSystem : MonoBehaviour
 {
+    // Configuration parameters
     [SerializeField] Dialogue dialogue;
+    [SerializeField] KeyCode advanceKey = KeyCode.Space;
+    [SerializeField] Textbox textbox;
     
-    // Cached components
-    Textbox textbox;
-
     // State variables
     int entryIndex = 0;
 
     private void Start() {
-        textbox = GetComponent<Textbox>();
-
         QueueDialogue(dialogue);
     }
 
+    // Queue a dialogue to be displayed
     public void QueueDialogue(Dialogue dialogue)
     {
         this.dialogue = dialogue; 
         this.entryIndex = 0;  
         
-        SetTextboxVisibility(true);
         StartCoroutine(DisplayDialogue());
     }
 
+    // Display the next entry in the dialogue
     private IEnumerator DisplayDialogue()
     {
+        SetTextboxVisibility(true);
+
         while (true)
         {
             // Get the dialogue entry
@@ -45,16 +46,20 @@ public class DialogueSystem : MonoBehaviour
             // Show the content text
             yield return textbox.Say();
 
+            // Wait for the user to advance the dialogue
+            yield return new WaitUntil(() => Input.GetKeyDown(advanceKey));
+
             // Move to the next entry, or end the dialogue if we're at the end
             if (++entryIndex >= dialogue.entries.Count)
-            {
-                textbox.Clear();
-                SetTextboxVisibility(false);
                 break;
-            }
         }
+
+        textbox.Clear();
+        SetTextboxVisibility(false);
+
     }
 
+    // Set the visibility of the textbox
     private void SetTextboxVisibility(bool visible)
     {
         textbox.gameObject.SetActive(visible);

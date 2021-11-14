@@ -8114,7 +8114,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1522584117
 GameObject:
@@ -10720,7 +10720,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 242199389805913627, guid: 81556ccb1927e3044ad98f2c790e52cb, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 242199389805913627, guid: 81556ccb1927e3044ad98f2c790e52cb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10789,20 +10789,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 937505186594551469, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
       propertyPath: m_Name
-      value: Dialogue Canvas
+      value: Dialogue System
       objectReference: {fileID: 0}
-    - target: {fileID: 1743173846837283768, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
-      propertyPath: testEntry
-      value: 
-      objectReference: {fileID: 11400000, guid: 46679476110909747bd815789c6a8950, type: 2}
-    - target: {fileID: 3807254865391330953, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765884262979472123, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
-      propertyPath: dialogue
-      value: 
-      objectReference: {fileID: 11400000, guid: 8d5eedb6cf3fbc14f889b9bbad1f59ce, type: 2}
     - target: {fileID: 6344986284834697497, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -10813,7 +10801,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6344986284834697497, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6344986284834697497, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
       propertyPath: m_AnchorMax.x
@@ -11017,6 +11005,10 @@ PrefabInstance:
     - target: {fileID: 1079068395711406487, guid: 0f65919544f171947b03cf1ec3a45719, type: 3}
       propertyPath: m_Name
       value: Pause System
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079068396491190366, guid: 0f65919544f171947b03cf1ec3a45719, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f65919544f171947b03cf1ec3a45719, type: 3}
