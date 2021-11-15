@@ -41,9 +41,14 @@ public class DrawingArea : MonoBehaviour
 
         lineRenderer.SetPositions(positions);
 
-        // Set line width
+        // Set outline width
         lineRenderer.startWidth = outlineWidth;
         lineRenderer.endWidth = outlineWidth;
+
+        // Set outline color to match the color of the line
+        Color outlineColor = drawingCanvas.GetLinePrefab().GetLineColor();
+        lineRenderer.startColor = outlineColor;
+        lineRenderer.endColor = outlineColor;
     }
 
     // Invoked when the player clicks inside the drawing area's collider

@@ -5,8 +5,13 @@ using UnityEngine;
 public class DrawingCanvas : MonoBehaviour
 {
     // Cofiguration parameters
+    [Header("Line")]
     [SerializeField] Line linePrefab;
+
+    [Tooltip("The parent object that will hold all the drawn lines")]
     [SerializeField] GameObject linesParent;
+
+    [Header("Line Drawing Settings")]
     [SerializeField] LayerMask cantDrawOverLayer;
     [SerializeField] int minLineLength = 2;
 
@@ -100,5 +105,10 @@ public class DrawingCanvas : MonoBehaviour
                 currentLine = null;
             }
         }
+    }
+
+    public Line GetLinePrefab()
+    {
+        return linePrefab;
     }
 }
