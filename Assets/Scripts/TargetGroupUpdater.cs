@@ -6,93 +6,134 @@ using Cinemachine;
 public class TargetGroupUpdater : MonoBehaviour
 {
     // Configuration parameters
-    [Header("Drawing Area Detection")]
-    [SerializeField] float distanceThreshold = 10f;
-    [SerializeField] GameObject player;
-
-    
-    [Header("Drawing Area Weight")]
-    [SerializeField] float currentWeight = 0f;
-
+    [Header("Focus Area Detection")]
+    [SerializeField] Transform playerTransform;
     
     [Header("Target Group Index")]
     [SerializeField] int dynamicTargetIndex = 0;
+
+    [Header("Target Transition")]
+    [Range(0, 2)] 
+    [Tooltip("The higher the value, the smoother and longer the transition will be")]
+    [SerializeField] float transitionSmoothTime = 0.7f;
     
     // Cached components and objects
-    Animator anim;
     CinemachineTargetGroup ctg;
-    DrawingArea[] drawingAreas;
+    FocusArea[] focusAreas;
+
+    // State variables
+    bool isTransitioning = false;
+    bool isFocused = false;
+    float currentWeight = 0f;
+    float targetWeight = 0f;
+    float weightVelocity = 0;
 
     void Start()
     {
-        anim = GetComponent<Animator>();
         ctg = GetComponent<CinemachineTargetGroup>();
-        drawingAreas = FindObjectsOfType<DrawingArea>();
+
+        // Find all the focus areas
+        focusAreas = FindObjectsOfType<FocusArea>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        SearchClosestDrawingArea();
+        SearchClosestFocusArea();
         UpdateCurrentWeight();
     }
 
-    void SearchClosestDrawingArea()
+    void SearchClosestFocusArea()
     {
-        // Distance is based on player position
-        Vector3 playerPosition = player.transform.position;
+        Vector3 playerPosition = playerTransform.position;
 
         // Iterate through each drawing area to find the closest one
-        float closestDistance = distanceThreshold;
-        Transform closestTransform = null;
-        foreach (DrawingArea a in drawingAreas)
+        foreach (FocusArea area in focusAreas)
         {
-            Transform areaTransform = a.transform;
-            float distance = Vector2.Distance(playerPosition, areaTransform.position);
+            Bounds bounds = area.GetComponent<SpriteRenderer>().bounds;
 
-            if (distance < closestDistance)
+            // If the player is inside the bounds of the focus area,
+            // focus on the focus area.
+            if (bounds.Contains(playerPosition))
             {
-                closestDistance = distance;
-                closestTransform = areaTransform;
+                Transform target = area.transform;
+
+                Vector2 size = bounds.size;
+                float radius = Mathf.Max(size.x / 2, size.y / 2);
+
+                StartCoroutine(Focus(target, radius));
+                return;                   
             }
         }
-        
-        // If a drawing area within the threshold is found, set it as a target
-        if (closestTransform != null)
-        {
-            SetTarget(closestTransform);
-            anim.SetBool("hasTarget", true);
-        }
-        // Otherwise, remove it as a target
-        else
-            anim.SetBool("hasTarget", false);   // Note: an animation event will invoke ReleaseTarget() when the time is right
+
+        // If no focus area is found, unfocus.
+        StartCoroutine(Unfocus());
     }
 
-    public void ReleaseTarget()
-    {
-        UpdateTarget(null, 0);
-    }
-
-    void SetTarget(Transform t)
-    {
-        // Calculate the target's radius
-        BoxCollider2D boxCollider = t.GetComponent<BoxCollider2D>();
-        Vector2 collisionBoundsSize = boxCollider.size;
-        float width = collisionBoundsSize.x * t.localScale.x;
-        float height = collisionBoundsSize.y * t.localScale.y;
-        float radius = Mathf.Max(width, height) / 2;
-
-        // Upadte the target
-        UpdateTarget(t, radius);
-    }
-
-    void UpdateTarget(Transform t, float r) {
-        ctg.m_Targets[dynamicTargetIndex].target = t;
-        ctg.m_Targets[dynamicTargetIndex].radius = r;
-    }
-
+    // Update the current weight
     void UpdateCurrentWeight()
     {
+        // Use smooth damp to get a transition value between the current and target weight
+        currentWeight = Mathf.SmoothDamp(currentWeight, targetWeight, ref weightVelocity, transitionSmoothTime);
+
+        // Add/subtract a very small amount to the weight to ensure it hits 0 or 1
+        if (targetWeight == 1.0f)
+            currentWeight += 0.0001f;
+        else if (targetWeight == 0.0f)
+            currentWeight -= 0.0001f;
+
+        // Clamp the weight, then update it in the target group
+        currentWeight = Mathf.Clamp01(currentWeight);
         ctg.m_Targets[dynamicTargetIndex].weight = currentWeight;
+    }
+
+    // Focus on a target
+    IEnumerator Focus(Transform target, float radius)
+    {
+        // Ensure transitions do not happen concurrently 
+        if (isTransitioning || isFocused) 
+            yield break;
+        isTransitioning = true;
+        isFocused = true;
+
+        // Add the target to the target group
+        UpdateTarget(target, radius);
+
+        // Update the target weight
+        targetWeight = 1.0f;
+
+        // Then wait for the current weight to reach the target weight.
+        // When it does, the focusing animation is finished.
+        yield return new WaitUntil(() => currentWeight >= targetWeight);
+
+        isTransitioning = false;
+    }
+
+    // Unfocus from a target
+    IEnumerator Unfocus()
+    {
+        // Ensure transitions do not happen concurrently 
+        if (isTransitioning || !isFocused) 
+            yield break;
+        isTransitioning = true;
+        isFocused = false;
+
+        // Update the target weight
+        targetWeight = 0.0f;
+
+        // Wait for the current weight to reach the target weight.
+        // When it does, the unfocusing animation is finished.
+        yield return new WaitUntil(() => currentWeight <= targetWeight);
+
+        // Then remove the target from the target group
+        UpdateTarget(null, 0);
+
+        isTransitioning = false;
+    }
+
+    // Update the target in the target group, as well as its radius    
+    void UpdateTarget(Transform target, float radius) {
+        ctg.m_Targets[dynamicTargetIndex].target = target;
+        ctg.m_Targets[dynamicTargetIndex].radius = radius;
     }
 
 }
