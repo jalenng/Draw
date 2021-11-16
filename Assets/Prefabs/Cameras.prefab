@@ -369,7 +369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PositionMode: 1
   m_RotationMode: 0
-  m_UpdateMethod: 0
+  m_UpdateMethod: 1
   m_Targets:
   - target: {fileID: 0}
     weight: 1e-30
@@ -391,4 +391,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
   dynamicTargetIndex: 0
-  transitionSpeed: 0.5
+  transitionSmoothTime: 0.7
