@@ -81,4 +81,9 @@ public class Line : MonoBehaviour
         return lineWidth;
     }
 
+    public Color GetLineColor()
+    {
+        return lineColor;
+    }
+
 }

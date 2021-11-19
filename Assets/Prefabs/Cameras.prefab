@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242199389748082207}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.570061, y: -0.3727274, z: -13}
+  m_LocalPosition: {x: -9.559217, y: -0.87249196, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 242199389805913627}
@@ -177,7 +177,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242199389850525462}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.132, y: -0.4499998, z: -13}
+  m_LocalPosition: {x: -13.132, y: -0.9499999, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 242199390418717890}
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_ZDamping: 0
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
-  m_ScreenY: 0.6
+  m_ScreenY: 0.55
   m_CameraDistance: 10
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
   m_AdjustmentMode: 0
-  m_GroupFramingSize: 0.9
+  m_GroupFramingSize: 1.25
   m_MaxDollyIn: 5000
   m_MaxDollyOut: 5000
   m_MinimumDistance: 1
@@ -334,7 +334,6 @@ GameObject:
   - component: {fileID: 2433448107878360565}
   - component: {fileID: 5025664488006747042}
   - component: {fileID: 1964373613}
-  - component: {fileID: 1964373614}
   m_Layer: 0
   m_Name: Cinemachine Target Group
   m_TagString: Untagged
@@ -370,10 +369,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PositionMode: 1
   m_RotationMode: 0
-  m_UpdateMethod: 0
+  m_UpdateMethod: 1
   m_Targets:
   - target: {fileID: 0}
-    weight: 1
+    weight: 1e-30
     radius: 0
   - target: {fileID: 0}
     weight: 1
@@ -390,26 +389,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c5f7c3f626b562488e014324c350d4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceThreshold: 10
-  player: {fileID: 0}
-  currentWeight: 0
+  playerTransform: {fileID: 0}
   dynamicTargetIndex: 0
---- !u!95 &1964373614
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5181522926243448964}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8b13d9552e1ea1942a9851c7f49ce52e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  transitionSmoothTime: 0.7
