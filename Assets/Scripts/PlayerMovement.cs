@@ -22,27 +22,33 @@ public class PlayerMovement : MonoBehaviour
     private bool onGround;
     private bool jump;
     private Animator anim;
+    private bool isDead = true;
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        StartCoroutine(Spawn());
     }
 
     private void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        if (horizontal < 0)
+        if(!isDead)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
-        }
-        else if (horizontal > 0)
-        {
-            GetComponent<SpriteRenderer>().flipX = false;
-        }
-        anim.SetFloat("Speed",Mathf.Abs(horizontal * speed));
-        if (Input.GetButtonDown("Jump"))
-        {
-            jump = true;
+            horizontal = Input.GetAxisRaw("Horizontal");
+            if (horizontal < 0)
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else if (horizontal > 0)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+            }
+
+            anim.SetFloat("Speed", Mathf.Abs(horizontal * speed));
+            if (Input.GetButtonDown("Jump"))
+            {
+                jump = true;
+            }
         }
 
 
@@ -50,13 +56,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
-        if (jump) Jump();
-        else onGround = Physics2D.OverlapCircle(groundCheck.position, overlap, ground);
-        jump = false;
-        if (rb2d.velocity.y == 0)
+        if(!isDead)
         {
-            anim.SetBool("isJumping",false);
+            Move();
+            if (jump) Jump();
+            else onGround = Physics2D.OverlapCircle(groundCheck.position, overlap, ground);
+            jump = false;
+
+            anim.SetBool("isTouchingGround", onGround);
+
+            if (rb2d.velocity.y <= 0 && onGround)
+            {
+                anim.SetBool("isJumping", false);
+            }
         }
     }
 
@@ -74,4 +86,38 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isJumping",true);
         }
     }
+
+    public void Die(Transform respawn)
+    {
+        if(!isDead)
+        {
+            isDead = true;
+            anim.SetBool("isJumping",false);
+            anim.SetBool("Dead", true);
+            rb2d.gravityScale = 0;
+            rb2d.bodyType = RigidbodyType2D.Static;
+            StartCoroutine(Respawn(respawn));
+        }
+    }
+
+    IEnumerator Respawn(Transform respawn)
+    {
+        yield return new WaitForSeconds(1f);
+        anim.SetBool("Dead",false);
+        rb2d.gravityScale = 1;
+        rb2d.bodyType = RigidbodyType2D.Dynamic;
+        isDead = false;
+        rb2d.velocity = Vector2.zero;
+        transform.position = respawn.transform.position;
+    }
+
+    IEnumerator Spawn()
+    {
+        yield return new WaitForSeconds(0.2f);
+        anim.SetBool("Spawn",true);
+        yield return new WaitForSeconds(2.2f);
+        anim.SetBool("Spawn",false);
+        isDead = false;
+    }
+
 }
