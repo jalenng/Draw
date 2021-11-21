@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class DialogueSystem : MonoBehaviour
 {
@@ -8,21 +9,36 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] Dialogue dialogue;
     [SerializeField] KeyCode advanceKey = KeyCode.Space;
     [SerializeField] Textbox textbox;
-    
+    private PlayableDirector director;
+
+
     // State variables
     int entryIndex = 0;
 
     private void Start() {
-        QueueDialogue(dialogue);
+        // QueueDialogue(dialogue);
+        director = GameObject.Find("CutsceneManager").GetComponent<PlayableDirector>();
     }
 
     // Queue a dialogue to be displayed
     public void QueueDialogue(Dialogue dialogue)
     {
+        if(director) PauseTimeline();
         this.dialogue = dialogue; 
         this.entryIndex = 0;  
         
         StartCoroutine(DisplayDialogue());
+    }
+
+    public void PauseTimeline()
+    {
+        director.playableGraph.GetRootPlayable(0).SetSpeed(0);
+        // director.Pause();
+    }
+    public void ResumeTimeline()
+    {
+        director.playableGraph.GetRootPlayable(0).SetSpeed(1);
+        // director.Resume();
     }
 
     // Display the next entry in the dialogue
@@ -51,7 +67,11 @@ public class DialogueSystem : MonoBehaviour
 
             // Move to the next entry, or end the dialogue if we're at the end
             if (++entryIndex >= dialogue.entries.Count)
+            {
+                if(director) ResumeTimeline();
                 break;
+            }
+                
         }
 
         textbox.Clear();

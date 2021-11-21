@@ -6,25 +6,24 @@ using UnityEngine.Playables;
 
 public class CutsceneTrigger : MonoBehaviour
 {
-    public PlayableDirector timeline;
-
     public PlayableAsset cutscene;
+    private TimelineTrigger trigger;
 
     public bool hasPlayed;
+
+    private void Start()
+    {
+        trigger = GameObject.Find("CutsceneManager").GetComponent<TimelineTrigger>();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!hasPlayed && other.gameObject.CompareTag("Player"))
         {
-            StartCoroutine(StartCutscene());
+            trigger.Trigger(cutscene);
+            hasPlayed = true;
         }
     }
+    
 
-    private IEnumerator StartCutscene()
-    {
-        yield return new WaitForSeconds(.1f);
-        hasPlayed = true;
-        timeline.playableAsset = cutscene;
-        timeline.Play();
-    }
 }
