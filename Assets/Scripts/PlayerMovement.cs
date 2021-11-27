@@ -9,9 +9,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float movementSmoothing = 0.05f;
-    [SerializeField] private Transform groundCheck;
     [SerializeField] private float overlap;
     [SerializeField] private LayerMask ground;
+    [SerializeField] private Collider2D feetCollider;
 
     // Cached components
     private Rigidbody2D rb2d;
@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Move();
             if (jump) Jump();
-            else onGround = Physics2D.OverlapCircle(groundCheck.position, overlap, ground);
+            else onGround = feetCollider.IsTouchingLayers(ground);
             jump = false;
 
             anim.SetBool("isTouchingGround", onGround);
