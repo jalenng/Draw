@@ -13,7 +13,15 @@ public class DialogueSystem : MonoBehaviour
     int entryIndex = 0;
 
     private void Start() {
-        QueueDialogue(dialogue);
+        if (dialogue)
+            QueueDialogue(dialogue);
+    }
+
+    private void Update() {
+        // Fast forward current dialogue entry if the advance key is pressed.
+        // Allows players to advance the dialogue while the typewriting effect is still in progress.
+        if (Input.GetKeyDown(advanceKey)) 
+            textbox.FastForward();
     }
 
     // Queue a dialogue to be displayed
@@ -56,7 +64,6 @@ public class DialogueSystem : MonoBehaviour
 
         textbox.Clear();
         SetTextboxVisibility(false);
-
     }
 
     // Set the visibility of the textbox

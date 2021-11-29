@@ -17,6 +17,9 @@ public class Textbox : MonoBehaviour
     string contentText;
     int CPS;
 
+    int totalCharacters;
+    int i;
+
     // Updates the avatar image to show
     public void setAvatar(Sprite avatar)
     {
@@ -44,6 +47,12 @@ public class Textbox : MonoBehaviour
         StartCoroutine(Say());
     }
 
+    // Stops the typewriting effect for the current dialogue entry, and shows all the text
+    public void FastForward()
+    {
+        i = totalCharacters - 1;
+    }
+
     // Updates the textbox to show the current avatar and content
     public IEnumerator Say()
     {
@@ -57,21 +66,22 @@ public class Textbox : MonoBehaviour
         // If typewriting effect is enabled...
         if (CPS > 0)
         {
+            // Calculate the duration between characters
+            float SPC = 1.0f / CPS;
+
             // Get the number of characters
-            int totalCharacters = contentText.Length;
+            totalCharacters = contentText.Length;
 
             // At every interval, update the textbox text to achieve a typewriter effect
-            for (int i = 0; i <= totalCharacters; i++)
+            for (i = 0; i <= totalCharacters; i++)
             {
                 contentTMP.text = contentText.Substring(0, i);
-                yield return new WaitForSeconds(1.0f / CPS);
+                yield return new WaitForSeconds(SPC);
             }
         }
         // Else, don't typewrite the text.
         else
-        {
             contentTMP.text = contentText;
-        }
 
         // Show the CTM indicator
         CTCImage.enabled = true;
