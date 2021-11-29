@@ -6,14 +6,22 @@ using UnityEngine;
 public class Line : MonoBehaviour
 {
     // Configuration parameters
-    [SerializeField] PhysicsMaterial2D physicsMaterial;
+    [Header("Appearance")]
     [SerializeField] float lineWidth = 0.05f;
     [SerializeField] Color lineColor = Color.black;
     [SerializeField] float pointsMinDistance = 0.1f; // The minimum distance between line's points.
+    
+    [Header("Physics")]
+    [SerializeField] bool affectedByGravity = false;
+    [SerializeField] float massPerPoint = 0.1f;
+    [SerializeField] float linearDrag = 1.2f;
+    [SerializeField] float angularDrag = 0.4f;
+    [SerializeField] float gravityScale = 1.0f;
 
     // Cached components
     LineRenderer lineRenderer;
     EdgeCollider2D edgeCollider;
+    Rigidbody2D rb2d;
 
     // State variables
     [HideInInspector] public List<Vector2> points = new List<Vector2>();
@@ -24,12 +32,21 @@ public class Line : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         edgeCollider = GetComponent<EdgeCollider2D>();
+        rb2d = GetComponent<Rigidbody2D>();
+
+        // Make the collision mode continuous.
+        // Yields more accurate but also more computationally expensive collision.
+        rb2d.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        
+        // Update the other physics properties
+        rb2d.drag = linearDrag;
+        rb2d.angularDrag = angularDrag;
+        rb2d.gravityScale = gravityScale;
+        rb2d.mass = 0;
     }
 
     void Start()
     {
-        edgeCollider.sharedMaterial = physicsMaterial;
-
         // Set line width
         lineRenderer.startWidth = lineWidth;
         lineRenderer.endWidth = lineWidth;
@@ -57,11 +74,13 @@ public class Line : MonoBehaviour
         CircleCollider2D circleCollider = this.gameObject.AddComponent<CircleCollider2D>();
         circleCollider.offset = newPoint;
         circleCollider.radius = circleColliderRadius;
-        circleCollider.sharedMaterial = physicsMaterial;
 
         // Line Renderer
         lineRenderer.positionCount = pointsCount;
         lineRenderer.SetPosition(pointsCount - 1, newPoint);
+
+        // Update the mass
+        rb2d.mass += massPerPoint;
 
         // Edge Collider
         // Edge colliders accept only 2 points or more (we can't create an edge with one point :D )
@@ -84,6 +103,17 @@ public class Line : MonoBehaviour
     public Color GetLineColor()
     {
         return lineColor;
+    }
+
+    public void ApplyBodyTypeProperty()
+    {
+        // If the line supposed to be affected by gravity, make its body type dynamic
+        if (affectedByGravity)
+            rb2d.bodyType = RigidbodyType2D.Dynamic;
+
+        // Else, set body type to static
+        else
+            rb2d.bodyType = RigidbodyType2D.Static;
     }
 
 }

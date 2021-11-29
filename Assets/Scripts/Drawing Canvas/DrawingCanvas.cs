@@ -15,12 +15,6 @@ public class DrawingCanvas : MonoBehaviour
     [SerializeField] LayerMask cantDrawOverLayer;
     [SerializeField] int minLineLength = 2;
 
-    [Header ("Line Physics Properties")] 
-    [SerializeField] bool affectedByGravity = false;
-    [SerializeField] float lineMass = 6.0f;
-    [SerializeField] float lineLinearDrag = 1.2f;
-    [SerializeField] float lineAngularDrag = 0.4f;
-
     // Cached components
     Line currentLine;
     Camera cam;
@@ -72,38 +66,15 @@ public class DrawingCanvas : MonoBehaviour
             
             // If the line is too short, ignore the line that was just drawn.
             if (currentLine.pointsCount < minLineLength) 
-            {
                 Destroy (currentLine.gameObject);
-            } 
+
+            // Otherwise, apply the line's body type property.
+            // This makes the line either static or dynamic, depending on whether it's affected by gravity.
             else 
-            {
-                // Make the line dynamic (affected by gravity) if desired.
-                Rigidbody2D currentLineRigidbody = currentLine.GetComponent<Rigidbody2D>();
-
-                // If the line supposed to be affected by gravity
-                if (affectedByGravity)
-                {
-                    // Set body type to dynamic
-                    currentLineRigidbody.bodyType = RigidbodyType2D.Dynamic;
-
-                    // Make the collision mode continuous.
-                    // Yields more accurate but also more computationally expensive collision.
-                    currentLineRigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-                    currentLineRigidbody.mass = lineMass;
-                    currentLineRigidbody.drag = lineLinearDrag;
-                    currentLineRigidbody.angularDrag = lineAngularDrag;
-                    currentLineRigidbody.gravityScale = 1.0f;
-                }
-
-                // Else, set body type to static
-                else
-                {
-                    currentLineRigidbody.bodyType = RigidbodyType2D.Static;
-                }
-
-                // Make currentLine null. We're done with this line.
-                currentLine = null;
-            }
+                currentLine.ApplyBodyTypeProperty();
+            
+            // Make currentLine null. We're done with this line.
+            currentLine = null;
         }
     }
 

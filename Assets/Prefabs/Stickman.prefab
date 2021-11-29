@@ -52,7 +52,6 @@ MonoBehaviour:
   speed: 4
   jumpForce: 6
   movementSmoothing: 0.05
-  overlap: 0.05
   ground:
     serializedVersion: 2
     m_Bits: 1088
@@ -95,7 +94,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -673095393
-  m_SortingLayer: 4
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -3085751926795914777, guid: 02bbc1b217ec1b74ab2d8943c3d02fcb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -124,7 +123,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c74e6d5387e77ed44ae0e32935a4f2ef, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
