@@ -10,7 +10,7 @@ public class Textbox : MonoBehaviour
     [Header("Components")]
     [SerializeField] TextMeshProUGUI contentTMP;
     [SerializeField] Image avatarImage;
-    [SerializeField] Image CTCImage;
+    [SerializeField] Animator CTCAnimator;
 
     // State variables
     Sprite avatarSprite;
@@ -56,8 +56,8 @@ public class Textbox : MonoBehaviour
     // Updates the textbox to show the current avatar and content
     public IEnumerator Say()
     {
-        // Hide the CTM indicator
-        CTCImage.enabled = false;
+        // Hide the CTC indicator
+        CTCAnimator.SetBool("Hidden", true);
 
         // Update avatar image
         avatarImage.sprite = avatarSprite;
@@ -83,8 +83,9 @@ public class Textbox : MonoBehaviour
         else
             contentTMP.text = contentText;
 
-        // Show the CTM indicator
-        CTCImage.enabled = true;
+        // Show the CTC indicator
+        CTCAnimator.SetBool("Hidden", false);
+
     }
 
 }
