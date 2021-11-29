@@ -6,10 +6,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Configuration parameters
+    [Header("Movement")]
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float movementSmoothing = 0.05f;
-    [SerializeField] private float overlap;
+    
+    [Header("Ground Check")]
     [SerializeField] private LayerMask ground;
     [SerializeField] private Collider2D feetCollider;
 
@@ -23,10 +25,15 @@ public class PlayerMovement : MonoBehaviour
     private bool jump;
     private Animator anim;
     private bool isDead = true;
+    private Vector3 respawnPos;
+
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        respawnPos = transform.position;
+
         StartCoroutine(Spawn());
     }
 
@@ -87,7 +94,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Die(Transform respawn)
+
+    public void SetRespawnPos(Vector3 respawnPos)
+    {
+        this.respawnPos = respawnPos;
+    }
+
+    public void Die()
     {
         if(!isDead)
         {
@@ -96,11 +109,11 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("Dead", true);
             rb2d.gravityScale = 0;
             rb2d.bodyType = RigidbodyType2D.Static;
-            StartCoroutine(Respawn(respawn));
+            StartCoroutine(Respawn());
         }
     }
 
-    IEnumerator Respawn(Transform respawn)
+    IEnumerator Respawn()
     {
         yield return new WaitForSeconds(1f);
         anim.SetBool("Dead",false);
@@ -108,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
         rb2d.bodyType = RigidbodyType2D.Dynamic;
         isDead = false;
         rb2d.velocity = Vector2.zero;
-        transform.position = respawn.transform.position;
+        transform.position = respawnPos;
     }
 
     IEnumerator Spawn()

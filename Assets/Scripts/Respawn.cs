@@ -10,7 +10,7 @@ public class Respawn : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<PlayerMovement>().Die(respawn);
+            other.gameObject.GetComponent<PlayerMovement>().Die();
         }
     }
 }
