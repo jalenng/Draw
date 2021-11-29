@@ -15,7 +15,7 @@ public class TargetGroupUpdater : MonoBehaviour
     [Header("Target Transition")]
     [Range(0, 2)] 
     [Tooltip("The higher the value, the smoother and longer the transition will be")]
-    [SerializeField] float transitionSmoothTime = 0.7f;
+    [SerializeField] float transitionSmoothTime = 0.33f;
     
     // Cached components and objects
     CinemachineTargetGroup ctg;
@@ -109,7 +109,7 @@ public class TargetGroupUpdater : MonoBehaviour
     }
 
     // Unfocus from a target
-    IEnumerator Unfocus()
+    public IEnumerator Unfocus(bool force = false)
     {
         // Ensure transitions do not happen concurrently 
         if (isTransitioning || !isFocused) 

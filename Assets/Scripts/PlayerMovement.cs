@@ -109,6 +109,10 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("Dead", true);
             rb2d.gravityScale = 0;
             rb2d.bodyType = RigidbodyType2D.Static;
+
+            IEnumerator unfocusCoroutine = FindObjectOfType<TargetGroupUpdater>().Unfocus(true);
+            StartCoroutine(unfocusCoroutine);
+
             StartCoroutine(Respawn());
         }
     }
