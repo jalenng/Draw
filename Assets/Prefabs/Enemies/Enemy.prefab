@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 306299134610277266}
   - component: {fileID: 3099822656185025910}
   - component: {fileID: 306299134610277267}
-  - component: {fileID: 306299134610277268}
   - component: {fileID: 306299134610277270}
   m_Layer: 0
   m_Name: Enemy
@@ -73,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -673095393
-  m_SortingLayer: 4
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -817517239374485151, guid: e242ef7f87877a84aa08ec816b948611, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -120,19 +119,6 @@ MonoBehaviour:
   initWait: 0
   distanceOffset: 0.1
   speed: 1
---- !u!114 &306299134610277268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 306299134610277264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a684b583ab86648bda181aa54e7dc4cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  respawn: {fileID: 0}
 --- !u!95 &306299134610277270
 Animator:
   serializedVersion: 3

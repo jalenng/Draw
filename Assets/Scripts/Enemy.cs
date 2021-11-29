@@ -21,7 +21,9 @@ public class Enemy : MonoBehaviour
     {
         if (points.Count > 0)
         {
-            transform.position = Vector2.MoveTowards(transform.position, points[index].transform.position,
+            transform.position = Vector2.MoveTowards(
+                transform.position,
+                points[index].transform.position,
                 speed * Time.deltaTime);
             if (Vector2.Distance(transform.position, points[index].transform.position) < distanceOffset)
             {
@@ -31,10 +33,15 @@ public class Enemy : MonoBehaviour
                     wait = initWait;
                 }
                 else
-                {
                     wait -= Time.deltaTime;
-                }
             }
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+            other.gameObject.GetComponent<PlayerMovement>().Die();
+    }
+
 }
