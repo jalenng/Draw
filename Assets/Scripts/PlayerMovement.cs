@@ -26,7 +26,8 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     private bool isDead = true;
     private Vector3 respawnPos;
-
+    private bool isPaused = false;
+    
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -39,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if(!isDead)
+        if(!isDead && !isPaused)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
             if (horizontal < 0)
@@ -61,6 +62,12 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void TogglePause()
+    {
+        horizontal = 0;
+        anim.SetFloat("Speed",0);
+        isPaused = !isPaused;
+    }
     private void FixedUpdate()
     {
         if(!isDead)
