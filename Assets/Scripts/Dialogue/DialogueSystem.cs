@@ -9,8 +9,9 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] Dialogue dialogue;
     [SerializeField] KeyCode advanceKey = KeyCode.Space;
     [SerializeField] Textbox textbox;
-    private PlayableDirector director;
 
+    // Cached object references
+    private PlayableDirector director;
 
     // State variables
     int entryIndex = 0;
@@ -31,7 +32,10 @@ public class DialogueSystem : MonoBehaviour
     // Queue a dialogue to be displayed
     public void QueueDialogue(Dialogue dialogue)
     {
-        if(director) PauseTimeline();
+        // If there is a playable director, pause the timeline/cutscene
+        if (director) 
+            PauseTimeline();
+
         this.dialogue = dialogue; 
         this.entryIndex = 0;  
         
@@ -75,15 +79,16 @@ public class DialogueSystem : MonoBehaviour
 
             // Move to the next entry, or end the dialogue if we're at the end
             if (++entryIndex >= dialogue.entries.Count)
-            {
-                if(director) ResumeTimeline();
-                break;
-            }
-                
+                break;                
         }
 
+        // Clear and hide the textbox
         textbox.Clear();
         SetTextboxVisibility(false);
+
+        // If there is a playable director, resume the timeline/cutscene
+        if (director) 
+            ResumeTimeline();
     }
 
     // Set the visibility of the textbox
