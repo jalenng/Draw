@@ -116,7 +116,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 747203235
-  m_SortingLayer: 3
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2c5102e1f5ef37042ad3b7d6b782868e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
@@ -303,12 +303,9 @@ MonoBehaviour:
   linesParent: {fileID: 2158349128190063131}
   cantDrawOverLayer:
     serializedVersion: 2
-    m_Bits: 448
-  minLineLength: 2
-  affectedByGravity: 1
-  lineMass: 6
-  lineLinearDrag: 1.2
-  lineAngularDrag: 0.4
+    m_Bits: 320
+  minLineLength: 0.5
+  maxTotalLineLength: 10
 --- !u!1 &6013472230435510633
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad0fb33fd0b71464886ba3c852f80982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linesParent: {fileID: 2158349128190063131}
+  drawingCanvas: {fileID: 3121044882252102164}
   drawingArea: {fileID: 7562454472242513397}
 --- !u!212 &1421605840355200629
 SpriteRenderer:
@@ -394,7 +391,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 747203235
-  m_SortingLayer: 3
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 52fef9d81d9978c4e904f2be7a3fe1ba, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}

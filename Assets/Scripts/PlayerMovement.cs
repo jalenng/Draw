@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask ground;
     [SerializeField] private Collider2D feetCollider;
 
+    [Header("Auto Respawn")]
+    [SerializeField] private float minY = -20f;
+
     // Cached components
     private Rigidbody2D rb2d;
 
@@ -59,7 +62,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-
+        // Trigger respawn when Stickman falls too far
+        if (transform.position.y < minY)
+        {
+            Die();
+        }
     }
 
     public void TogglePause()
