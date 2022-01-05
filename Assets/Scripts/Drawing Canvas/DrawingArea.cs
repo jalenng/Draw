@@ -12,14 +12,24 @@ public class DrawingArea : MonoBehaviour
     LineRenderer lineRenderer;
     BoxCollider2D boxCollider;
 
+    // State variables4
+    Color baseOutlineColor;
+
     private void Start() {
         lineRenderer = GetComponent<LineRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
 
         // Disable sprite renderer component, as we only need it to show the collider in the scene view
         Destroy(GetComponent<SpriteRenderer>());
+        
+        baseOutlineColor = drawingCanvas.GetLinePrefab().GetLineColor();
 
         SetUpBorderOutline();
+    }
+
+    private void Update()
+    {
+        UpdateBorderOutlineColor();
     }
 
     private void SetUpBorderOutline()
@@ -36,7 +46,7 @@ public class DrawingArea : MonoBehaviour
             new Vector3(halfWidth, halfHeight, 0),      // Top right
             new Vector3(halfWidth, -halfHeight, 0),     // Bottom right
             new Vector3(-halfWidth, -halfHeight, 0),    // Bottom left
-            new Vector3(-halfWidth, halfHeight, 0),    // Top left
+            new Vector3(-halfWidth, halfHeight, 0),     // Top left
         };
 
         lineRenderer.SetPositions(positions);
@@ -44,9 +54,15 @@ public class DrawingArea : MonoBehaviour
         // Set outline width
         lineRenderer.startWidth = outlineWidth;
         lineRenderer.endWidth = outlineWidth;
+    }
 
-        // Set outline color to match the color of the line
-        Color outlineColor = drawingCanvas.GetLinePrefab().GetLineColor();
+    private void UpdateBorderOutlineColor()
+    {
+        // Set outline color to match the color of the line.
+        // The amount of remaining ink is represented by the alpha value.
+        float inkRemaining = 1.0f - drawingCanvas.GetInkRatio();
+        // Debug.Log(inkRemaining);
+        Color outlineColor = new Color(baseOutlineColor.r, baseOutlineColor.g, baseOutlineColor.b, inkRemaining);
         lineRenderer.startColor = outlineColor;
         lineRenderer.endColor = outlineColor;
     }
@@ -55,4 +71,5 @@ public class DrawingArea : MonoBehaviour
     private void OnMouseDown() {
         drawingCanvas.BeginDraw();
     }
+    
 }

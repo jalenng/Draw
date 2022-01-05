@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ResetButton : MonoBehaviour
 {
-
-    public GameObject linesParent;
-
+    // Cached components and object references
+    public DrawingCanvas drawingCanvas;
     public DrawingArea drawingArea;
+
     private void Start() {
         SetUpPosition();
     }
 
-    // Set up reset button position relative to the folder.
+    // Set up reset button position relative to the folder
     private void SetUpPosition()
     {        
         // Get position of top-right corner of drawing area
@@ -37,10 +37,7 @@ public class ResetButton : MonoBehaviour
     }
 
     private void OnMouseDown() {
-        // Delete all Lines pertaining to the LineParent
-        foreach (Transform child in linesParent.transform) {
-            GameObject.Destroy(child.gameObject);
-        }
+        drawingCanvas.Reset();
     }
 
 }
