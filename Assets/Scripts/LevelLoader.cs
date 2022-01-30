@@ -26,7 +26,7 @@ public class LevelLoader : MonoBehaviour
     // Loads the main menu
     public void LoadMainMenu()
     {
-        StartCoroutine(LoadScene(mainMenuBuildIndex));
+        LoadScene(mainMenuBuildIndex);
     }
 
     // Loads the next scene, or the main menu if there are no more scenes
@@ -40,11 +40,23 @@ public class LevelLoader : MonoBehaviour
         if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
             nextSceneIndex = mainMenuBuildIndex;
 
-        StartCoroutine(LoadScene(nextSceneIndex));
+        LoadScene(nextSceneIndex);
+    }
+
+    // Reloads the current scene. Should be used for debugging, not in production.
+    public void ReloadScene()
+    {
+        LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    // Loads a scene
+    public void LoadScene(int index)
+    {
+        StartCoroutine(LoadSceneRoutine(index));
     }
 
     // A coroutine that loads a given scene
-    IEnumerator LoadScene(int index)
+    IEnumerator LoadSceneRoutine(int index)
     {
         // Ensure only one scene gets loaded
         if (isLoading) 

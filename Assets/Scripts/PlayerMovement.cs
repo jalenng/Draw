@@ -108,7 +108,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
     public void SetRespawnPos(Vector3 respawnPos)
     {
         this.respawnPos = respawnPos;
