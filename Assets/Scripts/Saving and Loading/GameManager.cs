@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     // Object references with attributes to save
     [Header("Object References")]
     public PlayerData player;
-    public List<Checkpoint> checkpointData;
+    public List<CheckpointData> checkpointData;
 
     // State variables
     string saveFilePath;
@@ -52,6 +52,15 @@ public class GameManager : MonoBehaviour
         // Capture the game data
         gameData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
         gameData.playerData = player.Capture();
+        
+        gameData.checkpointData = new List<SerializableCheckpointData>();
+        foreach (CheckpointData checkpoint in checkpointData)
+        {
+            //TODO: Fix
+            if (checkpoint == null)
+                continue;
+            gameData.checkpointData.Add(checkpoint.Capture());
+        }
 
         // Write to file
         serializer.Save(gameData, saveFilePath);

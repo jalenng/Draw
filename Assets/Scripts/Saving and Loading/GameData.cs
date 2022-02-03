@@ -11,6 +11,5 @@ using UnityEngine;
 public class GameData {
     public int sceneIndex;
     public SerializablePlayerData playerData;
-    // public List<SerializableCheckpointData> checkpointData;
-
+    public List<SerializableCheckpointData> checkpointData = new List<SerializableCheckpointData>();
 }
