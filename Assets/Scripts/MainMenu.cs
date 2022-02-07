@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     [Header("Buttons")]
     public Button playButton;
     public Button loadButton;
+    public Button quitButton;
 
     LevelLoader levelLoader;
     GameManager gameManager;
@@ -31,6 +32,11 @@ public class MainMenu : MonoBehaviour
     public void Load()
     {
         gameManager.Load();
+    }
+    public void Quit()
+    {
+        Debug.Log("Quitting the game");
+        Application.Quit();
     }
 
 }
