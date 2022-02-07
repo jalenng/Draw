@@ -10,6 +10,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     // Configuration parameters
+    [SerializeField] bool enableDebugKeys = false;
+    
     [Header("File saving")]
 
     // Object references with attributes to save
@@ -36,11 +38,14 @@ public class GameManager : MonoBehaviour
     // Debugging purposes
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-            Save();
+        if (enableDebugKeys)
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+                Save();
 
-        if (Input.GetKeyDown(KeyCode.L))
-            Load();
+            if (Input.GetKeyDown(KeyCode.L))
+                Load();
+        }
     }
 
     // Save the game to the savefile

@@ -12,21 +12,35 @@ public class LevelLoader : MonoBehaviour
 
     [Header("Configuration")]
     [SerializeField] int mainMenuBuildIndex = 0;
+    [SerializeField] int settingsBuildIndex = 1;
+    [SerializeField] int gameStartBuildIndex = 2;
     [SerializeField] float minLoadingTime = 3f;
 
     // State variables
     bool isLoading = false;
 
-    private void Start() 
+    private void Start()
     {
         // Hide the loading animation
-        loadingAnimation.SetActive(false);    
+        loadingAnimation.SetActive(false);
+    }
+
+    // Load the first level
+    public void StartGame()
+    {
+        LoadScene(gameStartBuildIndex);
     }
 
     // Loads the main menu
     public void LoadMainMenu()
     {
         LoadScene(mainMenuBuildIndex);
+    }
+
+    // Loads the settings
+    public void LoadSettings()
+    {
+        LoadScene(settingsBuildIndex);
     }
 
     // Loads the next scene, or the main menu if there are no more scenes
@@ -59,13 +73,13 @@ public class LevelLoader : MonoBehaviour
     IEnumerator LoadSceneRoutine(int index)
     {
         // Ensure only one scene gets loaded
-        if (isLoading) 
+        if (isLoading)
             yield break;
         isLoading = true;
 
         // Start the transition animation 
         yield return AnimateTransition();
-        
+
         // Show the loading animation
         loadingAnimation.SetActive(true);
 
