@@ -48,6 +48,9 @@ public class PauseSystem : MonoBehaviour
     // Transition to the main menu with an animation
     public void LoadMainMenu()
     {  
+        // Save the game
+        FindObjectOfType<GameManager>().Save();
+
         // Don't allow the player to open the pause menu
         canOpen = false;
 
