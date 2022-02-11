@@ -13,7 +13,7 @@ public class CutsceneTrigger : MonoBehaviour
 
     private void Start()
     {
-        trigger = GameObject.Find("CutsceneManager").GetComponent<TimelineTrigger>();
+        trigger = FindObjectOfType<TimelineTrigger>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

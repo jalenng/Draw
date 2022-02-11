@@ -9,7 +9,11 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] Vector3 respawnOffset = new Vector3(0.5f, 1.25f, 0.0f);
 
     // State variables
-    bool activated = false;
+    bool isActivated = false;
+    public bool IsActivated { 
+        get { return isActivated; } 
+        set { isActivated = value; }
+    }
 
     // Cached component references
     Animator anim;
@@ -23,21 +27,28 @@ public class Checkpoint : MonoBehaviour
     {
         // If the checkpoint has not been activated,
         // and the player has collided with the checkpoint...
-        if (!activated && other.CompareTag("Player")) 
+        if (!isActivated && other.CompareTag("Player")) 
         {
             PlayerMovement playerMovement = other.GetComponent<PlayerMovement>();
 
-            // Update the player's respawn position
             if (playerMovement) 
-            {
+            {        
+                // Update the player's respawn position
                 playerMovement.SetRespawnPos(transform.position + respawnOffset);
-                activated = true;
-
-                // Animate the checkpoint activation
-                anim.SetBool("Activated", true);
+                Activate();
             }
             else
                 Debug.LogError("Cannot set checkpoint because PlayerController was not found");
         }
+    }
+
+    // Activate the checkpoint. 
+    // This updates its animation and state, but does not update the player's respawn position.
+    public void Activate() 
+    {   
+        isActivated = true;
+        
+        // Animate the checkpoint activation
+        anim.SetBool("Activated", true);
     }
 }

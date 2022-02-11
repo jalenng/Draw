@@ -19,7 +19,7 @@ public class DialogueSystem : MonoBehaviour
     private void Start() {
         // if (dialogue)
         //     QueueDialogue(dialogue);
-        director = GameObject.Find("CutsceneManager").GetComponent<PlayableDirector>();
+        director = FindObjectOfType<PlayableDirector>();
     }
 
     private void Update() {

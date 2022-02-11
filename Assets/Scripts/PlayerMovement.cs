@@ -22,13 +22,13 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb2d;
 
     // State variables
+    public Vector3 respawnPos;
     private Vector3 m_Velocity = Vector3.zero;
     private float horizontal;
     private bool onGround;
     private bool jump;
     private Animator anim;
     private bool isDead = true;
-    private Vector3 respawnPos;
     private bool isPaused = false;
     
     private void Awake()
@@ -107,7 +107,6 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isJumping",true);
         }
     }
-
 
     public void SetRespawnPos(Vector3 respawnPos)
     {
