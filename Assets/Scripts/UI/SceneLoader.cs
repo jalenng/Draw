@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelLoader : MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
     // Configuration parameters
     [Header("Object references")]
-    [SerializeField] LevelTransition transition;
+    [SerializeField] SceneTransition transition;
     [SerializeField] GameObject loadingAnimation;
 
     [Header("Configuration")]
@@ -47,20 +47,21 @@ public class LevelLoader : MonoBehaviour
     public void LoadNextScene()
     {
         // Get the next scene index
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int currentSceneIndex = GetCurrentSceneIndex();
         int nextSceneIndex = currentSceneIndex + 1;
 
         // Go to main menu if there are no more scenes
         if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
-            nextSceneIndex = mainMenuBuildIndex;
-
-        LoadScene(nextSceneIndex);
+            LoadMainMenu();
+        else
+            LoadScene(nextSceneIndex);
     }
 
     // Reloads the current scene. Should be used for debugging, not in production.
     public void ReloadScene()
     {
-        LoadScene(SceneManager.GetActiveScene().buildIndex);
+        int currentSceneIndex = GetCurrentSceneIndex();
+        LoadScene(currentSceneIndex);
     }
 
     // Loads a scene
@@ -77,8 +78,15 @@ public class LevelLoader : MonoBehaviour
             yield break;
         isLoading = true;
 
+        // Set the transition color based on the level index
+        Color transitionColor = Color.black;    // Black for transitioning to a level
+        if (index == mainMenuBuildIndex || index == settingsBuildIndex)
+            transitionColor = Color.white;      // White for transitioning to a menu
+        transition.SetTransitionColor(transitionColor);
+
         // Start the transition animation 
-        yield return AnimateTransition();
+        Time.timeScale = 1f;
+        yield return transition.FadeOut();
 
         // Show the loading animation
         loadingAnimation.SetActive(true);
@@ -87,16 +95,27 @@ public class LevelLoader : MonoBehaviour
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
         asyncLoad.allowSceneActivation = false;
 
+        // Use the minimum loading time only if we're not navigating from or to the settings menu
+        if (index != settingsBuildIndex && GetCurrentSceneIndex() != settingsBuildIndex)
+            yield return new WaitForSeconds(minLoadingTime);    
+
         // Wait for the scene to finish loading before activating it
-        yield return new WaitForSeconds(minLoadingTime);
         yield return new WaitUntil(() => asyncLoad.progress >= 0.9f);
         asyncLoad.allowSceneActivation = true;
+
+        // Hide the loading animation
+        loadingAnimation.SetActive(false);
+
+        // Start the transition animation 
+        yield return transition.FadeIn();
+
+        isLoading = false;
     }
 
-    // A coroutine that animates the level transition
-    IEnumerator AnimateTransition()
+    // Returns the current scene index
+    private int GetCurrentSceneIndex()
     {
-        Time.timeScale = 1f;
-        yield return transition.FadeOut();
+        return SceneManager.GetActiveScene().buildIndex;
     }
+
 }

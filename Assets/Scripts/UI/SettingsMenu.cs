@@ -15,11 +15,11 @@ public class SettingsMenu : MonoBehaviour
     [Header("Buttons")]
     public Button returnButton;
 
-    LevelLoader levelLoader;
+    SceneLoader levelLoader;
 
     void Start()
     {
-        levelLoader = FindObjectOfType<LevelLoader>();
+        levelLoader = FindObjectOfType<SceneLoader>();
     }
 
     public void Return()

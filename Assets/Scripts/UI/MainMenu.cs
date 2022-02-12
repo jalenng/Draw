@@ -12,12 +12,12 @@ public class MainMenu : MonoBehaviour
     public Button settingsButton;
     public Button quitButton;
 
-    LevelLoader levelLoader;
+    SceneLoader levelLoader;
     GameManager gameManager;
 
     void Start()
     {
-        levelLoader = FindObjectOfType<LevelLoader>();
+        levelLoader = FindObjectOfType<SceneLoader>();
         gameManager = FindObjectOfType<GameManager>();    // GameManager is a singleton
 
         // Make the Load button interactable only if there is a game save

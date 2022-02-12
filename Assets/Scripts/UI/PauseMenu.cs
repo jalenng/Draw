@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseSystem : MonoBehaviour
-{   
-    // Configuration parameters
-    [SerializeField] GameObject pauseMenuCanvas;
+public class PauseMenu : MonoBehaviour
+{
+    // Cached components
+    Canvas canvas;
 
     // State variables
-    bool paused = false;    // Whether the game is paused or not
-    bool canOpen = true;    // Whether the pause menu can be opened or not
+    bool paused = false;    // Whether the game is paused
+    bool canPause = true;    // Whether the game can be paused
 
     // Start is called before the first frame update
     void Start()
     {
-        pauseMenuCanvas.SetActive(false);
+        canvas = GetComponent<Canvas>();
+        canvas.enabled = false;
     }
 
     // Update is called once per frame
@@ -32,9 +33,11 @@ public class PauseSystem : MonoBehaviour
     // Pause the game    
     public void Pause()
     {
+        if (!canPause)
+            return;
         paused = true;
         Time.timeScale = 0;
-        pauseMenuCanvas.SetActive(true);
+        canvas.enabled = true;
     }
 
     // Resume the game
@@ -42,26 +45,23 @@ public class PauseSystem : MonoBehaviour
     {
         paused = false;
         Time.timeScale = 1;
-        pauseMenuCanvas.SetActive(false);
+        canvas.enabled = false;
     }
-    
+
     // Transition to the main menu with an animation
     public void LoadMainMenu()
-    {  
+    {
         // Save the game
-        FindObjectOfType<GameManager>().Save();
+        FindObjectOfType<GameManager>()?.Save();
 
         // Don't allow the player to open the pause menu
-        canOpen = false;
+        canPause = false;
 
         // Resume the game
         Resume();
 
-        // Update the fade-out color to white to match the main menu's fade-in color
-        FindObjectOfType<LevelTransition>().SetFadeOutColor(Color.white);
-
         // Load the main menu with the level manager
-        FindObjectOfType<LevelLoader>().LoadMainMenu();
+        FindObjectOfType<SceneLoader>().LoadMainMenu();
     }
 
 }

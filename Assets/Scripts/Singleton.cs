@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Attach this script to a GameObject to make it a singleton based on its tag.
 public class Singleton : MonoBehaviour
 {
     [SerializeField] bool destroyImmediately = true;

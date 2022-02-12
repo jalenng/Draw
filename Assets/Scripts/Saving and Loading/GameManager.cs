@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 
         // Capture the game data
         gameData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
-        gameData.playerData = player.Capture();
+        gameData.playerData = player?.Capture();
         
         gameData.checkpointData = new List<SerializableCheckpointData>();
         foreach (CheckpointData checkpoint in checkpointData)
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 
         // Reload the scene
         int sceneIndex = gameData.sceneIndex;
-        FindObjectOfType<LevelLoader>().LoadScene(sceneIndex);
+        FindObjectOfType<SceneLoader>().LoadScene(sceneIndex);
 
         // It is now the responsibility of the saved GameObjects in the reloaded scene
         // to reference the GameManager and retrieve the loaded game data.

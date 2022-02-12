@@ -105,9 +105,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5649544195135873324}
   - component: {fileID: 5649544195135873325}
+  - component: {fileID: 1809652060251540795}
   m_Layer: 0
-  m_Name: Level Loader
-  m_TagString: Untagged
+  m_Name: Scene Loader
+  m_TagString: SceneLoader
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,7 +143,22 @@ MonoBehaviour:
   transition: {fileID: 6415835920046351764}
   loadingAnimation: {fileID: 1149484912}
   mainMenuBuildIndex: 0
+  settingsBuildIndex: 1
+  gameStartBuildIndex: 2
   minLoadingTime: 3
+--- !u!114 &1809652060251540795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649544195135873326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2af5cfe4ca2fc44dba4489db92df11f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyImmediately: 1
 --- !u!1 &5649544195359899905
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +171,7 @@ GameObject:
   - component: {fileID: 5649544195359899917}
   - component: {fileID: 5649544195359899918}
   m_Layer: 5
-  m_Name: Level Transition Canvas
+  m_Name: Scene Transitioner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -241,7 +257,7 @@ GameObject:
   - component: {fileID: 7907874822698731852}
   - component: {fileID: 5649544195503774736}
   m_Layer: 5
-  m_Name: Level Transition
+  m_Name: Scene Transition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,8 +294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca705088a7007f48a21aeb2fe462177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeInColor: {r: 0, g: 0, b: 0, a: 1}
-  fadeOutColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!114 &5649544195503774737
 MonoBehaviour:
   m_ObjectHideFlags: 0
