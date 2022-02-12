@@ -23,8 +23,7 @@ public class FocusArea : MonoBehaviour
         if(other.CompareTag("Player")) {
             // Unity camera size is 1/2 of its height
             float camSize = transform.lossyScale.y / 2 / zoomFactor;   
-            blender.UpdateFocusCamera(transform.position, camSize);
-            blender.Focus();
+            blender.Focus(transform.position, camSize);
         }
     }
 

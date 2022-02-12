@@ -8,6 +8,9 @@ using static Cinemachine.CinemachineBlendListCamera;
 // It is intended to work in conjunction with FocusAreas.
 public class CameraBlender : MonoBehaviour
 {
+    // Configurable parameters
+    [SerializeField] float blendTime = 0.75f;
+
     // Blend list camera component
     CinemachineBlendListCamera blendListCam;
 
@@ -20,7 +23,6 @@ public class CameraBlender : MonoBehaviour
     Instruction trackingInstruction = new Instruction();
     Instruction focusInstruction = new Instruction();
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -31,19 +33,19 @@ public class CameraBlender : MonoBehaviour
         focusCam = (CinemachineVirtualCamera)(blendListCam.ChildCameras[1]);
 
         // Create the instructions
-        trackingInstruction.m_Blend = new CinemachineBlendDefinition(
-            CinemachineBlendDefinition.Style.EaseInOut,
-            1.0f
-        );
         trackingInstruction.m_Hold = 0f;
         trackingInstruction.m_VirtualCamera = trackingCam;
-
-        focusInstruction.m_Blend = new CinemachineBlendDefinition(
+        trackingInstruction.m_Blend = new CinemachineBlendDefinition(
             CinemachineBlendDefinition.Style.EaseInOut,
-            1.0f
+            blendTime
         );
+
         focusInstruction.m_Hold = 0f;
         focusInstruction.m_VirtualCamera = focusCam;
+        focusInstruction.m_Blend = new CinemachineBlendDefinition(
+            CinemachineBlendDefinition.Style.EaseInOut,
+            blendTime
+        );
 
         // Initialize starting instructions: use the tracking camera.
         blendListCam.m_Instructions = new Instruction[1];
@@ -59,14 +61,18 @@ public class CameraBlender : MonoBehaviour
         focusCam.m_Lens.OrthographicSize = size;
     }
 
-    public void Focus()
+    public void Focus(Vector2 pos, float size)
     {
+        // Update the focus camera
+        UpdateFocusCamera(pos, size);
+
         // Clear instructions list
         blendListCam.m_Instructions = new Instruction[2];
 
         // Add instructions to list
         blendListCam.m_Instructions[0] = trackingInstruction;
         blendListCam.m_Instructions[1] = focusInstruction;
+
     }
 
     public void Unfocus()
