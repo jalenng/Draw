@@ -71,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void TogglePause()
     {
+        if (isPaused) transform.parent = null;
         horizontal = 0;
         anim.SetFloat("Speed",0);
         isPaused = !isPaused;

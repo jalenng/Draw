@@ -10,6 +10,7 @@ public class CutsceneTrigger : MonoBehaviour
     private TimelineTrigger trigger;
 
     public bool hasPlayed;
+    public bool triggerable;
 
     private void Start()
     {
@@ -20,10 +21,20 @@ public class CutsceneTrigger : MonoBehaviour
     {
         if (!hasPlayed && other.gameObject.CompareTag("Player"))
         {
-            trigger.Trigger(cutscene);
-            hasPlayed = true;
+            TriggerCutscene();
+            other.gameObject.transform.parent = transform.parent.transform;
         }
     }
-    
 
+    public void TriggerCutscene()
+    {
+        trigger.Trigger(cutscene);
+        hasPlayed = true;
+    }
+
+    public void ToggleTriggerable()
+    {
+        triggerable = true;
+    }
+    
 }

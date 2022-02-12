@@ -10,4 +10,9 @@ public class ClaireTrigger : MonoBehaviour
     {
         anim.SetBool(parameter,true);
     }
+
+    public void Trigger(string parameter)
+    {
+        anim.SetTrigger(parameter);
+    }
 }

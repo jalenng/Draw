@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class DrawingCanvas : MonoBehaviour
 {
@@ -24,7 +25,8 @@ public class DrawingCanvas : MonoBehaviour
     // Cached components
     Line currentLine;
     Camera cam;
-
+    
+    public CutsceneTrigger trigger;
 
     void Start()
     {
@@ -98,6 +100,7 @@ public class DrawingCanvas : MonoBehaviour
 
             // Make currentLine null. We're done with this line.
             currentLine = null;
+            if (trigger && !trigger.hasPlayed) trigger.TriggerCutscene();
         }
     }
 
@@ -141,8 +144,11 @@ public class DrawingCanvas : MonoBehaviour
 
         // Check if there is enough ink
         bool inkRemaining = totalDrawnLineLength < maxTotalLineLength;
+        
+        //Check if cutscene has been triggered
+        bool triggered = trigger ? trigger && trigger.triggerable : true;
 
-        return !hitCantDraw && hitDrawingArea && inkRemaining;
+        return !hitCantDraw && hitDrawingArea && inkRemaining && triggered;
     }
 
     // Returns the ratio of ink used to the maximum ink
