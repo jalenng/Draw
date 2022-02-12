@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteAlways]
 public class DrawingArea : MonoBehaviour
 {
     // Configuration parameters
@@ -12,16 +13,13 @@ public class DrawingArea : MonoBehaviour
     LineRenderer lineRenderer;
     BoxCollider2D boxCollider;
 
-    // State variables4
+    // State variables
     Color baseOutlineColor;
 
     private void Start() {
         lineRenderer = GetComponent<LineRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
 
-        // Disable sprite renderer component, as we only need it to show the collider in the scene view
-        Destroy(GetComponent<SpriteRenderer>());
-        
         baseOutlineColor = drawingCanvas.GetLinePrefab().GetLineColor();
 
         SetUpBorderOutline();
