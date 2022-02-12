@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     // Configuration parameters
-    [SerializeField] bool enableDebugKeys = false;
     
     [Header("File saving")]
 
@@ -33,12 +32,36 @@ public class GameManager : MonoBehaviour
         );
         serializer = new GameSerializer();
         gameData = null;
+
+        SetupSaveOnQuit();
     }
 
-    // Debugging purposes
+    void Start()
+    {
+        SetRatio(3, 2);
+    }
+
+    void SetRatio(float w, float h)
+    {
+        if ((((float)Screen.width) / ((float)Screen.height)) > w / h)
+        {
+            Screen.SetResolution((int)(((float)Screen.height) * (w / h)), Screen.height, true);
+        }
+        else
+        {
+            Screen.SetResolution(Screen.width, (int)(((float)Screen.width) * (h / w)), true);
+        }
+    }
+
+    void SetupSaveOnQuit()
+    {
+        Application.quitting += Save;
+    }
+
     void Update()
     {
-        if (enableDebugKeys)
+        // For dev and debugging convenience
+        if (Debug.isDebugBuild)
         {
             if (Input.GetKeyDown(KeyCode.S))
                 Save();

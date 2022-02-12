@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SceneTransition : MonoBehaviour
 {
+    [SerializeField] Image loadingAnimation;
+    
     // Cached components
     Animator anim;
     Image image;
@@ -13,11 +15,18 @@ public class SceneTransition : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         image = GetComponent<Image>();
+
+        StartCoroutine(FadeIn());
     }
 
     public void SetTransitionColor(Color color)
     {
         image.color = color;
+
+        loadingAnimation.color = new Color(
+            1f - color.r, 
+            1f - color.g, 
+            1f - color.b);
     }
 
     public IEnumerator FadeIn()

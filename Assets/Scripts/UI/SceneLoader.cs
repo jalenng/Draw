@@ -8,7 +8,6 @@ public class SceneLoader : MonoBehaviour
     // Configuration parameters
     [Header("Object references")]
     [SerializeField] SceneTransition transition;
-    [SerializeField] GameObject loadingAnimation;
 
     [Header("Configuration")]
     [SerializeField] int mainMenuBuildIndex = 0;
@@ -18,12 +17,6 @@ public class SceneLoader : MonoBehaviour
 
     // State variables
     bool isLoading = false;
-
-    private void Start()
-    {
-        // Hide the loading animation
-        loadingAnimation.SetActive(false);
-    }
 
     // Load the first level
     public void StartGame()
@@ -88,9 +81,6 @@ public class SceneLoader : MonoBehaviour
         Time.timeScale = 1f;
         yield return transition.FadeOut();
 
-        // Show the loading animation
-        loadingAnimation.SetActive(true);
-
         // Begin loading the scene asynchronously
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
         asyncLoad.allowSceneActivation = false;
@@ -102,9 +92,6 @@ public class SceneLoader : MonoBehaviour
         // Wait for the scene to finish loading before activating it
         yield return new WaitUntil(() => asyncLoad.progress >= 0.9f);
         asyncLoad.allowSceneActivation = true;
-
-        // Hide the loading animation
-        loadingAnimation.SetActive(false);
 
         // Start the transition animation 
         yield return transition.FadeIn();

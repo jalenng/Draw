@@ -15,7 +15,8 @@ public class DialogueSystem : MonoBehaviour
 
     // State variables
     int entryIndex = 0;
-
+    bool skip = false;
+    
     private void Start() {
         // if (dialogue)
         //     QueueDialogue(dialogue);
@@ -27,6 +28,16 @@ public class DialogueSystem : MonoBehaviour
         // Allows players to advance the dialogue while the typewriting effect is still in progress.
         if (Input.GetKeyDown(advanceKey)) 
             textbox.FastForward();
+
+        // For dev and debugging convenience
+        if (Debug.isDebugBuild) {
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                textbox.FastForward();
+                skip = true;
+                entryIndex = dialogue.entries.Count;
+            }
+        }
     }
 
     // Queue a dialogue to be displayed
@@ -38,7 +49,7 @@ public class DialogueSystem : MonoBehaviour
 
         this.dialogue = dialogue; 
         this.entryIndex = 0;  
-        
+
         StartCoroutine(DisplayDialogue());
     }
 
@@ -75,7 +86,7 @@ public class DialogueSystem : MonoBehaviour
             yield return textbox.Say();
 
             // Wait for the user to advance the dialogue
-            yield return new WaitUntil(() => Input.GetKeyDown(advanceKey));
+            yield return new WaitUntil(() => Input.GetKeyDown(advanceKey) || skip);
 
             // Move to the next entry, or end the dialogue if we're at the end
             if (++entryIndex >= dialogue.entries.Count)
