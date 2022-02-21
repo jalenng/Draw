@@ -12,4 +12,5 @@ public class GameData {
     public int sceneIndex;
     public SerializablePlayerData playerData;
     public List<SerializableCheckpointData> checkpointData = new List<SerializableCheckpointData>();
+    public List<SerializableCutsceneData> cutsceneData = new List<SerializableCutsceneData>();
 }

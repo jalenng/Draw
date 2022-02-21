@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [Header("Object References")]
     public PlayerData player;
     public List<CheckpointData> checkpointData;
+    public List<CutsceneData> cutsceneData;
 
     // State variables
     string saveFilePath;
@@ -84,10 +85,19 @@ public class GameManager : MonoBehaviour
         gameData.checkpointData = new List<SerializableCheckpointData>();
         foreach (CheckpointData checkpoint in checkpointData)
         {
-            //TODO: Fix
+            //TODO: improve this
             if (checkpoint == null)
                 continue;
             gameData.checkpointData.Add(checkpoint.Capture());
+        }
+        
+        gameData.cutsceneData = new List<SerializableCutsceneData>();
+        foreach (CutsceneData cutscene in cutsceneData)
+        {
+            //TODO: Improve this
+            if (cutscene == null)
+                continue;
+            gameData.cutsceneData.Add(cutscene.Capture());
         }
 
         // Write to file

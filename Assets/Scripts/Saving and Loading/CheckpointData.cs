@@ -31,7 +31,7 @@ public class CheckpointData : MonoBehaviour
 
     void Reset()
     {
-        myID = System.Guid.NewGuid().ToString(); 
+        RegenerateGUID();
     }
 
     void Start()

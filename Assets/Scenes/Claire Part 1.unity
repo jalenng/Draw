@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 32122169}
   - component: {fileID: 32122171}
   - component: {fileID: 32122170}
+  - component: {fileID: 32122172}
   m_Layer: 0
   m_Name: CutsceneTrigger (1)
   m_TagString: Untagged
@@ -196,6 +197,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &32122172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32122168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 416f21474bc827c4b9836e78198a5d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myID: 0669409e-8a8f-427c-8fa5-24623914c16d
 --- !u!1001 &35358266
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -735,7 +749,7 @@ Transform:
   - {fileID: 1820304627}
   - {fileID: 844822111}
   m_Father: {fileID: 443629773}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &91316600
 GameObject:
@@ -978,7 +992,7 @@ Transform:
   - {fileID: 1881557886}
   - {fileID: 676000827}
   m_Father: {fileID: 443629773}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &311340264
 PrefabInstance:
@@ -1053,7 +1067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1422282483251121600, guid: 0f65919544f171947b03cf1ec3a45719, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1422282483251121600, guid: 0f65919544f171947b03cf1ec3a45719, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1429,6 +1443,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1521747330}
   - {fileID: 1265930444}
   - {fileID: 5860633428939374852}
   - {fileID: 1303497854}
@@ -1438,6 +1453,7 @@ Transform:
   - {fileID: 2090765056}
   - {fileID: 1027297668}
   - {fileID: 1039026319}
+  - {fileID: 1149783555}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3987,7 +4003,7 @@ Transform:
   m_Children:
   - {fileID: 32122169}
   - {fileID: 348898515}
-  m_Father: {fileID: 1058559630}
+  m_Father: {fileID: 1149783555}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &995432039
@@ -4019,7 +4035,7 @@ Transform:
   m_Children:
   - {fileID: 1439287884}
   - {fileID: 1808980172}
-  m_Father: {fileID: 1058559630}
+  m_Father: {fileID: 1149783555}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1002188190
@@ -4033,6 +4049,7 @@ GameObject:
   - component: {fileID: 1002188191}
   - component: {fileID: 1002188193}
   - component: {fileID: 1002188192}
+  - component: {fileID: 1002188194}
   m_Layer: 0
   m_Name: CutsceneTrigger (3)
   m_TagString: Untagged
@@ -4095,6 +4112,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &1002188194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002188190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 416f21474bc827c4b9836e78198a5d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myID: e34242b0-218d-4b09-a739-32d801d5bf1f
 --- !u!1001 &1006583010
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4271,7 +4301,7 @@ Transform:
   - {fileID: 786117478}
   - {fileID: 35358267}
   m_Father: {fileID: 443629773}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1034172464
 GameObject:
@@ -4333,7 +4363,7 @@ Transform:
   - {fileID: 889339500}
   - {fileID: 1628578986}
   m_Father: {fileID: 443629773}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1039157658
 GameObject:
@@ -4364,7 +4394,7 @@ Transform:
   m_Children:
   - {fileID: 1002188191}
   - {fileID: 1436754290}
-  m_Father: {fileID: 1058559630}
+  m_Father: {fileID: 1149783555}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1051527517
@@ -4436,11 +4466,6 @@ Transform:
 --- !u!1 &1058559627 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5231622865541214431, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
-  m_PrefabInstance: {fileID: 557659355}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1058559630 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5231622865541214401, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
   m_PrefabInstance: {fileID: 557659355}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1074997143
@@ -5085,6 +5110,40 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3121044882252102163, guid: 71d17e4c639a6d147b726089326d0abe, type: 3}
   m_PrefabInstance: {fileID: 1147588302}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1149783554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1149783555}
+  m_Layer: 0
+  m_Name: Cutscenes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1149783555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149783554}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1833475659}
+  - {fileID: 991513435}
+  - {fileID: 995432040}
+  - {fileID: 1039157659}
+  m_Father: {fileID: 443629773}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1171436139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5214,7 +5273,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1192545125
 PrefabInstance:
@@ -5773,7 +5832,7 @@ Transform:
   - {fileID: 1144005347}
   - {fileID: 851687770}
   m_Father: {fileID: 443629773}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1256650214
 PrefabInstance:
@@ -5968,7 +6027,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3712837120670564430, guid: 5bf56ee0bd3cd4b47a8d3cdcb81dfd08, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3712837120670564430, guid: 5bf56ee0bd3cd4b47a8d3cdcb81dfd08, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7278,6 +7337,7 @@ GameObject:
   - component: {fileID: 1439287884}
   - component: {fileID: 1439287886}
   - component: {fileID: 1439287885}
+  - component: {fileID: 1439287887}
   m_Layer: 0
   m_Name: CutsceneTrigger (2)
   m_TagString: Untagged
@@ -7340,6 +7400,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &1439287887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439287883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 416f21474bc827c4b9836e78198a5d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myID: 49ae79eb-ba73-467e-a45e-2ec25d0d1a42
 --- !u!1001 &1472433329
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7622,8 +7695,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 99999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1836670407}
-  m_RootOrder: 2
+  m_Father: {fileID: 443629773}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1538228628
 GameObject:
@@ -8911,7 +8984,7 @@ Transform:
   m_Children:
   - {fileID: 1834311290}
   - {fileID: 174715612}
-  m_Father: {fileID: 1058559630}
+  m_Father: {fileID: 1149783555}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1834311289
@@ -8925,6 +8998,7 @@ GameObject:
   - component: {fileID: 1834311290}
   - component: {fileID: 1834311292}
   - component: {fileID: 1834311291}
+  - component: {fileID: 1834311293}
   m_Layer: 0
   m_Name: CutsceneTrigger
   m_TagString: Untagged
@@ -8987,11 +9061,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 2}
   m_EdgeRadius: 0
---- !u!4 &1836670407 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 242199389805913627, guid: 81556ccb1927e3044ad98f2c790e52cb, type: 3}
-  m_PrefabInstance: {fileID: 242199389772549731}
+--- !u!114 &1834311293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834311289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 416f21474bc827c4b9836e78198a5d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myID: 1bf039c0-f603-451f-a419-3537a10e5de7
 --- !u!1001 &1844362795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10130,7 +10212,7 @@ Transform:
   - {fileID: 1015435250}
   - {fileID: 1675717077}
   m_Father: {fileID: 443629773}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2095448801
 PrefabInstance:
@@ -10357,7 +10439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 242199389805913627, guid: 81556ccb1927e3044ad98f2c790e52cb, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 242199389805913627, guid: 81556ccb1927e3044ad98f2c790e52cb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10450,7 +10532,7 @@ PrefabInstance:
       objectReference: {fileID: 6200000, guid: c74e6d5387e77ed44ae0e32935a4f2ef, type: 2}
     - target: {fileID: 1450883229827684623, guid: 5560dc89a02bbbd47b9a7cb886fe0d5f, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1450883229827684623, guid: 5560dc89a02bbbd47b9a7cb886fe0d5f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10604,7 +10686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3666633371233344393, guid: c7c519c50ce8708409201879fa07a81f, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3666633371233344393, guid: c7c519c50ce8708409201879fa07a81f, type: 3}
       propertyPath: m_LocalScale.x
@@ -10678,7 +10760,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5963290114822669853, guid: 00ffea8dad7367d4aa0ab3673548ebf4, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5963290114822669853, guid: 00ffea8dad7367d4aa0ab3673548ebf4, type: 3}
       propertyPath: m_LocalPosition.x
