@@ -16,21 +16,22 @@ public class DialogueSystem : MonoBehaviour
     // State variables
     int entryIndex = 0;
     bool skip = false;
-    
-    private void Start() {
-        // if (dialogue)
-        //     QueueDialogue(dialogue);
+
+    private void Start()
+    {
         director = FindObjectOfType<PlayableDirector>();
     }
 
-    private void Update() {
+    private void Update()
+    {
         // Fast forward current dialogue entry if the advance key is pressed.
         // Allows players to advance the dialogue while the typewriting effect is still in progress.
-        if (Input.GetKeyDown(advanceKey)) 
+        if (CheckIfAdvanceKeyPressed())
             textbox.FastForward();
 
         // For dev and debugging convenience
-        if (Debug.isDebugBuild) {
+        if (Debug.isDebugBuild)
+        {
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
                 textbox.FastForward();
@@ -40,15 +41,20 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
+    private bool CheckIfAdvanceKeyPressed()
+    {
+        return Input.GetKeyDown(advanceKey) || Input.GetMouseButtonDown(0);
+    }
+
     // Queue a dialogue to be displayed
     public void QueueDialogue(Dialogue dialogue)
     {
         // If there is a playable director, pause the timeline/cutscene
-        if (director) 
+        if (director)
             PauseTimeline();
 
-        this.dialogue = dialogue; 
-        this.entryIndex = 0;  
+        this.dialogue = dialogue;
+        this.entryIndex = 0;
 
         StartCoroutine(DisplayDialogue());
     }
@@ -86,11 +92,11 @@ public class DialogueSystem : MonoBehaviour
             yield return textbox.Say();
 
             // Wait for the user to advance the dialogue
-            yield return new WaitUntil(() => Input.GetKeyDown(advanceKey) || skip);
+            yield return new WaitUntil(() => CheckIfAdvanceKeyPressed() || skip);
 
             // Move to the next entry, or end the dialogue if we're at the end
             if (++entryIndex >= dialogue.entries.Count)
-                break;                
+                break;
         }
 
         // Clear and hide the textbox
@@ -98,7 +104,7 @@ public class DialogueSystem : MonoBehaviour
         SetTextboxVisibility(false);
 
         // If there is a playable director, resume the timeline/cutscene
-        if (director) 
+        if (director)
             ResumeTimeline();
     }
 
