@@ -21,6 +21,7 @@ public class SettingsMenu : MonoBehaviour
     [Header("Buttons")]
     public Button returnButton;
 
+    // Object references
     SceneLoader levelLoader;
 
     void Start()
