@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Configuration parameters
+    [SerializeField] private bool animateSpawnOnLoad = false;
+
     [Header("Movement")]
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
@@ -20,93 +22,92 @@ public class PlayerMovement : MonoBehaviour
 
     // Cached components
     private Rigidbody2D rb2d;
+    private Animator anim;
 
     // State variables
     public Vector3 respawnPos;
-    private Vector3 m_Velocity = Vector3.zero;
-    private float horizontal;
-    private bool onGround;
-    private bool jump;
-    private Animator anim;
-    private bool isDead = true;
+    private bool isDead = false;
     private bool isPaused = false;
     
+    // Input variables
+    private bool jumpRequested = false;
+    private float horizontal;
+
     private void Awake()
     {
+        // Get components
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
+        // Set initial respawn position
         respawnPos = transform.position;
 
-        StartCoroutine(Spawn());
+        if (animateSpawnOnLoad)
+            Spawn();
     }
 
     private void Update()
     {
-        if(!isDead && !isPaused)
-        {
-            horizontal = Input.GetAxisRaw("Horizontal");
-            if (horizontal < 0)
-            {
-                GetComponent<SpriteRenderer>().flipX = true;
-            }
-            else if (horizontal > 0)
-            {
-                GetComponent<SpriteRenderer>().flipX = false;
-            }
+        if(isDead || isPaused) return;
 
-            anim.SetFloat("Speed", Mathf.Abs(horizontal * speed));
-            if (Input.GetButtonDown("Jump"))
-            {
-                jump = true;
-            }
-        }
-
+        GetInput();
+        UpdateSpriteDirection();
+        
         // Trigger respawn when Stickman falls too far
         if (transform.position.y < minY)
-        {
             Die();
+        
+        anim.SetFloat("XSpeed", Mathf.Abs(rb2d.velocity.x));
+        anim.SetFloat("YVelocity", rb2d.velocity.y);
+    }
+    private void FixedUpdate()
+    {
+        if (isDead) return;
+
+        Walk();
+
+        if (jumpRequested)
+        {
+            if (feetCollider.IsTouchingLayers(ground)) {
+                Jump();
+                anim.SetTrigger("Jump");
+            }
+            jumpRequested = false;
         }
+                
+    }
+
+    private void GetInput()
+    {
+        horizontal = Input.GetAxisRaw("Horizontal");
+        if (Input.GetButtonDown("Jump"))
+            jumpRequested = true;
+    }
+
+    private void UpdateSpriteDirection()
+    {
+        if (horizontal < 0)
+            GetComponent<SpriteRenderer>().flipX = true;
+        else if (horizontal > 0)
+            GetComponent<SpriteRenderer>().flipX = false;
     }
 
     public void TogglePause()
     {
-        if (isPaused) transform.parent = null;
-        horizontal = 0;
-        anim.SetFloat("Speed",0);
+        if (isPaused)
+            transform.parent = null;
+        
         isPaused = !isPaused;
     }
-    private void FixedUpdate()
+
+    private void Walk()
     {
-        if(!isDead)
-        {
-            Move();
-            if (jump) Jump();
-            else onGround = feetCollider.IsTouchingLayers(ground);
-            jump = false;
-
-            anim.SetBool("isTouchingGround", onGround);
-
-            if (rb2d.velocity.y <= 0 && onGround)
-            {
-                anim.SetBool("isJumping", false);
-            }
-        }
+        rb2d.velocity = new Vector2(horizontal * speed, rb2d.velocity.y);
     }
 
-
-    private void Move()
-    {
-        Vector3 target = new Vector2(horizontal * speed, rb2d.velocity.y);
-        rb2d.velocity = Vector3.SmoothDamp(rb2d.velocity, target, ref m_Velocity, movementSmoothing);
-    }
     private void Jump()
     {
-        if (onGround && jump)
-        {
-            rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
-            anim.SetBool("isJumping",true);
-        }
+        rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
     }
 
     public void SetRespawnPos(Vector3 respawnPos)
@@ -116,35 +117,34 @@ public class PlayerMovement : MonoBehaviour
 
     public void Die()
     {
-        if(!isDead)
-        {
-            isDead = true;
-            anim.SetBool("isJumping",false);
-            anim.SetBool("Dead", true);
-            rb2d.gravityScale = 0;
-            rb2d.bodyType = RigidbodyType2D.Static;
+        if (isDead) return;
+        
+        isDead = true;
+        
+        // Freeze the player
+        rb2d.simulated = false;
 
-            StartCoroutine(Respawn());
-        }
+        // Trigger death animation
+        anim.SetTrigger("Dead");
+
+        StartCoroutine(Respawn());
+    }
+    void Spawn()
+    {
+        anim.SetTrigger("Spawn");
     }
 
     IEnumerator Respawn()
     {
         yield return new WaitForSeconds(1f);
-        anim.SetBool("Dead",false);
-        rb2d.gravityScale = 1;
-        rb2d.bodyType = RigidbodyType2D.Dynamic;
-        isDead = false;
-        rb2d.velocity = Vector2.zero;
-        transform.position = respawnPos;
-    }
 
-    IEnumerator Spawn()
-    {
-        yield return new WaitForSeconds(0.2f);
-        anim.SetBool("Spawn",true);
-        yield return new WaitForSeconds(2.2f);
-        anim.SetBool("Spawn",false);
+        // Unfreeze the player
+        rb2d.simulated = true;
+        rb2d.velocity = Vector2.zero;
+
+        // Move the player to the respawn position
+        transform.position = respawnPos;
+
         isDead = false;
     }
 
