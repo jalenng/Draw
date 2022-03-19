@@ -48,7 +48,12 @@ public class CutsceneData : MonoBehaviour
         if (cutsceneData == null)
             Debug.Log("Cutscene data not found for cutscene " + ID);
         else if (cutsceneData.hasPlayed)
+        {
             cutsceneTrigger.hasPlayed = true;
+            // Get all siblings of cutscene trigger and disable them
+            foreach (Transform child in transform.parent)
+                child.gameObject.SetActive(false);
+        }
             
     }
 
