@@ -66,6 +66,11 @@ public class PlayerMovement : MonoBehaviour
 
         Walk();
 
+        if (feetCollider.IsTouchingLayers(ground))
+            anim.SetBool("isTouchingGround", true);
+        else 
+            anim.SetBool("isTouchingGround", false);
+
         if (jumpRequested)
         {
             if (feetCollider.IsTouchingLayers(ground)) {
