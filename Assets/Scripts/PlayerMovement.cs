@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     // State variables
     public Vector3 respawnPos;
     private bool isDead = false;
-    private bool isPaused = false;
+    [SerializeField]private bool isPaused = false;
     
     // Input variables
     private bool jumpRequested = false;
@@ -48,7 +48,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if(isDead || isPaused) return;
+        if (isDead)
+        {
+            return;
+        }
+
+        if (isPaused)
+        {
+            anim.SetFloat("XSpeed", 0);
+            anim.SetFloat("YVelocity", 0);
+            anim.SetBool("isTouchingGround", true);
+            anim.SetTrigger("Reset");
+        }
 
         GetInput();
         UpdateSpriteDirection();
@@ -62,7 +73,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (isDead) return;
+        if (isDead || isPaused)
+        {
+            
+            return;
+        }
 
         Walk();
 
@@ -99,6 +114,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void TogglePause()
     {
+        Debug.Log("Pause " + isPaused);
+        rb2d.velocity = Vector2.zero;
         if (isPaused)
             transform.parent = null;
         
