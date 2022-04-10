@@ -59,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetFloat("YVelocity", 0);
             anim.SetBool("isTouchingGround", true);
             anim.SetTrigger("Reset");
+            return;
         }
 
         GetInput();
