@@ -36,4 +36,8 @@ public class FocusArea : MonoBehaviour
         }
     }
 
+    public void UpdateArea(int x)
+    {
+        transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
+    }
 }
