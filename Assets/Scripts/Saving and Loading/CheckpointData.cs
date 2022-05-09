@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // This is what is being serialized
 [System.Serializable]
@@ -42,13 +43,27 @@ public class CheckpointData : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         gameManager.checkpointData.Add(this);
 
-        // Attempt to load previous game data from the Game Manager
-        List<SerializableCheckpointData> allCheckpointData = gameManager?.gameData?.checkpointData;
-        SerializableCheckpointData checkpointData = allCheckpointData?.Find(x => x.ID == ID);
-        if (checkpointData == null)
-            Debug.Log("Checkpoint data not found for checkpoint " + ID);
-        else if (checkpointData.isActivated)
-            checkpoint.Activate();
+        Load();
+    }
+
+    // Attempt to load previous game data from the Game Manager
+    void Load()
+    {
+        GameData gameData = gameManager?.gameData;
+
+        // Ensure build index matches
+        bool sceneIndexMatch = gameData?.sceneIndex == SceneManager.GetActiveScene().buildIndex;
+        if (sceneIndexMatch)
+        {
+            List<SerializableCheckpointData> allCheckpointData = gameManager?.gameData?.checkpointData;
+            SerializableCheckpointData checkpointData = allCheckpointData?.Find(x => x.ID == ID);
+
+            // Ensure checkpoint data exists
+            if (checkpointData == null)
+                Debug.Log("Checkpoint data not found for checkpoint " + ID);
+            else if (checkpointData.isActivated)
+                checkpoint.Activate();
+        }
     }
 
     // Returns a serializable version of the player's data

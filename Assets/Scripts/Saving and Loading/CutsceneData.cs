@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // This is what is being serialized
 [System.Serializable]
@@ -42,19 +43,33 @@ public class CutsceneData : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         gameManager.cutsceneData.Add(this);
 
-        // Attempt to load previous game data from the Game Manager
-        List<SerializableCutsceneData> allCutsceneData = gameManager?.gameData?.cutsceneData;
-        SerializableCutsceneData cutsceneData = allCutsceneData?.Find(x => x.ID == ID);
-        if (cutsceneData == null)
-            Debug.Log("Cutscene data not found for cutscene " + ID);
-        else if (cutsceneData.hasPlayed)
+        Load();
+    }
+
+    // Attempt to load previous game data from the Game Manager
+    void Load()
+    {
+        GameData gameData = gameManager?.gameData;
+
+        // Ensure build index matches
+        bool sceneIndexMatch = gameData?.sceneIndex == SceneManager.GetActiveScene().buildIndex;
+        if (sceneIndexMatch)
         {
-            cutsceneTrigger.hasPlayed = true;
-            // Get all siblings of cutscene trigger and disable them
-            foreach (Transform child in transform.parent)
-                child.gameObject.SetActive(false);
+            List<SerializableCutsceneData> allCutsceneData = gameData?.cutsceneData;
+            SerializableCutsceneData cutsceneData = allCutsceneData?.Find(x => x.ID == ID);
+
+            // Ensure cutscene data exists
+            if (cutsceneData == null)
+                Debug.Log("Cutscene data not found for cutscene " + ID);
+            else if (cutsceneData.hasPlayed)
+            {
+                cutsceneTrigger.hasPlayed = true;
+                // Get all siblings of cutscene trigger and disable them
+                foreach (Transform child in transform.parent)
+                    child.gameObject.SetActive(false);
+            }
         }
-            
+
     }
 
     // Returns a serializable version of the player's data
