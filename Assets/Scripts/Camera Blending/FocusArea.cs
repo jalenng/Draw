@@ -22,7 +22,10 @@ public class FocusArea : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Player")) {
             // Unity camera size is 1/2 of its height
-            float camSize = transform.lossyScale.y / 2 / zoomFactor;   
+            float camSizeByHeight = transform.lossyScale.y / 2;
+            float camSizeByWidth = transform.lossyScale.x / 3;  // 3:2 ratio
+            float camSize = Mathf.Max(camSizeByHeight, camSizeByWidth) / zoomFactor;
+            
             blender.Focus(transform.position, camSize);
         }
     }

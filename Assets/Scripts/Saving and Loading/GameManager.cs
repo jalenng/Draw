@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
         serializer = new GameSerializer();
         gameData = null;
 
-        SetupSaveOnQuit();
+        // SetupSaveOnQuit();
     }
 
     void Start()

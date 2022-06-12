@@ -11,6 +11,11 @@ public class AudioSystem : MonoBehaviour
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioMixerParamsConfig mixerParams;
 
+    // Audio source
+    [Header("Audio Sources")]
+    [SerializeField] AudioSource BGMSource;
+    [SerializeField] AudioSource SFXSource;
+
     void Start()
     {
         // Apply player prefs to audio mixer parameters
@@ -61,9 +66,34 @@ public class AudioSystem : MonoBehaviour
         PlayerPrefs.SetFloat(SFXVolumeParam, SFXVolume);
     }
     
-    // Update is called once per frame
-    void Update()
+    // Plays a sound effect audio clip
+    public void PlaySFX(AudioClip clip)
     {
-        
+        SFXSource.PlayOneShot(clip);
+    }
+
+    // Fades out the background music
+    public IEnumerator PlayBGM(AudioClip clip, float fadeDuration = 1f, float delay = 0f)
+    {
+        yield return FadeBGMVolume(0f, fadeDuration); 
+        BGMSource.clip = clip;
+        BGMSource.PlayDelayed(delay);
+        yield return FadeBGMVolume(1f, fadeDuration);
+    }
+
+    // Helper function to facilitate fading
+    IEnumerator FadeBGMVolume(float targetVolume, float time)
+    {
+        float startVolume = BGMSource.volume;
+        float startTime = Time.time;
+
+        // Adjust the volume towards the end volume
+        while (Time.time < startTime + time)
+        {
+            BGMSource.volume = Mathf.Lerp(startVolume, targetVolume, (Time.time - startTime) / time);
+            yield return null;
+        }
+
+        BGMSource.volume = targetVolume;
     }
 }

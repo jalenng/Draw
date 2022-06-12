@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // This is what is being serialized
 [System.Serializable]
@@ -30,20 +31,33 @@ public class PlayerData : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         gameManager.player = this;
 
-        // Attempt to load previous game data from the Game Manager
-        SerializablePlayerData playerData = gameManager?.gameData?.playerData;
-        if (playerData != null)
+        Load();
+    }
+
+    // Attempt to load previous game data from the Game Manager
+    void Load()
+    {
+        GameData gameData = gameManager?.gameData;
+
+        // Ensure build index matches
+        bool sceneIndexMatch = gameData?.sceneIndex == SceneManager.GetActiveScene().buildIndex;
+        if (sceneIndexMatch)
         {
-            transform.position = new Vector3(
-                playerData.position[0],
-                playerData.position[1],
-                playerData.position[2]
-            );
-            playerMovement.respawnPos = new Vector3(
-                playerData.respawnPos[0],
-                playerData.respawnPos[1],
-                playerData.respawnPos[2]
-            );
+            // Ensure player data exists 
+            SerializablePlayerData playerData = gameData?.playerData;
+            if (playerData != null)
+            {
+                transform.position = new Vector3(
+                    playerData.position[0],
+                    playerData.position[1],
+                    playerData.position[2]
+                );
+                playerMovement.respawnPos = new Vector3(
+                    playerData.respawnPos[0],
+                    playerData.respawnPos[1],
+                    playerData.respawnPos[2]
+                );
+            }
         }
     }
 
