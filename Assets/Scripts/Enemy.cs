@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     {
         Move();
     }
-
+    
     private void Move()
     {
         if (points.Count > 0)
