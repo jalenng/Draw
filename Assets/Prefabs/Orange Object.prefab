@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7949143088991643367}
   - component: {fileID: 6244367843685489988}
   - component: {fileID: 2861360096640410582}
+  - component: {fileID: 156424493162379790}
   m_Layer: 10
   m_Name: Orange Object
   m_TagString: Untagged
@@ -101,7 +102,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: be9f55ba61f4a45b2833211d464876b3, type: 2}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -149,3 +150,15 @@ PolygonCollider2D:
       - {x: 0.585, y: 0.57}
       - {x: 0.585, y: -0.57}
       - {x: -0.59499997, y: -0.57}
+--- !u!114 &156424493162379790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8669401566246642394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95cec21136c7cbf4bbb6247a85314983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

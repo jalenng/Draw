@@ -28,22 +28,17 @@ public class DialogueSystem : MonoBehaviour
         // Allows players to advance the dialogue while the typewriting effect is still in progress.
         if (CheckIfAdvanceKeyPressed())
             textbox.FastForward();
-
-        // For dev and debugging convenience
-        if (Debug.isDebugBuild)
-        {
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                textbox.FastForward();
-                skip = true;
-                entryIndex = dialogue.entries.Count;
-            }
-        }
     }
 
     private bool CheckIfAdvanceKeyPressed()
     {
         return Input.GetKeyDown(advanceKey) || Input.GetMouseButtonDown(0);
+    }
+
+    public void Skip() {
+        textbox.FastForward();
+        skip = true;
+        entryIndex = dialogue.entries.Count;
     }
 
     // Queue a dialogue to be displayed
@@ -93,6 +88,7 @@ public class DialogueSystem : MonoBehaviour
 
             // Wait for the user to advance the dialogue
             yield return new WaitUntil(() => CheckIfAdvanceKeyPressed() || skip);
+            skip = false;
 
             // Move to the next entry, or end the dialogue if we're at the end
             if (++entryIndex >= dialogue.entries.Count)
