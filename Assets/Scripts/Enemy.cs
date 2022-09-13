@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     {
         Move();
     }
-
+    
     private void Move()
     {
         if (movementType == MovementType.Straight) {

@@ -8,17 +8,17 @@ public class PlayerMovement : MonoBehaviour
     // Configuration parameters
     [SerializeField] private bool animateSpawnOnLoad = false;
 
-    [Header("Movement")]
-    [SerializeField] private float speed;
+    [Header("Movement")] [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float movementSmoothing = 0.05f;
-    
-    [Header("Ground Check")]
-    [SerializeField] private LayerMask ground;
+
+    [Header("Ground Check")] [SerializeField]
+    private LayerMask ground;
+
     [SerializeField] private Collider2D feetCollider;
 
-    [Header("Auto Respawn")]
-    [SerializeField] private float minY = -20f;
+    [Header("Auto Respawn")] [SerializeField]
+    private float minY = -20f;
 
     // Cached components
     private Rigidbody2D rb2d;
@@ -27,8 +27,8 @@ public class PlayerMovement : MonoBehaviour
     // State variables
     public Vector3 respawnPos;
     private bool isDead = false;
-    [SerializeField]private bool isPaused = false;
-    
+    [SerializeField] private bool isPaused = false;
+
     // Input variables
     private bool jumpRequested = false;
     private float horizontal;
@@ -64,38 +64,37 @@ public class PlayerMovement : MonoBehaviour
 
         GetInput();
         UpdateSpriteDirection();
-        
+
         // Trigger respawn when Stickman falls too far
         if (transform.position.y < minY)
             Die();
-        
+
         anim.SetFloat("XSpeed", Mathf.Abs(rb2d.velocity.x));
         anim.SetFloat("YVelocity", rb2d.velocity.y);
     }
+
     private void FixedUpdate()
     {
-        if (isDead || isPaused)
-        {
-            
-            return;
-        }
+        if (isDead || isPaused) return;
 
         Walk();
 
         if (feetCollider.IsTouchingLayers(ground))
             anim.SetBool("isTouchingGround", true);
-        else 
+        else
             anim.SetBool("isTouchingGround", false);
 
         if (jumpRequested)
         {
-            if (feetCollider.IsTouchingLayers(ground)) {
+            if (feetCollider.IsTouchingLayers(ground))
+            {
                 Jump();
                 anim.SetTrigger("Jump");
             }
+
             jumpRequested = false;
         }
-                
+
     }
 
     private void GetInput()
@@ -116,10 +115,9 @@ public class PlayerMovement : MonoBehaviour
     public void TogglePause()
     {
         Debug.Log("Pause " + isPaused);
+        if (isPaused) transform.parent = null;
+
         rb2d.velocity = Vector2.zero;
-        if (isPaused)
-            transform.parent = null;
-        
         isPaused = !isPaused;
     }
 
