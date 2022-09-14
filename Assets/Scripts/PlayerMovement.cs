@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")] [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float movementSmoothing = 0.05f;
+    [SerializeField] private int jumpBufferFramesMax = 5;
 
     [Header("Ground Check")] [SerializeField]
     private LayerMask ground;
@@ -31,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Input variables
     private bool jumpRequested = false;
+    private int jumpBufferFrames = 0;
     private float horizontal;
 
     private void Awake()
@@ -90,9 +92,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 Jump();
                 anim.SetTrigger("Jump");
+                jumpRequested = false;
             }
-
-            jumpRequested = false;
+            else
+            {
+                jumpBufferFrames--;
+                if (jumpBufferFrames < 0)
+                    jumpRequested = false;
+            }
         }
 
     }
@@ -101,7 +108,10 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         if (Input.GetButtonDown("Jump"))
+        {
             jumpRequested = true;
+            jumpBufferFrames = jumpBufferFramesMax;
+        }
     }
 
     private void UpdateSpriteDirection()
