@@ -62,6 +62,19 @@ public class Textbox : MonoBehaviour
         // Update avatar image
         avatarImage.sprite = avatarSprite;
 
+        // If there is no avatar image, let the text use the space for the avatar
+        RectTransform contentTMPRectTransform = contentTMP.gameObject.GetComponent<RectTransform>();
+        if (avatarSprite == null)
+        {
+            avatarImage.color = new Color(1, 1, 1, 0);
+            contentTMPRectTransform.offsetMin = new Vector2(42, contentTMPRectTransform.offsetMin.y);
+        }
+        else
+        {
+            avatarImage.color = new Color(1, 1, 1, 1);
+            contentTMPRectTransform.offsetMin = new Vector2(320, contentTMPRectTransform.offsetMin.y);
+        }
+
         // Update dialogue content text.
         // If typewriting effect is enabled...
         if (CPS > 0)

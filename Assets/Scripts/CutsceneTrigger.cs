@@ -10,20 +10,39 @@ public class CutsceneTrigger : MonoBehaviour
     private TimelineTrigger trigger;
 
     public bool hasPlayed;
+    public bool triggerable;
 
     private void Start()
     {
-        trigger = GameObject.Find("CutsceneManager").GetComponent<TimelineTrigger>();
+        trigger = FindObjectOfType<TimelineTrigger>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!hasPlayed && other.gameObject.CompareTag("Player"))
         {
-            trigger.Trigger(cutscene);
             hasPlayed = true;
+            Debug.Log("Player trigger");
+            other.gameObject.transform.parent = transform.parent.transform;
+            // TriggerCutscene();
+            StartCoroutine(TriggerCutsceneRoutine());
         }
     }
-    
 
+    public IEnumerator TriggerCutsceneRoutine()
+    {
+        yield return trigger.StartCutscene(cutscene);
+    }
+
+    public void TriggerCutscene()
+    {
+        hasPlayed = true;
+        trigger.Trigger(cutscene);
+    }
+
+    public void ToggleTriggerable()
+    {
+        triggerable = true;
+    }
+    
 }
