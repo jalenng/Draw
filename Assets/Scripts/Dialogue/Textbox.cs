@@ -88,7 +88,7 @@ public class Textbox : MonoBehaviour
             // At every interval, update the textbox text to achieve a typewriter effect
             for (i = 0; i <= totalCharacters; i++)
             {
-                contentTMP.text = contentText.Substring(0, i);
+                contentTMP.text = "<color=black>" + contentText.Substring(0, i) + "<color=white>" + contentText.Substring(i);
                 yield return new WaitForSeconds(SPC);
             }
         }
