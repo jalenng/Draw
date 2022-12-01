@@ -27,6 +27,12 @@ public class SceneLoader : MonoBehaviour
         LoadScene(config.mainMenuBuildIndex);
     }
 
+    // Loads the level selector
+    public void LoadLevelSelector()
+    {
+        LoadScene(config.levelSelectorBuildIndex);
+    }
+
     // Loads the settings
     public void LoadSettings()
     {
@@ -69,7 +75,7 @@ public class SceneLoader : MonoBehaviour
         isLoading = true;
 
         // Set the transition color based on the level index.
-        bool loadingToMenu = index == config.mainMenuBuildIndex || index == config.settingsBuildIndex;
+        bool loadingToMenu = index == config.mainMenuBuildIndex || index == config.settingsBuildIndex || index == config.levelSelectorBuildIndex;
 
         Color transitionColor = loadingToMenu
             ? Color.white   // White for transitioning to a menu
