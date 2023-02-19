@@ -16,11 +16,10 @@ public class WallPoint : MonoBehaviour
      }
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        Debug.Log("something blah blah");
         if(!isActivated && other.CompareTag("ScribbleWall"))
         {
             ScribbleWall scribbleWall = other.GetComponent<ScribbleWall>();
-            Debug.Log("Setting new respawn pos");
+            Debug.Log("New Respawn Pos: " + (transform.position + respawnOffset));
             scribbleWall.SetRespawnPos(transform.position + respawnOffset);
             isActivated = true;
         }

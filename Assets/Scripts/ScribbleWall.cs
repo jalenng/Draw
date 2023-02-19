@@ -24,16 +24,17 @@ public class ScribbleWall : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other) 
     {
-        Debug.Log("colliding w something");
         if(other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Collided w Player");
-            StartCoroutine(Respawn());
+            StartCoroutine(Respawn(1f));
         }
     }
-    IEnumerator Respawn()
+    public void StartRespawn() {
+        StartCoroutine(Respawn(0f));
+    }
+    IEnumerator Respawn(float wait)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(wait);
         transform.position = respawnPos;
     }
 }
