@@ -6,6 +6,7 @@ public class OrangeObject : MonoBehaviour
 {
     Rigidbody2D rb2d;
     [SerializeField] Vector3 respawnPos;
+    Quaternion respawnRotation;
 
     // Make object static and unaffected by gravity
     void Start()
@@ -13,6 +14,7 @@ public class OrangeObject : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.bodyType = RigidbodyType2D.Static;
         respawnPos = transform.position;
+        respawnRotation = transform.rotation;
     }
 
     // Update is called once per frame
@@ -33,7 +35,7 @@ public class OrangeObject : MonoBehaviour
     {
         yield return new WaitForSeconds(wait);
         rb2d.bodyType = RigidbodyType2D.Static;
-        Debug.Log("Respawning");
         transform.position = respawnPos;
+        transform.rotation = respawnRotation;
     }
 }

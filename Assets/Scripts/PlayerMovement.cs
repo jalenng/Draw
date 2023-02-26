@@ -26,8 +26,8 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     // State variables
 
-    [SerializeField] public GameObject ScribbleWall;
-    [SerializeField] public GameObject OrangeObjectManager;
+    [SerializeField] public ScribbleWall scribbleWall;
+    [SerializeField] public OrangeObjectManager orangeObjectManager;
     public Vector3 respawnPos;
     private bool isDead = false;
     [SerializeField] private bool isPaused = false;
@@ -44,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         // Set initial respawn position
         respawnPos = transform.position;
-
         if (animateSpawnOnLoad)
             Spawn();
     }
@@ -176,8 +175,8 @@ public class PlayerMovement : MonoBehaviour
         rb2d.velocity = Vector2.zero;
 
         // Respawn orange objects and scribble wall... Idk if there's a better way to implement this lol
-        ScribbleWall.GetComponent<ScribbleWall>().StartRespawn();
-        OrangeObjectManager.GetComponent<OrangeObjectManager>().StartOrangeObjectsRespawn();
+        scribbleWall.StartRespawn();
+        orangeObjectManager.StartOrangeObjectsRespawn();
         // Move the player to the respawn position
         transform.position = respawnPos;
 
