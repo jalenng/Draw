@@ -1,0 +1,199 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5231622865541214431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5231622865541214401}
+  - component: {fileID: 5231622865541214430}
+  - component: {fileID: 5231622865541214400}
+  - component: {fileID: 5231622865541214403}
+  m_Layer: 0
+  m_Name: Cutscene Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5231622865541214401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5231622865541214431}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &5231622865541214430
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5231622865541214431}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: cb40b62bb80374251b27716369d206b1, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 4267878453906699984, guid: 2ed44711322b0496ab38b82d7e2f81ae, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -6527154227260671605, guid: 2ed44711322b0496ab38b82d7e2f81ae, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -5939317333010344792, guid: 2ed44711322b0496ab38b82d7e2f81ae, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1792478384631559954, guid: 2ed44711322b0496ab38b82d7e2f81ae, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2240180665649618162, guid: cb40b62bb80374251b27716369d206b1, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -5184435802326835615, guid: cb40b62bb80374251b27716369d206b1, type: 2}
+    value: {fileID: 5231622865541214400}
+  - key: {fileID: -2120948723098767849, guid: 6508b891b64e8439f9bf2d4c825c8d93, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2124563049333039178, guid: cb40b62bb80374251b27716369d206b1, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1423292720397475499, guid: cb40b62bb80374251b27716369d206b1, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 6970949245146665116, guid: cb40b62bb80374251b27716369d206b1, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -248418179367341510, guid: cb40b62bb80374251b27716369d206b1, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 906730658092740263, guid: 04fa26cf28cca4ce4a60b308251098a5, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3083427345868684865, guid: 04fa26cf28cca4ce4a60b308251098a5, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -2115137680941811293, guid: 04fa26cf28cca4ce4a60b308251098a5, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -4221811322734348060, guid: 04fa26cf28cca4ce4a60b308251098a5, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 4650552496500950986, guid: 04fa26cf28cca4ce4a60b308251098a5, type: 2}
+    value: {fileID: 5231622865541214400}
+  - key: {fileID: -1840911709038246424, guid: 04fa26cf28cca4ce4a60b308251098a5, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
+--- !u!114 &5231622865541214400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5231622865541214431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 709e5494e37ef4bc2af30de6612ab0b4, type: 2}
+    - {fileID: 11400000, guid: 02c251ef8dad843f9913495a851ffa85, type: 2}
+    - {fileID: 11400000, guid: 00f0f130ec0d8472e8a7f29e5506a474, type: 2}
+    - {fileID: 11400000, guid: 876c773762a8e44ddbe0aa0d15af714a, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: DialogueSystem, Assembly-CSharp
+          m_MethodName: QueueDialogue
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 8d5eedb6cf3fbc14f889b9bbad1f59ce, type: 2}
+            m_ObjectArgumentAssemblyTypeName: Dialogue, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+          m_MethodName: TogglePause
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+          m_MethodName: TogglePause
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
+          m_MethodName: Play
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 6508b891b64e8439f9bf2d4c825c8d93, type: 2}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Playables.PlayableAsset,
+              UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: DialogueSystem, Assembly-CSharp
+          m_MethodName: QueueDialogue
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 8d5eedb6cf3fbc14f889b9bbad1f59ce, type: 2}
+            m_ObjectArgumentAssemblyTypeName: Dialogue, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+          m_MethodName: TogglePause
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &5231622865541214403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5231622865541214431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7980f6a090811446a89c2477f4a808f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: {fileID: 5231622865541214430}
