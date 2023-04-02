@@ -15,6 +15,7 @@ public class AudioSystem : MonoBehaviour
     [Header("Audio Sources")]
     [SerializeField] AudioSource BGMSource;
     [SerializeField] AudioSource SFXSource;
+    [SerializeField] public List<AudioClip> soundEffects = new List<AudioClip>();
 
     void Start()
     {
@@ -67,9 +68,17 @@ public class AudioSystem : MonoBehaviour
     }
     
     // Plays a sound effect audio clip
-    public void PlaySFX(AudioClip clip)
+    public void PlaySFX(string sound)
     {
-        SFXSource.PlayOneShot(clip);
+        AudioClip s = soundEffects.Find(item => item.name == sound);
+        SFXSource.PlayOneShot(s);
+    }
+    public void PlaySFX(string sound, float pitch) {
+        AudioClip s = soundEffects.Find(item => item.name == sound);
+        float beforePitch = SFXSource.pitch;
+        SFXSource.pitch = pitch;
+        SFXSource.PlayOneShot(s);
+        SFXSource.pitch = beforePitch;
     }
 
     // Fades out the background music
@@ -95,5 +104,8 @@ public class AudioSystem : MonoBehaviour
         }
 
         BGMSource.volume = targetVolume;
+    }
+    public List<AudioClip> getSFX() {
+        return soundEffects;
     }
 }

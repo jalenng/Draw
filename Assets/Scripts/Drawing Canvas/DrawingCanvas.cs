@@ -25,12 +25,14 @@ public class DrawingCanvas : MonoBehaviour
     // Cached components
     Line currentLine;
     Camera cam;
+    AudioSystem audioSys;
     
     public CutsceneTrigger trigger;
 
     void Start()
     {
         cam = Camera.main;
+        audioSys = FindObjectOfType<AudioSystem>();
     }
 
     void Update()
