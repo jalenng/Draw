@@ -77,7 +77,7 @@ public class SettingsMenu : MonoBehaviour
     {
         audioMixer.SetFloat(mixerParams.SFXVolume, RatioToDecibel(SFXVolumeSlider.value));
     }
-    public void ReturnToMenu()
+    public void Return()
     {
         levelLoader.LoadMainMenu();
     }
