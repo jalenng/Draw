@@ -13,6 +13,6 @@ public class UIButton : MonoBehaviour
 
     // Update is called once per frame
     public void buttonSFX() {
-        audioSys.PlaySFX("pageflip");
+        audioSys.PlaySFX("NEWpageflip");
     }
 }
