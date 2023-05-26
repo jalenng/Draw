@@ -10,6 +10,8 @@ public class SettingsMenu : MonoBehaviour
     [Header("Audio Mixer")]
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioMixerParamsConfig mixerParams;
+    [SerializeField] GameObject PauseMenu;
+    [SerializeField] GameObject Settings;
     
     // Sliders
     [Header("Sliders")]
@@ -41,6 +43,7 @@ public class SettingsMenu : MonoBehaviour
 
     void Start()
     {
+        Settings.SetActive(false);
         levelLoader = FindObjectOfType<SceneLoader>();
         audioSys = FindObjectOfType<AudioSystem>();
 

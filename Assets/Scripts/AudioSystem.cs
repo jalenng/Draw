@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+// AudioSystem will be used to play non-repeating miscellaneous sound effects. Sound effects that loop use a true/false ifPlaying
+// to stop overlap, and will be played through another sound source.
 [RequireComponent(typeof(Singleton))]
 public class AudioSystem : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class AudioSystem : MonoBehaviour
     // Audio source
     [Header("Audio Sources")]
     [SerializeField] AudioSource BGMSource;
+    [SerializeField] float bgmPitch;
     [SerializeField] AudioSource SFXSource;
     [SerializeField] public List<AudioClip> soundEffects = new List<AudioClip>();
 
@@ -85,6 +88,7 @@ public class AudioSystem : MonoBehaviour
     public IEnumerator PlayBGM(AudioClip clip, float fadeDuration = 1f, float delay = 0f)
     {
         yield return FadeBGMVolume(0f, fadeDuration); 
+        BGMSource.pitch = bgmPitch;
         BGMSource.clip = clip;
         BGMSource.PlayDelayed(delay);
         yield return FadeBGMVolume(1f, fadeDuration);

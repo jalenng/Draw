@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float movementSmoothing = 0.05f;
     [SerializeField] private int jumpBufferFramesMax = 5;
-    public AudioSystem audioSys;
 
     [Header("Ground Check")] [SerializeField]
     private LayerMask ground;
@@ -25,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // Cached components
     private Rigidbody2D rb2d;
     private Animator anim;
+    private AudioSource playerSound;
 
     // State variables
     public Vector3 respawnPos;
@@ -41,16 +41,13 @@ public class PlayerMovement : MonoBehaviour
         // Get components
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        audioSys = FindObjectOfType<AudioSystem>();
+        playerSound = GetComponent<AudioSource>();
 
         // Set initial respawn position
         respawnPos = transform.position;
 
         if (animateSpawnOnLoad)
             Spawn();
-    }
-    private void Start() {
-       
     }
 
     private void Update()
@@ -112,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
     private void GetInput()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+        if(horizontal == 0) playerSound.Stop();
         if (Input.GetButtonDown("Jump"))
         {
             jumpRequested = true;
@@ -139,11 +137,17 @@ public class PlayerMovement : MonoBehaviour
     private void Walk()
     {
         rb2d.velocity = new Vector2(horizontal * speed, rb2d.velocity.y);
+        if(!feetCollider.IsTouchingLayers(ground)) {
+            Debug.Log("Stopping");
+            playerSound.Stop();
+        } else if(rb2d.velocity.x != 0 && !playerSound.isPlaying) {
+            Debug.Log("Playing");
+            playerSound.Play(0);
+        }
     }
 
     private void Jump()
     {
-        audioSys.PlaySFX("jumpingsfx");
         rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
     }
 
@@ -163,7 +167,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Trigger death animation
         anim.SetTrigger("Dead");
-        audioSys.PlaySFX("eraser");
         StartCoroutine(Respawn());
     }
     void Spawn()
