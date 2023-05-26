@@ -59,7 +59,6 @@ public class PauseMenu : MonoBehaviour
         // Load the main menu with the level manager
         FindObjectOfType<SceneLoader>().LoadMainMenu();
     }
-
     public void enableCanvas(bool enable) {
         canvas.enabled = enable;
     }

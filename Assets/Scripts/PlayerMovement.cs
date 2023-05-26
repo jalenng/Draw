@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float movementSmoothing = 0.05f;
     [SerializeField] private int jumpBufferFramesMax = 5;
-    public AudioSystem audioSys;
 
     [Header("Ground Check")] [SerializeField]
     private LayerMask ground;
@@ -45,15 +44,11 @@ public class PlayerMovement : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         playerSound = GetComponent<AudioSource>();
-        audioSys = FindObjectOfType<AudioSystem>();
 
         // Set initial respawn position
         respawnPos = transform.position;
         if (animateSpawnOnLoad)
             Spawn();
-    }
-    private void Start() {
-       
     }
 
     private void Update()
@@ -152,7 +147,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        audioSys.PlaySFX("jumpingsfx");
         rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
     }
 
@@ -172,7 +166,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Trigger death animation
         anim.SetTrigger("Dead");
-        audioSys.PlaySFX("eraser");
         StartCoroutine(Respawn());
     }
     void Spawn()
