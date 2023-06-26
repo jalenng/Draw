@@ -25,8 +25,10 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb2d;
     private Animator anim;
     private AudioSource playerSound;
-
     // State variables
+
+    [SerializeField] public ScribbleWall scribbleWall;
+    [SerializeField] public OrangeObjectManager orangeObjectManager;
     public Vector3 respawnPos;
     private bool isDead = false;
     [SerializeField] private bool isPaused = false;
@@ -42,10 +44,8 @@ public class PlayerMovement : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         playerSound = GetComponent<AudioSource>();
-
         // Set initial respawn position
         respawnPos = transform.position;
-
         if (animateSpawnOnLoad)
             Spawn();
     }
@@ -173,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
     {
         anim.SetTrigger("Spawn");
     }
+    // Code to check if the player position is inside of another collider 
 
     IEnumerator Respawn()
     {
@@ -182,6 +183,9 @@ public class PlayerMovement : MonoBehaviour
         rb2d.simulated = true;
         rb2d.velocity = Vector2.zero;
 
+        // Respawn orange objects and scribble wall... Idk if there's a better way to implement this lol
+        scribbleWall.StartRespawn();
+        orangeObjectManager.StartOrangeObjectsRespawn();
         // Move the player to the respawn position
         transform.position = respawnPos;
 
