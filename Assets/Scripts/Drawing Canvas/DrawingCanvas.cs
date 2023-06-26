@@ -25,22 +25,27 @@ public class DrawingCanvas : MonoBehaviour
     // Cached components
     Line currentLine;
     Camera cam;
+    AudioSource audioSource;
     
     public CutsceneTrigger trigger;
 
     void Start()
     {
         cam = Camera.main;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
         // If current line exists, draw
-        if (currentLine != null)
+        if (currentLine != null) {
+            audioSource.Play();
             Draw();
+        }
 
         // If the mouse button is released, end drawing
         if (Input.GetMouseButtonUp(0))
+        audioSource.Pause();
             EndDraw();
     }
 

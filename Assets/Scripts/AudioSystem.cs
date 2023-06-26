@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+// AudioSystem will be used to play non-repeating miscellaneous sound effects. Sound effects that loop use a true/false ifPlaying
+// to stop overlap, and will be played through another sound source.
 [RequireComponent(typeof(Singleton))]
 public class AudioSystem : MonoBehaviour
 {
@@ -14,7 +16,9 @@ public class AudioSystem : MonoBehaviour
     // Audio source
     [Header("Audio Sources")]
     [SerializeField] AudioSource BGMSource;
+    [SerializeField] float bgmPitch;
     [SerializeField] AudioSource SFXSource;
+    [SerializeField] public List<AudioClip> soundEffects = new List<AudioClip>();
 
     void Start()
     {
@@ -67,15 +71,24 @@ public class AudioSystem : MonoBehaviour
     }
     
     // Plays a sound effect audio clip
-    public void PlaySFX(AudioClip clip)
+    public void PlaySFX(string sound)
     {
-        SFXSource.PlayOneShot(clip);
+        AudioClip s = soundEffects.Find(item => item.name == sound);
+        SFXSource.PlayOneShot(s);
+    }
+    public void PlaySFX(string sound, float pitch) {
+        AudioClip s = soundEffects.Find(item => item.name == sound);
+        float beforePitch = SFXSource.pitch;
+        SFXSource.pitch = pitch;
+        SFXSource.PlayOneShot(s);
+        SFXSource.pitch = beforePitch;
     }
 
     // Fades out the background music
     public IEnumerator PlayBGM(AudioClip clip, float fadeDuration = 1f, float delay = 0f)
     {
         yield return FadeBGMVolume(0f, fadeDuration); 
+        BGMSource.pitch = bgmPitch;
         BGMSource.clip = clip;
         BGMSource.PlayDelayed(delay);
         yield return FadeBGMVolume(1f, fadeDuration);
@@ -95,5 +108,8 @@ public class AudioSystem : MonoBehaviour
         }
 
         BGMSource.volume = targetVolume;
+    }
+    public List<AudioClip> getSFX() {
+        return soundEffects;
     }
 }
