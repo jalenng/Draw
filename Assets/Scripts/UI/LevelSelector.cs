@@ -13,7 +13,7 @@ public class LevelSelector : MonoBehaviour
     // Object references
     SceneLoader levelLoader;
 
-    void Awake()
+    void Start()
     {
         levelLoader = FindObjectOfType<SceneLoader>();
     }
