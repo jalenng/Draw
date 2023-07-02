@@ -39,13 +39,11 @@ public class DrawingCanvas : MonoBehaviour
     {
         // If current line exists, draw
         if (currentLine != null) {
-            audioSource.Play();
             Draw();
         }
 
         // If the mouse button is released, end drawing
         if (Input.GetMouseButtonUp(0))
-        audioSource.Pause();
             EndDraw();
     }
 
@@ -55,6 +53,7 @@ public class DrawingCanvas : MonoBehaviour
     {
         if (CheckIfCanDraw())
         {
+            audioSource.Play();
             // Instantiate a new line
             currentLine = Instantiate(linePrefab, this.transform).GetComponent<Line>();
 
@@ -70,6 +69,7 @@ public class DrawingCanvas : MonoBehaviour
     {
         if (CheckIfCanDraw())
         {
+            if(!audioSource.isPlaying) audioSource.Play();
             // Account for canvas position
             Vector2 pointPosition = GetMousePosInWorldSpace();
             currentLine.AddPoint(pointPosition);    
@@ -85,7 +85,6 @@ public class DrawingCanvas : MonoBehaviour
         }
         else
             EndDraw();
-
         // Debug.Log("Ink used: " + totalDrawnLineLength + "/" + maxTotalLineLength);
     }
 

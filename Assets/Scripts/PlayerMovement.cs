@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb2d;
     private Animator anim;
     private AudioSource playerSound;
+    private AudioSystem audSysSound;
+    [SerializeField] private GameObject audSys;
     // State variables
 
     public RespawnManager respawner;
@@ -44,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         playerSound = GetComponent<AudioSource>();
         respawner = FindObjectOfType<RespawnManager>();
+        audSysSound = audSys.GetComponent<AudioSystem>();
         // Set initial respawn position
         respawnPos = transform.position;
         if (animateSpawnOnLoad)
@@ -93,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
             if (feetCollider.IsTouchingLayers(ground))
             {
                 Jump();
+                audSysSound.PlaySFX("penciljump");
                 anim.SetTrigger("Jump");
                 jumpRequested = false;
             }
@@ -138,11 +142,9 @@ public class PlayerMovement : MonoBehaviour
     {
         rb2d.velocity = new Vector2(horizontal * speed, rb2d.velocity.y);
         if(!feetCollider.IsTouchingLayers(ground)) {
-            Debug.Log("Stopping");
             playerSound.Stop();
         } else if(rb2d.velocity.x != 0 && !playerSound.isPlaying) {
-            Debug.Log("Playing");
-            playerSound.Play(0);
+            playerSound.Play();
         }
     }
 
@@ -164,6 +166,8 @@ public class PlayerMovement : MonoBehaviour
         
         // Freeze the player
         rb2d.simulated = false;
+        playerSound.Stop();
+        audSysSound.PlaySFX("eraser");
 
         // Trigger death animation
         anim.SetTrigger("Dead");
@@ -185,6 +189,7 @@ public class PlayerMovement : MonoBehaviour
 
         respawner.StartObjectRespawn();    
         // Move the player to the respawn position
+        audSysSound.PlaySFX("pop");
         transform.position = respawnPos;
 
         isDead = false;
