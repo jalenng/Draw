@@ -27,8 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private AudioSource playerSound;
     // State variables
 
-    [SerializeField] public ScribbleWall scribbleWall;
-    [SerializeField] public OrangeObjectManager orangeObjectManager;
+    public RespawnManager respawner;
     public Vector3 respawnPos;
     private bool isDead = false;
     [SerializeField] private bool isPaused = false;
@@ -44,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         playerSound = GetComponent<AudioSource>();
-
+        respawner = FindObjectOfType<RespawnManager>();
         // Set initial respawn position
         respawnPos = transform.position;
         if (animateSpawnOnLoad)
@@ -182,10 +181,7 @@ public class PlayerMovement : MonoBehaviour
         rb2d.simulated = true;
         rb2d.velocity = Vector2.zero;
 
-        // Respawn orange objects and scribble wall if they exist
-        scribbleWall?.StartRespawn();
-        orangeObjectManager?.StartOrangeObjectsRespawn();
-
+        respawner.StartObjectRespawn();    
         // Move the player to the respawn position
         transform.position = respawnPos;
 
