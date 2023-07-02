@@ -11,13 +11,10 @@ public class PauseMenu : MonoBehaviour
     bool paused = false;    // Whether the game is paused
     bool canPause = true;    // Whether the game can be paused
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         canvas = GetComponent<Canvas>();
-        canvas.enabled = false;
+        enableCanvas(false);
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -37,7 +34,7 @@ public class PauseMenu : MonoBehaviour
             return;
         paused = true;
         Time.timeScale = 0;
-        canvas.enabled = true;
+        enableCanvas(true);
     }
 
     // Resume the game
@@ -45,7 +42,7 @@ public class PauseMenu : MonoBehaviour
     {
         paused = false;
         Time.timeScale = 1;
-        canvas.enabled = false;
+        enableCanvas(false);
     }
 
     // Transition to the main menu with an animation
@@ -63,6 +60,7 @@ public class PauseMenu : MonoBehaviour
         // Load the main menu with the level manager
         FindObjectOfType<SceneLoader>().LoadMainMenu();
     }
+
     public void enableCanvas(bool enable) {
         canvas.enabled = enable;
     }

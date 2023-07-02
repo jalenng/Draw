@@ -25,7 +25,6 @@ public class SettingsMenu : MonoBehaviour
 
     // Object references
     SceneLoader levelLoader;
-    public AudioSystem audioSys;
 
     // Helper function to logarithmically map (0, 1) to a decibel value used for the audio mixer attenuation.
     float RatioToDecibel(float ratio)
@@ -45,7 +44,6 @@ public class SettingsMenu : MonoBehaviour
     {
         Settings.SetActive(false);
         levelLoader = FindObjectOfType<SceneLoader>();
-        audioSys = FindObjectOfType<AudioSystem>();
 
         // Set sliders to current values of the audio mixer
         float masterVolume;
@@ -60,7 +58,13 @@ public class SettingsMenu : MonoBehaviour
         audioMixer.GetFloat(mixerParams.SFXVolume, out SFXVolume);
         SFXVolumeSlider.value = DecibelToRatio(SFXVolume);
     }
-
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Settings.SetActive(false);
+        }
+    }
     public void OnMasterVolumeChanged()
     {
         audioMixer.SetFloat(mixerParams.masterVolume, RatioToDecibel(masterVolumeSlider.value));
@@ -76,7 +80,7 @@ public class SettingsMenu : MonoBehaviour
     {
         audioMixer.SetFloat(mixerParams.SFXVolume, RatioToDecibel(SFXVolumeSlider.value));
     }
-    public void Return()
+    public void ReturnToMenu()
     {
         levelLoader.LoadMainMenu();
     }

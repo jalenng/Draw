@@ -138,10 +138,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rb2d.velocity = new Vector2(horizontal * speed, rb2d.velocity.y);
         if(!feetCollider.IsTouchingLayers(ground)) {
-            Debug.Log("Stopping");
             playerSound.Stop();
         } else if(rb2d.velocity.x != 0 && !playerSound.isPlaying) {
-            Debug.Log("Playing");
             playerSound.Play(0);
         }
     }

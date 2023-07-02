@@ -9,7 +9,6 @@ public class MainMenu : MonoBehaviour
     [Header("Buttons")]
     public Button playButton;
     public Button loadButton;
-    public Button levelsButton;
     public Button settingsButton;
     public Button quitButton;
 
