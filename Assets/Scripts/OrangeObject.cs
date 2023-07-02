@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OrangeObject : MonoBehaviour
+public class OrangeObject : RespawnInterface
 {
     Rigidbody2D rb2d;
     [SerializeField] Vector3 respawnPos;
@@ -17,18 +17,12 @@ public class OrangeObject : MonoBehaviour
         respawnRotation = transform.rotation;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // Make object affected by gravity upon collision
     private void OnCollisionEnter2D(Collision2D other) {
         rb2d.bodyType = RigidbodyType2D.Dynamic;
     }
     
-    public void StartRespawn() {
+    public override void StartRespawn() {
         StartCoroutine(Respawn(0f));
     }
     IEnumerator Respawn(float wait)
