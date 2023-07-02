@@ -7,9 +7,11 @@ public class ResetButton : MonoBehaviour
     // Cached components and object references
     public DrawingCanvas drawingCanvas;
     public DrawingArea drawingArea;
+    public AudioSource audio;
 
     private void Start() {
         SetUpPosition();
+        audio = GetComponent<AudioSource>();
     }
 
     // Set up reset button position relative to the folder
@@ -37,6 +39,7 @@ public class ResetButton : MonoBehaviour
     }
 
     private void OnMouseDown() {
+        audio.Play();
         drawingCanvas.Reset();
     }
 
