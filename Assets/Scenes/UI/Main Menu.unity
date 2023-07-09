@@ -204,40 +204,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec457b6ba6ec4a7468cb4aac46c06603, type: 3}
---- !u!1 &672873240 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8103548546112292329, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
-  m_PrefabInstance: {fileID: 8103548546522889461}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &672873246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 672873240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1711609467}
-          m_TargetAssemblyTypeName: AudioSystem, Assembly-CSharp
-          m_MethodName: PlaySFX
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: markermark
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1001 &696426054
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -986,6 +952,82 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 32516698094188662, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 32516698094188662, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 32516698094188662, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1711609467}
+    - target: {fileID: 32516698094188662, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 32516698094188662, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 32516698094188662, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: AudioSystem, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 32516698094188662, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 32516698094188662, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: markercircle
+      objectReference: {fileID: 0}
+    - target: {fileID: 32516698094188662, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208454168438460177, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1711609467}
+    - target: {fileID: 1208454168438460177, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208454168874424915, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1711609467}
+    - target: {fileID: 1208454168874424915, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 3581660289292671515, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1711609467}
+    - target: {fileID: 3581660289292671515, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864153094692208105, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1711609467}
+    - target: {fileID: 3864153094692208105, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734003091616933766, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1711609467}
+    - target: {fileID: 4734003091616933766, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFX
+      objectReference: {fileID: 0}
     - target: {fileID: 5837863380791906529, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -1044,19 +1086,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5837863381429126563, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5837863381429126563, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1711609467}
     - target: {fileID: 5837863381429126563, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: buttonSFX
+      value: PlaySFX
       objectReference: {fileID: 0}
     - target: {fileID: 5837863381429126563, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UIButton, Assembly-CSharp
+      value: AudioSystem, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8103548545015916811, guid: 0ebbcc2ce01db534494544629740d817, type: 3}
       propertyPath: m_Name
