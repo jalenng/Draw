@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 855648227621039374}
   - component: {fileID: 4875532095664471050}
   - component: {fileID: 4095027843285816525}
+  - component: {fileID: 2744626052826538559}
   m_Layer: 0
   m_Name: Dynamic Drawing Canvas Instructions
   m_TagString: Untagged
@@ -75,7 +76,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1052975445
-  m_SortingLayer: 2
+  m_SortingLayer: -4
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &4095027843285816525
@@ -170,3 +171,18 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
+--- !u!114 &2744626052826538559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8693072709752636187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 443ee41664bcf0848bd25e49122fec94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeDuration: 1.5
+  distanceToFadeIn: 10
+  targetTransform: {fileID: 0}
