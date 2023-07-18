@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class DialogueSystem : MonoBehaviour
 {
@@ -12,29 +10,16 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] KeyCode advanceKey = KeyCode.Space;
     [SerializeField] Textbox textbox;
 
-
     // Cached object references
     private PlayableDirector director;
-    private Camera camera;
-
-    // All this... to detect if we're clicking the skip button. Lol
-    GraphicRaycaster raycaster;
-    PointerEventData pointerData;
-    EventSystem eventSys;
-    Canvas canvas;
 
     // State variables
     int entryIndex = 0;
     bool skip = false;
-    bool skipEnabled = true;
 
     private void Start()
     {
         director = FindObjectOfType<PlayableDirector>();
-        camera = FindObjectOfType<Camera>();
-        eventSys = FindObjectOfType<EventSystem>();
-        canvas = GetComponentInChildren<Canvas>();
-        raycaster = canvas.GetComponent<GraphicRaycaster>();
     }
 
     private void Update()
@@ -44,29 +29,10 @@ public class DialogueSystem : MonoBehaviour
         if (CheckIfAdvanceKeyPressed())
             textbox.FastForward();
     }
-    // Helper function
-    public void enableSkip(bool enabled) {
-        skipEnabled = enabled;
-    }
 
     private bool CheckIfAdvanceKeyPressed()
     {
-        if(Input.GetKeyDown(advanceKey) || Input.GetMouseButtonDown(0)) {
-            // When the player attempts to advance, create this pointer event thing.
-            // Raycast from the point clicked at, and check UI objects hit.
-            // If any object hit is the skip button, then return false and don't skip.
-            // Otherwise, return if we can advance or not.
-            pointerData = new PointerEventData(eventSys);
-            pointerData.position = Input.mousePosition;
-            List<RaycastResult> results = new List<RaycastResult>();
-            raycaster.Raycast(pointerData, results);
-            foreach (RaycastResult result in results)
-            {
-                if(result.gameObject.tag == "SkipButton") return false;
-            }
-            return skipEnabled;
-        }
-        return false;
+        return Input.GetKeyDown(advanceKey) || Input.GetMouseButtonDown(0);
     }
 
     public void Skip() {
