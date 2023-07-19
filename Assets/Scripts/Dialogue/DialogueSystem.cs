@@ -9,6 +9,7 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] Dialogue dialogue;
     [SerializeField] KeyCode advanceKey = KeyCode.Space;
     [SerializeField] Textbox textbox;
+    [SerializeField] GameObject skipButton;
 
     // Cached object references
     private PlayableDirector director;
@@ -16,6 +17,8 @@ public class DialogueSystem : MonoBehaviour
     // State variables
     int entryIndex = 0;
     bool skip = false;
+    bool advKeyPressed = false;
+    bool skipConActive = false;
 
     private void Start()
     {
@@ -26,13 +29,19 @@ public class DialogueSystem : MonoBehaviour
     {
         // Fast forward current dialogue entry if the advance key is pressed.
         // Allows players to advance the dialogue while the typewriting effect is still in progress.
-        if (CheckIfAdvanceKeyPressed())
+        if (CheckIfAdvanceKeyPressed()) {
             textbox.FastForward();
+        }
+    }
+    // Function called at the end of all other updates, to let DisplayDialogue check advKeyPressed before we reset it.
+    private void LateUpdate() {
+        advKeyPressed = false;
     }
 
     private bool CheckIfAdvanceKeyPressed()
     {
-        return Input.GetKeyDown(advanceKey) || Input.GetMouseButtonDown(0);
+        // AdvKeyPressed is a bool that represents a mouse press basically. It gets set by the SkipCheck Button.
+        return (advKeyPressed || Input.GetKeyDown(advanceKey)) && !skipConActive;
     }
 
     public void Skip() {
@@ -87,7 +96,7 @@ public class DialogueSystem : MonoBehaviour
             yield return textbox.Say();
 
             // Wait for the user to advance the dialogue
-            yield return new WaitUntil(() => CheckIfAdvanceKeyPressed() || skip);
+            yield return new WaitUntil(() => CheckIfAdvanceKeyPressed() || skip || advKeyPressed);
             skip = false;
 
             // Move to the next entry, or end the dialogue if we're at the end
@@ -108,6 +117,12 @@ public class DialogueSystem : MonoBehaviour
     private void SetTextboxVisibility(bool visible)
     {
         textbox.gameObject.SetActive(visible);
+        skipButton.SetActive(visible);
     }
-
+    public void setAdvPressed(bool pressed) {
+        advKeyPressed = pressed;   
+    }
+    public void setSkipConActive(bool active) {
+        skipConActive = active;
+    }
 }
