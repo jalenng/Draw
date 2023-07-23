@@ -13,7 +13,6 @@ public class PauseMenu : MonoBehaviour
 
     void Start() {
         canvas = GetComponent<Canvas>();
-        enableCanvas(false);
     }
     // Update is called once per frame
     void Update()

@@ -1,17 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Audio;
-
+using UnityEngine.UI;
 public class SettingsMenu : MonoBehaviour
 {
     // Audio mixer
     [Header("Audio Mixer")]
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioMixerParamsConfig mixerParams;
-    [SerializeField] GameObject PauseMenu;
-    [SerializeField] GameObject Settings;
     
     // Sliders
     [Header("Sliders")]
@@ -25,7 +22,7 @@ public class SettingsMenu : MonoBehaviour
 
     // Object references
     SceneLoader levelLoader;
-
+    Canvas canvas;
     // Helper function to logarithmically map (0, 1) to a decibel value used for the audio mixer attenuation.
     float RatioToDecibel(float ratio)
     {
@@ -42,8 +39,8 @@ public class SettingsMenu : MonoBehaviour
 
     void Start()
     {
-        Settings.SetActive(false);
         levelLoader = FindObjectOfType<SceneLoader>();
+        canvas = GetComponent<Canvas>();
 
         // Set sliders to current values of the audio mixer
         float masterVolume;
@@ -62,7 +59,7 @@ public class SettingsMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Settings.SetActive(false);
+            canvas.enabled = false;
         }
     }
     public void OnMasterVolumeChanged()
