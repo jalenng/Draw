@@ -181,9 +181,10 @@ public class PlayerMovement : MonoBehaviour
         rb2d.simulated = true;
         rb2d.velocity = Vector2.zero;
 
-        // Respawn orange objects and scribble wall... Idk if there's a better way to implement this lol
-        scribbleWall.StartRespawn();
-        orangeObjectManager.StartOrangeObjectsRespawn();
+        // Respawn orange objects and scribble wall if they exist
+        scribbleWall?.StartRespawn();
+        orangeObjectManager?.StartOrangeObjectsRespawn();
+
         // Move the player to the respawn position
         transform.position = respawnPos;
 
