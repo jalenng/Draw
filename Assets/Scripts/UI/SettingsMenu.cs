@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Audio;
-
+using UnityEngine.UI;
 public class SettingsMenu : MonoBehaviour
 {
     // Audio mixer
@@ -23,7 +22,7 @@ public class SettingsMenu : MonoBehaviour
 
     // Object references
     SceneLoader levelLoader;
-
+    Canvas canvas;
     // Helper function to logarithmically map (0, 1) to a decibel value used for the audio mixer attenuation.
     float RatioToDecibel(float ratio)
     {
@@ -41,6 +40,7 @@ public class SettingsMenu : MonoBehaviour
     void Start()
     {
         levelLoader = FindObjectOfType<SceneLoader>();
+        canvas = GetComponent<Canvas>();
 
         // Set sliders to current values of the audio mixer
         float masterVolume;
@@ -55,10 +55,17 @@ public class SettingsMenu : MonoBehaviour
         audioMixer.GetFloat(mixerParams.SFXVolume, out SFXVolume);
         SFXVolumeSlider.value = DecibelToRatio(SFXVolume);
     }
-
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            canvas.enabled = false;
+        }
+    }
     public void OnMasterVolumeChanged()
     {
         audioMixer.SetFloat(mixerParams.masterVolume, RatioToDecibel(masterVolumeSlider.value));
+
     }
 
     public void OnBGMVolumeChanged()
@@ -70,8 +77,7 @@ public class SettingsMenu : MonoBehaviour
     {
         audioMixer.SetFloat(mixerParams.SFXVolume, RatioToDecibel(SFXVolumeSlider.value));
     }
-
-    public void Return()
+    public void ReturnToMenu()
     {
         levelLoader.LoadMainMenu();
     }

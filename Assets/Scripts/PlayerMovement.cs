@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // Cached components
     private Rigidbody2D rb2d;
     private Animator anim;
+    private AudioSource playerSound;
     // State variables
 
     [SerializeField] public ScribbleWall scribbleWall;
@@ -42,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         // Get components
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        playerSound = GetComponent<AudioSource>();
         // Set initial respawn position
         respawnPos = transform.position;
         if (animateSpawnOnLoad)
@@ -107,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
     private void GetInput()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+        if(horizontal == 0) playerSound.Stop();
         if (Input.GetButtonDown("Jump"))
         {
             jumpRequested = true;
@@ -134,6 +137,11 @@ public class PlayerMovement : MonoBehaviour
     private void Walk()
     {
         rb2d.velocity = new Vector2(horizontal * speed, rb2d.velocity.y);
+        if(!feetCollider.IsTouchingLayers(ground)) {
+            playerSound.Stop();
+        } else if(rb2d.velocity.x != 0 && !playerSound.isPlaying) {
+            playerSound.Play(0);
+        }
     }
 
     private void Jump()
@@ -157,7 +165,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Trigger death animation
         anim.SetTrigger("Dead");
-
         StartCoroutine(Respawn());
     }
     void Spawn()

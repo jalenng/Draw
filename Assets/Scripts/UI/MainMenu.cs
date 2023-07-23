@@ -7,17 +7,14 @@ public class MainMenu : MonoBehaviour
 {
     // Buttons
     [Header("Buttons")]
-    public Button playButton;
     public Button loadButton;
-    public Button levelsButton;
-    public Button settingsButton;
-    public Button quitButton;
 
     SceneLoader levelLoader;
     GameManager gameManager;
-
     void Start()
     {
+        // Only enable the canvas if we're in the Main Menu Level. I don't really wanna disable the main
+        // Menu in each level.
         levelLoader = FindObjectOfType<SceneLoader>();
         gameManager = FindObjectOfType<GameManager>();    // GameManager is a singleton
 
@@ -36,20 +33,9 @@ public class MainMenu : MonoBehaviour
         gameManager.Load();
     }
 
-    public void Levels()
-    {
-        levelLoader.LoadLevelSelector();
-    }
-
-    public void Settings()
-    {
-        levelLoader.LoadSettings();
-    }
-
     public void Quit()
     {
         Debug.Log("Quitting the game");
         Application.Quit();
     }
-
 }
