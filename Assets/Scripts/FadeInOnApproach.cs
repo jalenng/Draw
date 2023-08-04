@@ -12,6 +12,7 @@ public class FadeInOnApproach : MonoBehaviour
   [SerializeField] Transform targetTransform;
 
   private Transform playerTransform;
+  private bool triggered = false;
 
   void Start()
   {
@@ -26,8 +27,9 @@ public class FadeInOnApproach : MonoBehaviour
   void Update()
   {
     float distance = Vector2.Distance(targetTransform.position, playerTransform.position);
-    if (distance <= distanceToFadeIn)
+    if (!triggered && distance <= distanceToFadeIn)
     {
+      triggered = true;
       StartCoroutine(FadeIn());
     }
   }
