@@ -49,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         playerSound = GetComponent<AudioSource>();
-
         respawner = FindObjectOfType<RespawnManager>();
         // Set initial respawn position
         prevPos = respawnPos = transform.position;
