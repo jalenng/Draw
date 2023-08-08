@@ -16,7 +16,7 @@ public class DrawingCanvas : MonoBehaviour
     [SerializeField] LayerMask cantDrawOverLayer;
     [SerializeField] float minLineLength = 0.5f;
     [SerializeField] float maxTotalLineLength = 10f;
-
+    
     // State variables
     Vector3 lastPointPos;
     float currentLineLength = 0f;
@@ -51,7 +51,7 @@ public class DrawingCanvas : MonoBehaviour
     // This function is invoked when the player clicks inside the drawing area's collider.
     public void BeginDraw()
     {
-        if (CheckIfCanDraw())
+        if (CanDraw())
         {
             audioSource.Play();
             // Instantiate a new line
@@ -67,7 +67,7 @@ public class DrawingCanvas : MonoBehaviour
     // Adds a point to the line
     void Draw()
     {
-        if (CheckIfCanDraw())
+        if (CanDraw())
         {
             if(!audioSource.isPlaying) audioSource.Play();
             // Account for canvas position
@@ -135,7 +135,7 @@ public class DrawingCanvas : MonoBehaviour
     }
 
     // Helper function that checks conditions for drawing
-    private bool CheckIfCanDraw()
+    public bool CanDraw()
     {
         Vector2 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
         float lineRadius = linePrefab.GetWidth() / 2f;
