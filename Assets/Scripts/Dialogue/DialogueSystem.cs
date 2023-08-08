@@ -10,6 +10,7 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] KeyCode advanceKey = KeyCode.Space;
     [SerializeField] Textbox textbox;
     [SerializeField] GameObject skipButton;
+    [SerializeField] GameObject skipConfirmationDialog;
 
     // Cached object references
     private PlayableDirector director;
@@ -18,7 +19,6 @@ public class DialogueSystem : MonoBehaviour
     int entryIndex = 0;
     bool skip = false;
     bool advKeyPressed = false;
-    bool skipConActive = false;
 
     private void Start()
     {
@@ -41,7 +41,8 @@ public class DialogueSystem : MonoBehaviour
     private bool CheckIfAdvanceKeyPressed()
     {
         // AdvKeyPressed is a bool that represents a mouse press basically. It gets set by the SkipCheck Button.
-        return (advKeyPressed || Input.GetKeyDown(advanceKey)) && !skipConActive;
+        if (skipConfirmationDialog.activeInHierarchy) return false;
+        return (advKeyPressed || Input.GetKeyDown(advanceKey));
     }
 
     public void Skip() {
@@ -121,8 +122,5 @@ public class DialogueSystem : MonoBehaviour
     }
     public void setAdvPressed(bool pressed) {
         advKeyPressed = pressed;   
-    }
-    public void setSkipConActive(bool active) {
-        skipConActive = active;
     }
 }
