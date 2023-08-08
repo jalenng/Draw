@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerMovement : MonoBehaviour
 {
     // Configuration parameters
@@ -12,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float movementSmoothing = 0.05f;
     [SerializeField] private int jumpBufferFramesMax = 5;
+    private float SFXDelay = 0.09f;
+
 
     [Header("Ground Check")] [SerializeField]
     private LayerMask ground;
@@ -27,9 +30,11 @@ public class PlayerMovement : MonoBehaviour
     private AudioSource playerSound;
     // State variables
 
-    [SerializeField] public ScribbleWall scribbleWall;
-    [SerializeField] public OrangeObjectManager orangeObjectManager;
+    private float curSFXDelay;
+    public RespawnManager respawner;
     public Vector3 respawnPos;
+    private Vector3 prevPos;
+
     private bool isDead = false;
     [SerializeField] private bool isPaused = false;
 
@@ -44,8 +49,9 @@ public class PlayerMovement : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         playerSound = GetComponent<AudioSource>();
+        respawner = FindObjectOfType<RespawnManager>();
         // Set initial respawn position
-        respawnPos = transform.position;
+        prevPos = respawnPos = transform.position;
         if (animateSpawnOnLoad)
             Spawn();
     }
@@ -59,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isPaused)
         {
-            anim.SetFloat("XSpeed", 0);
+            anim.SetBool("Moving", false);
             anim.SetFloat("YVelocity", 0);
             anim.SetBool("isTouchingGround", true);
             anim.SetTrigger("Reset");
@@ -73,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         if (transform.position.y < minY)
             Die();
 
-        anim.SetFloat("XSpeed", Mathf.Abs(rb2d.velocity.x));
+        anim.SetBool("Moving", (transform.position.x - prevPos.x) != 0 && horizontal != 0);
         anim.SetFloat("YVelocity", rb2d.velocity.y);
     }
 
@@ -93,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
             if (feetCollider.IsTouchingLayers(ground))
             {
                 Jump();
+                AudioSystem.audioPlayer.PlaySFX("penciljump");
                 anim.SetTrigger("Jump");
                 jumpRequested = false;
             }
@@ -103,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
                     jumpRequested = false;
             }
         }
-
+        prevPos = transform.position;
     }
 
     private void GetInput()
@@ -136,11 +143,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void Walk()
     {
+        // The SFXDelay stuff is added so that it will only play sounds after the player
+        // has been walking for a certaint amount of time, just so things like
+        // walking up stairs doesnt spam a bunch of short audio clips.
         rb2d.velocity = new Vector2(horizontal * speed, rb2d.velocity.y);
+        // The basic audio logic is: if not on ground, then stop footsteps.
+        // If velocity isn't 0 and right now we aren't playing sound, then play a sound.
         if(!feetCollider.IsTouchingLayers(ground)) {
             playerSound.Stop();
-        } else if(rb2d.velocity.x != 0 && !playerSound.isPlaying) {
-            playerSound.Play(0);
+            curSFXDelay = SFXDelay;
+        } else if((anim.GetBool("Moving")) && !playerSound.isPlaying) {
+            if(curSFXDelay > 0) {
+                curSFXDelay -= Time.deltaTime;
+            } else {
+                playerSound.Play();
+                curSFXDelay = SFXDelay;
+            }   
         }
     }
 
@@ -162,6 +180,8 @@ public class PlayerMovement : MonoBehaviour
         
         // Freeze the player
         rb2d.simulated = false;
+        playerSound.Stop();
+        AudioSystem.audioPlayer.PlaySFX("eraser");
 
         // Trigger death animation
         anim.SetTrigger("Dead");
@@ -181,11 +201,9 @@ public class PlayerMovement : MonoBehaviour
         rb2d.simulated = true;
         rb2d.velocity = Vector2.zero;
 
-        // Respawn orange objects and scribble wall if they exist
-        scribbleWall?.StartRespawn();
-        orangeObjectManager?.StartOrangeObjectsRespawn();
-
+        respawner.StartObjectRespawn();    
         // Move the player to the respawn position
+        AudioSystem.audioPlayer.PlaySFX("pop");
         transform.position = respawnPos;
 
         isDead = false;

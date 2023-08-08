@@ -8,6 +8,7 @@ using UnityEngine.Audio;
 [RequireComponent(typeof(Singleton))]
 public class AudioSystem : MonoBehaviour
 {
+    public static AudioSystem audioPlayer;
     // Audio mixer
     [Header("Audio Mixer")]
     [SerializeField] AudioMixer audioMixer;
@@ -26,6 +27,7 @@ public class AudioSystem : MonoBehaviour
         LoadAudioMixerParams();
 
         SetupSaveOnQuit();
+        audioPlayer = this;
     }
 
     // Ensures that the audio mixer parameters are saved when the game is quit.
