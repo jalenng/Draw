@@ -201,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
         rb2d.simulated = true;
         rb2d.velocity = Vector2.zero;
 
-        respawner.StartObjectRespawn();    
+        respawner?.StartObjectRespawn();    
         // Move the player to the respawn position
         AudioSystem.audioPlayer.PlaySFX("pop");
         transform.position = respawnPos;
