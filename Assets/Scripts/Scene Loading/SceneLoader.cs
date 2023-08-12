@@ -14,7 +14,7 @@ public class SceneLoader : MonoBehaviour
 
     // State variables
     bool isLoading = false;
-    public AudioSystem audSysSound;
+    AudioSystem audSysSound;
 
     void Start() {
         audSysSound = AudioSystem.audioPlayer;
