@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    // Cached components
-    Canvas canvas;
+    // Configuration parameters
+    public GameObject PauseMenuCanvas;
 
     // State variables
     bool paused = false;    // Whether the game is paused
     bool canPause = true;    // Whether the game can be paused
 
     void Start() {
-        canvas = GetComponent<Canvas>();
+        PauseMenuCanvas.SetActive(false);
     }
+    
     // Update is called once per frame
     void Update()
     {
@@ -33,7 +34,7 @@ public class PauseMenu : MonoBehaviour
             return;
         paused = true;
         Time.timeScale = 0;
-        enableCanvas(true);
+        PauseMenuCanvas.SetActive(true);
     }
 
     // Resume the game
@@ -41,7 +42,7 @@ public class PauseMenu : MonoBehaviour
     {
         paused = false;
         Time.timeScale = 1;
-        enableCanvas(false);
+        PauseMenuCanvas.SetActive(false);
     }
 
     // Transition to the main menu with an animation
@@ -58,8 +59,5 @@ public class PauseMenu : MonoBehaviour
 
         // Load the main menu with the level manager
         FindObjectOfType<SceneLoader>().LoadMainMenu();
-    }
-    public void enableCanvas(bool enable) {
-        canvas.enabled = enable;
     }
 }

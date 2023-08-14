@@ -14,8 +14,6 @@ public class DialogueSystem : MonoBehaviour
 
     // Cached object references
     private PlayableDirector director;
-    private PauseMenu pMenu;
-    private Canvas pMenuCanvas;
 
     // State variables
     int entryIndex = 0;
@@ -25,8 +23,6 @@ public class DialogueSystem : MonoBehaviour
     private void Start()
     {
         director = FindObjectOfType<PlayableDirector>();
-        pMenu = FindObjectOfType<PauseMenu>();
-        pMenuCanvas = pMenu.GetComponent<Canvas>();
     }
 
     private void Update()
@@ -45,7 +41,7 @@ public class DialogueSystem : MonoBehaviour
     private bool CheckIfAdvanceKeyPressed()
     {
         // AdvKeyPressed is a bool that represents a mouse press basically. It gets set by the SkipCheck Button.
-        if (skipConfirmationDialog.activeInHierarchy || pMenuCanvas.enabled) return false;
+        if (skipConfirmationDialog.activeInHierarchy) return false;
         return (advKeyPressed || Input.GetKeyDown(advanceKey));
     }
 
