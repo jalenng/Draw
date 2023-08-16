@@ -52,8 +52,10 @@ public class PlayerMovement : MonoBehaviour
         respawner = FindObjectOfType<RespawnManager>();
         // Set initial respawn position
         prevPos = respawnPos = transform.position;
-        if (animateSpawnOnLoad)
+        if (animateSpawnOnLoad) {
+            rb2d.simulated = false;
             Spawn();
+        }
     }
 
     private void Update()
@@ -208,5 +210,7 @@ public class PlayerMovement : MonoBehaviour
 
         isDead = false;
     }
-
+    public void setCanMove() {
+        rb2d.simulated = true;
+    }
 }
