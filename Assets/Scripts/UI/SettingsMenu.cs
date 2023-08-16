@@ -22,7 +22,7 @@ public class SettingsMenu : MonoBehaviour
 
     // Object references
     SceneLoader levelLoader;
-    Canvas canvas;
+    [SerializeField] MenuManager menuHolder;
     // Helper function to logarithmically map (0, 1) to a decibel value used for the audio mixer attenuation.
     float RatioToDecibel(float ratio)
     {
@@ -40,8 +40,6 @@ public class SettingsMenu : MonoBehaviour
     void Start()
     {
         levelLoader = FindObjectOfType<SceneLoader>();
-        canvas = GetComponent<Canvas>();
-
         // Set sliders to current values of the audio mixer
         float masterVolume;
         audioMixer.GetFloat(mixerParams.masterVolume, out masterVolume);
@@ -59,7 +57,7 @@ public class SettingsMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            canvas.enabled = false;
+            menuHolder.enableSettings(false);
         }
     }
     public void OnMasterVolumeChanged()
