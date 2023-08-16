@@ -9,6 +9,7 @@ public class LevelSelector : MonoBehaviour
 
     // Object references
     SceneLoader levelLoader;
+    [SerializeField] MenuManager menuHolder;
 
     void Awake()
     {
@@ -19,5 +20,10 @@ public class LevelSelector : MonoBehaviour
     {
         levelLoader.LoadScene(sceneIndex);
     }
-
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            menuHolder.enableLevels(false);
+        }
+    }
 }

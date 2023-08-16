@@ -6,38 +6,50 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
+    [Header("Configuration")]
+    [SerializeField] SceneLoaderParamsConfig config;
+
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject levelMenu;
 
-    Canvas mmCanvas;
-    Canvas smCanvas;
-    Canvas pmCanvas;
-    Canvas lmCanvas;
-
     void Start()
     {
-        // Enabling/Disabling canvases, because it seems that enabling canvases instead of whole objects
-        // helps to avoid scaling bugs. 
-        mmCanvas = mainMenu.GetComponent<Canvas>();
-        smCanvas = settingsMenu.GetComponent<Canvas>();
-        pmCanvas = pauseMenu.GetComponent<Canvas>();
-        lmCanvas = levelMenu.GetComponent<Canvas>();
         // Only enable Main Menu Canvas if we're in the Main Menu Scene
-        mmCanvas.enabled = (GetCurrentSceneIndex() == 0);
+        if (GetCurrentSceneIndex() == config.mainMenuBuildIndex) {
+            mainMenu.SetActive(true);
+        }
+        // If not in the Main Menu Scene menu, enable the Pause Menu.
+        // This does not immediately make it visible though. It just allows 
+        // Pause Menu to listen to the Esc key and manage the UI visibility itself.
+        else {
+            enablePause(true);
+        }
+        
         // Disable all other canvases
-        smCanvas.enabled = pmCanvas.enabled = lmCanvas.enabled = false;
+        enableSettings(false);
+        enableLevels(false);
     }
+
     // Public functions for OnClick() to call
     public void enableSettings(bool enable) {
-        smCanvas.enabled = enable;
+        if (settingsMenu) 
+            settingsMenu.SetActive(enable);
+        else 
+            Debug.Log("Tried to enable settings menu but it's undefined");
     }
     public void enablePause(bool enable) {
-        pmCanvas.enabled = enable;
+        if (pauseMenu) 
+            pauseMenu.SetActive(enable);
+        else 
+            Debug.Log("Tried to enable pause menu but it's undefined");
     }
     public void enableLevels(bool enable) {
-        lmCanvas.enabled = enable;
+        if (levelMenu) 
+            levelMenu.SetActive(enable);
+        else 
+            Debug.Log("Tried to enable levels menu but it's undefined");
     }
     // Shamelessly stolen from another script
     private int GetCurrentSceneIndex()
