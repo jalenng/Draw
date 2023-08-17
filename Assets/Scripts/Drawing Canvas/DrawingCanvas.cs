@@ -15,6 +15,7 @@ public class DrawingCanvas : MonoBehaviour
     [Header("Line Drawing Settings")]
     [SerializeField] LayerMask cantDrawOverLayer;
     [SerializeField] float minLineLength = 0.5f;
+    [Range(0, 20)] 
     [SerializeField] float maxTotalLineLength = 10f;
     
     // State variables
