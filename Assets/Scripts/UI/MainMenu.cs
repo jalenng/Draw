@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    // Buttons
-    [Header("Buttons")]
-    public Button loadButton;
+    [Header("Game Objects")]
+    public GameObject loadButton;
+    public GameObject playConfirmation;
 
     SceneLoader levelLoader;
     GameManager gameManager;
+
+    private bool canLoad;
+
     void Start()
     {
         // Only enable the canvas if we're in the Main Menu Level. I don't really wanna disable the main
@@ -18,12 +21,24 @@ public class MainMenu : MonoBehaviour
         levelLoader = FindObjectOfType<SceneLoader>();
         gameManager = FindObjectOfType<GameManager>();    // GameManager is a singleton
 
-        // Make the Load button interactable only if there is a game save
-        bool canLoad = gameManager.CanLoad();
-        loadButton.interactable = canLoad;
+        canLoad = gameManager.CanLoad();
+
+        // Show the Load button only if there is a game save
+        loadButton.SetActive(canLoad);
     }
 
-    public void Play()
+    public void RequestPlay()
+    {
+        // If there is an existing game save, prompt for confirmation
+        if (canLoad) {
+            playConfirmation.SetActive(true);
+        }
+        else {
+            Play();
+        }
+    }
+
+    public void Play() 
     {
         levelLoader.StartGame();
     }
