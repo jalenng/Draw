@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 242199389748082204}
   - component: {fileID: 242199389748082206}
   - component: {fileID: 242199389748082205}
+  - component: {fileID: 4095988809134076747}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -42,7 +43,7 @@ Camera:
   m_GameObject: {fileID: 242199389748082207}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -118,6 +119,19 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4095988809134076747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242199389748082207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f8690342de9acb4888d9cec340b80e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aspectRatio: 1.5
 --- !u!1 &242199389805913620
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,6 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b419a55b01ac9ac4c9cfca15e770e9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blendTime: 0.75
 --- !u!114 &5463054483065747668
 MonoBehaviour:
   m_ObjectHideFlags: 0
