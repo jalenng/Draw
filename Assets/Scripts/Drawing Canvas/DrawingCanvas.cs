@@ -69,7 +69,9 @@ public class DrawingCanvas : MonoBehaviour
     {
         if (CanDraw())
         {
-            if(!audioSource.isPlaying) audioSource.Play();
+            // Play SFX
+            if (!audioSource.isPlaying) audioSource.Play();
+            
             // Account for canvas position
             Vector2 pointPosition = GetMousePosInWorldSpace();
             currentLine.AddPoint(pointPosition);    
@@ -84,7 +86,12 @@ public class DrawingCanvas : MonoBehaviour
             lastPointPos = pointPosition;
         }
         else
+        {
+            // Stop SFX
+            audioSource.Stop();
+
             EndDraw();
+        }
         // Debug.Log("Ink used: " + totalDrawnLineLength + "/" + maxTotalLineLength);
     }
 
