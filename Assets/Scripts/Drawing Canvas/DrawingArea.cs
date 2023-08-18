@@ -12,6 +12,7 @@ public class DrawingArea : MonoBehaviour
     // Cached components
     LineRenderer lineRenderer;
     BoxCollider2D boxCollider;
+    CursorManager cursorManager;
 
     // State variables
     Color baseOutlineColor;
@@ -21,6 +22,8 @@ public class DrawingArea : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
 
         baseOutlineColor = drawingCanvas.GetLinePrefab().GetLineColor();
+
+        cursorManager = FindObjectOfType<CursorManager>();
 
         SetUpBorderOutline();
     }
@@ -63,6 +66,19 @@ public class DrawingArea : MonoBehaviour
         Color outlineColor = new Color(baseOutlineColor.r, baseOutlineColor.g, baseOutlineColor.b, inkRemaining);
         lineRenderer.startColor = outlineColor;
         lineRenderer.endColor = outlineColor;
+    }
+
+    // Update cursor conditionally when the mouse enters/exits the drawing area
+    private void OnMouseEnter() {
+        if (drawingCanvas.CanDraw()) {
+            cursorManager.EnableCursor("pencil");
+        }
+    }
+
+    private void OnMouseExit() {
+        if (!drawingCanvas.CanDraw()) {
+            cursorManager.DisableCursor("pencil");
+        }
     }
 
     // Invoked when the player clicks inside the drawing area's collider
