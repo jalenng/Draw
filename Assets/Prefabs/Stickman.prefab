@@ -56,12 +56,12 @@ MonoBehaviour:
   jumpForce: 6
   movementSmoothing: 0.05
   jumpBufferFramesMax: 5
-  audioSys: {fileID: 3858611780923627929, guid: 247aa42c7794fc24e87b84e9eaab4187, type: 3}
   ground:
     serializedVersion: 2
     m_Bits: 1088
   feetCollider: {fileID: 2574978673430354921}
   minY: -10
+  respawner: {fileID: 0}
   respawnPos: {x: 0, y: 0, z: 0}
   isPaused: 0
 --- !u!114 &1882610119951218810
@@ -235,7 +235,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -1643656973328474427, guid: f161f5ffa53013d40bd0c11e00ca8336, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0f0e8d6378a6941b78b2ba992533175b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 13e20c2d37f825244a0836f8720151cd, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
