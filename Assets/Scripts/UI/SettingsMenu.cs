@@ -11,7 +11,6 @@ public class SettingsMenu : MonoBehaviour
     [Header("Audio Mixer")]
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioMixerParamsConfig mixerParams;
-
     // Sliders
     [Header("Sliders")]
     public Slider masterVolumeSlider;
