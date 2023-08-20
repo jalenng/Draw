@@ -16,8 +16,6 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
-        // Only enable the canvas if we're in the Main Menu Level. I don't really wanna disable the main
-        // Menu in each level.
         levelLoader = FindObjectOfType<SceneLoader>();
         gameManager = FindObjectOfType<GameManager>();    // GameManager is a singleton
 
