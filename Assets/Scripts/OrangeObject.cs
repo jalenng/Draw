@@ -7,11 +7,13 @@ public class OrangeObject : RespawnInterface
     Rigidbody2D rb2d;
     [SerializeField] Vector3 respawnPos;
     Quaternion respawnRotation;
+    AudioSource audioSource;
 
     // Make object static and unaffected by gravity
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
         rb2d.bodyType = RigidbodyType2D.Static;
         respawnPos = transform.position;
         respawnRotation = transform.rotation;
@@ -19,6 +21,7 @@ public class OrangeObject : RespawnInterface
 
     // Make object affected by gravity upon collision
     private void OnCollisionEnter2D(Collision2D other) {
+        if(rb2d.bodyType != RigidbodyType2D.Dynamic) audioSource.Play();
         rb2d.bodyType = RigidbodyType2D.Dynamic;
     }
     
