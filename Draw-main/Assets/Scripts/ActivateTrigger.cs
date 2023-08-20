@@ -13,8 +13,10 @@ public class ActivateTrigger : MonoBehaviour
 
 private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("Trigger entered");
         if (other.gameObject.CompareTag("OrangeObject"))
         {
+            Debug.Log("OrangeObject collided");
             scene1.SetActive(true);
         }
     }
