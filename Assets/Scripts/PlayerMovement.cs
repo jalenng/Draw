@@ -213,7 +213,7 @@ public class PlayerMovement : MonoBehaviour
 
         isDead = false;
     }
-    public void setCanMove() {
-        rb2d.simulated = true;
+    public void setCanMove(int isOne) {
+        rb2d.simulated = (isOne == 1);
     }
 }
