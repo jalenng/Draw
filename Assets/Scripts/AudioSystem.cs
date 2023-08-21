@@ -17,7 +17,6 @@ public class AudioSystem : MonoBehaviour
     // Audio source
     [Header("Audio Sources")]
     [SerializeField] AudioSource BGMSource;
-    [SerializeField] float bgmPitch;
     [SerializeField] AudioSource SFXSource;
     [SerializeField] public List<AudioClip> soundEffects = new List<AudioClip>();
 
@@ -36,7 +35,7 @@ public class AudioSystem : MonoBehaviour
         Application.quitting += SaveAudioMixerParams;
     }
 
-    void LoadAudioMixerParams() 
+    void LoadAudioMixerParams()
     {
         // Get master volume
         string masterVolumeParam = mixerParams.masterVolume;
@@ -51,7 +50,7 @@ public class AudioSystem : MonoBehaviour
         audioMixer.SetFloat(SFXVolumeParam, PlayerPrefs.GetFloat(SFXVolumeParam, 0f));
     }
 
-    void SaveAudioMixerParams() 
+    void SaveAudioMixerParams()
     {
         // Save master volume
         string masterVolumeParam = mixerParams.masterVolume;
@@ -71,14 +70,15 @@ public class AudioSystem : MonoBehaviour
         audioMixer.GetFloat(SFXVolumeParam, out SFXVolume);
         PlayerPrefs.SetFloat(SFXVolumeParam, SFXVolume);
     }
-    
+
     // Plays a sound effect audio clip
     public void PlaySFX(string sound)
     {
         AudioClip s = soundEffects.Find(item => item.name == sound);
         SFXSource.PlayOneShot(s);
     }
-    public void PlaySFX(string sound, float pitch) {
+    public void PlaySFX(string sound, float pitch)
+    {
         AudioClip s = soundEffects.Find(item => item.name == sound);
         float beforePitch = SFXSource.pitch;
         SFXSource.pitch = pitch;
@@ -87,13 +87,17 @@ public class AudioSystem : MonoBehaviour
     }
 
     // Fades out the background music
-    public IEnumerator PlayBGM(AudioClip clip, float fadeDuration = 1f, float delay = 0f)
+    public IEnumerator PlayBGM(AudioClip clip, float pitch = 1f, float fadeDuration = 1f, float delay = 0f)
     {
-        yield return FadeBGMVolume(0f, fadeDuration); 
-        BGMSource.pitch = bgmPitch;
-        BGMSource.clip = clip;
-        BGMSource.PlayDelayed(delay);
-        yield return FadeBGMVolume(1f, fadeDuration);
+        // Do not replay the clip if it is already playing
+        if (BGMSource.clip != clip)
+        {
+            yield return FadeBGMVolume(0f, fadeDuration);
+            BGMSource.clip = clip;
+            BGMSource.pitch = pitch;
+            BGMSource.PlayDelayed(delay);
+            yield return FadeBGMVolume(1f, fadeDuration);
+        }
     }
 
     // Helper function to facilitate fading
@@ -111,7 +115,8 @@ public class AudioSystem : MonoBehaviour
 
         BGMSource.volume = targetVolume;
     }
-    public List<AudioClip> getSFX() {
+    public List<AudioClip> getSFX()
+    {
         return soundEffects;
     }
 }
