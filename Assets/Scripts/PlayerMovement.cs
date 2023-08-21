@@ -27,7 +27,10 @@ public class PlayerMovement : MonoBehaviour
     // Cached components
     private Rigidbody2D rb2d;
     private Animator anim;
-    private AudioSource playerSound;
+    private AudioSource footstepAS;
+    [SerializeField] private AudioSource jumpAS;
+    [SerializeField] private AudioSource deathAS;
+    [SerializeField] private AudioSource SpawnAS;
     // State variables
 
     private float curSFXDelay;
@@ -46,9 +49,9 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         // Get components
+        footstepAS = GetComponent<AudioSource>();
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        playerSound = GetComponent<AudioSource>();
         respawner = FindObjectOfType<RespawnManager>();
         // Set initial respawn position
         prevPos = respawnPos = transform.position;
@@ -101,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
             if (feetCollider.IsTouchingLayers(ground))
             {
                 Jump();
-                AudioSystem.audioPlayer.PlaySFX("penciljump");
+                jumpAS.Play();
                 anim.SetTrigger("Jump");
                 jumpRequested = false;
             }
@@ -118,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
     private void GetInput()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-        if(horizontal == 0) playerSound.Stop();
+        if(horizontal == 0) footstepAS.Stop();
         if (Input.GetButtonDown("Jump"))
         {
             jumpRequested = true;
@@ -152,13 +155,13 @@ public class PlayerMovement : MonoBehaviour
         // The basic audio logic is: if not on ground, then stop footsteps.
         // If velocity isn't 0 and right now we aren't playing sound, then play a sound.
         if(!feetCollider.IsTouchingLayers(ground)) {
-            playerSound.Stop();
+            footstepAS.Stop();
             curSFXDelay = SFXDelay;
-        } else if((anim.GetBool("Moving")) && !playerSound.isPlaying) {
+        } else if((anim.GetBool("Moving")) && !footstepAS.isPlaying) {
             if(curSFXDelay > 0) {
                 curSFXDelay -= Time.deltaTime;
             } else {
-                playerSound.Play();
+                footstepAS.Play();
                 curSFXDelay = SFXDelay;
             }   
         }
@@ -182,8 +185,8 @@ public class PlayerMovement : MonoBehaviour
         
         // Freeze the player
         rb2d.simulated = false;
-        playerSound.Stop();
-        AudioSystem.audioPlayer.PlaySFX("eraser");
+        footstepAS.Stop();
+        deathAS.Play();
 
         // Trigger death animation
         anim.SetTrigger("Dead");
@@ -205,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
 
         respawner?.StartObjectRespawn();    
         // Move the player to the respawn position
-        AudioSystem.audioPlayer.PlaySFX("pop");
+        SpawnAS.Play();
         transform.position = respawnPos;
 
         isDead = false;

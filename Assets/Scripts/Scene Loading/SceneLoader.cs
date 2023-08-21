@@ -14,10 +14,10 @@ public class SceneLoader : MonoBehaviour
 
     // State variables
     bool isLoading = false;
-    AudioSystem audSysSound;
+    private AudioSource audioSource;
 
     void Start() {
-        audSysSound = AudioSystem.audioPlayer;
+        audioSource = GetComponent<AudioSource>();
     }
     // Load the first level
     public void StartGame()
@@ -37,7 +37,7 @@ public class SceneLoader : MonoBehaviour
         // Get the next scene index
         int currentSceneIndex = GetCurrentSceneIndex();
         int nextSceneIndex = currentSceneIndex + 1;
-        audSysSound.PlaySFX("pageflip");
+        audioSource.Play();
         // Go to main menu if there are no more scenes
         if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
             LoadMainMenu();
