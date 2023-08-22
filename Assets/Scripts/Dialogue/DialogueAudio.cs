@@ -21,7 +21,6 @@ public class DialogueAudio : MonoBehaviour
         if(!source.isPlaying) {
             index = Random.Range(0, sounds.Length);
             clip = sounds[index];
-            Debug.Log(clip.name);
             source.PlayOneShot(clip);
         }   
     }

@@ -23,7 +23,6 @@ public class DialogueSystem : MonoBehaviour
     private void Start()
     {
         director = FindObjectOfType<PlayableDirector>();
-
     }
 
     private void Update()
