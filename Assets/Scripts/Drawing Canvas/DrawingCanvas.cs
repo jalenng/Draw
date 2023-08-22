@@ -15,6 +15,7 @@ public class DrawingCanvas : MonoBehaviour
     [Header("Line Drawing Settings")]
     [SerializeField] LayerMask cantDrawOverLayer;
     [SerializeField] float minLineLength = 0.5f;
+    [Range(0, 30)] 
     [SerializeField] float maxTotalLineLength = 10f;
     
     // State variables
@@ -69,7 +70,9 @@ public class DrawingCanvas : MonoBehaviour
     {
         if (CanDraw())
         {
-            if(!audioSource.isPlaying) audioSource.Play();
+            // Play SFX
+            if (!audioSource.isPlaying) audioSource.Play();
+            
             // Account for canvas position
             Vector2 pointPosition = GetMousePosInWorldSpace();
             currentLine.AddPoint(pointPosition);    
@@ -84,7 +87,12 @@ public class DrawingCanvas : MonoBehaviour
             lastPointPos = pointPosition;
         }
         else
+        {
+            // Stop SFX
+            audioSource.Stop();
+
             EndDraw();
+        }
         // Debug.Log("Ink used: " + totalDrawnLineLength + "/" + maxTotalLineLength);
     }
 
