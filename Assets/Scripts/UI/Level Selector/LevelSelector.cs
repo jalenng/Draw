@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class LevelSelector : MonoBehaviour
 {
-    // Configuration parameters
-    [Tooltip("Only takes effect in Debug mode")]
-    [SerializeField] private bool unlockAllLevelsInDebug = false;
-
     // Object references
     SceneLoader levelLoader;
     GameManager gameManager;
@@ -15,6 +11,11 @@ public class LevelSelector : MonoBehaviour
     bool unlockAllLevels;
 
     [SerializeField] MenuManager menuHolder;
+    
+    // Configuration parameters
+    // For dev/debug only
+    [Header("The options below will only take effect in Debug mode")]
+    [SerializeField] private bool unlockAllLevelsInDebug = false;
 
     void Start()
     {

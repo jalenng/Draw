@@ -22,6 +22,12 @@ using Steamworks;
 [DisallowMultipleComponent]
 public class SteamManager : MonoBehaviour {
 #if !DISABLESTEAMWORKS
+
+	// For dev/debug only
+	[Header("The options below will only take effect in Debug mode")]
+	[SerializeField] private bool resetStatsOnStartInDebug;
+	[SerializeField] private bool alsoResetAchievementsOnStartInDebug;
+
 	protected static bool s_EverInitialized = false;
 
 	protected static SteamManager s_instance;
@@ -123,6 +129,12 @@ public class SteamManager : MonoBehaviour {
 		}
 
 		s_EverInitialized = true;
+		Debug.Log("SteamManager initialized successfully");
+
+		if (Debug.isDebugBuild && resetStatsOnStartInDebug) {
+			Steamworks.SteamUserStats.ResetAllStats(alsoResetAchievementsOnStartInDebug);
+			Debug.Log("SteamManager cleared all stats successfully");
+		}
 	}
 
 	// This should only ever get called on first load and after an Assembly reload, You should never Disable the Steamworks Manager yourself.

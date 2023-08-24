@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 3121044882252102163}
   - component: {fileID: 3121044882252102164}
   - component: {fileID: 6086853913905144535}
+  - component: {fileID: 8941554221291303312}
   m_Layer: 14
   m_Name: Drawing Canvas
   m_TagString: Untagged
@@ -181,6 +182,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8941554221291303312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3121044882252102162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b831a69ea18d5f438604183defc7831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achievement: 4
 --- !u!1 &6013472230435510633
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,6 +428,14 @@ PrefabInstance:
       propertyPath: drawingCanvas
       value: 
       objectReference: {fileID: 3121044882252102164}
+    - target: {fileID: 3722581281183600478, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 0.067
+      objectReference: {fileID: 0}
+    - target: {fileID: 3722581281183600478, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].value
+      value: 0.067
+      objectReference: {fileID: 0}
     - target: {fileID: 5998983189275153447, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
       propertyPath: m_Name
       value: Drawing Area

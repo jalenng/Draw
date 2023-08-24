@@ -13,6 +13,7 @@ public class LevelEndTrigger : MonoBehaviour
         LoadNextScene();
     }
 
+    [ContextMenu("Load Next Scene")]
     public void LoadNextScene() {
         if(!triggered) {
             FindObjectOfType<SceneLoader>().LoadNextScene();
