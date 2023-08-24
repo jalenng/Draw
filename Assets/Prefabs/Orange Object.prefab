@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2861360096640410582}
   - component: {fileID: 156424493162379790}
   - component: {fileID: 7928050161254408662}
+  - component: {fileID: 4291443857318051985}
   m_Layer: 10
   m_Name: Orange Object
   m_TagString: Untagged
@@ -260,3 +261,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4291443857318051985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8669401566246642394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b831a69ea18d5f438604183defc7831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achievement: 5
+  resetStatsOnStartInDebug: 0
+  alsoResetAchievementsOnStartInDebug: 0
