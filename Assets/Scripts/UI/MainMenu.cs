@@ -13,13 +13,15 @@ public class MainMenu : MonoBehaviour
 
     SceneLoader levelLoader;
     GameManager gameManager;
+    PersistentStoreManager storeManager;
 
     private bool canLoad;
 
     void Start()
     {
         levelLoader = FindObjectOfType<SceneLoader>();
-        gameManager = FindObjectOfType<GameManager>();    // GameManager is a singleton
+        gameManager = FindObjectOfType<GameManager>();
+        storeManager = FindObjectOfType<PersistentStoreManager>();
 
         canLoad = gameManager.CanLoad();
 
@@ -27,7 +29,7 @@ public class MainMenu : MonoBehaviour
         loadButton.SetActive(canLoad);
 
         // Show the background variation if the player has completed the game.
-        bool hasCompletedGame = true;
+        bool hasCompletedGame = storeManager.QueryLevelReached(Global.Level.THE_END);
         preEndBackground.SetActive(!hasCompletedGame);
         postEndBackground.SetActive(hasCompletedGame);
     }

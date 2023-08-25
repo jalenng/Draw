@@ -10,18 +10,18 @@ using UnityEngine.SceneManagement;
 public class PersistentStore
 {
     public HashSet<Global.Level> reachedLevels = new HashSet<Global.Level>();
-    public bool gameCompleted = false;
+    // public bool gameCompleted = false;
 }
 
 [RequireComponent(typeof(Singleton))]
 public class PersistentStoreManager : MonoBehaviour
 {
-    [SerializeField] private string saveFileName = "save.dat";
+    [SerializeField] private string saveFileName = "store.dat";
+    private PersistentStore store = null;
 
     // State variables
-    ObjectSerializer<PersistentStore> serializer;
+    private ObjectSerializer<PersistentStore> serializer;
     private string saveFilePath;
-    private PersistentStore store = null;
 
     void Awake()
     {
@@ -69,11 +69,11 @@ public class PersistentStoreManager : MonoBehaviour
         Save();
     }
 
-    public void SetGameCompleted(bool value)
-    {
-        store.gameCompleted = value;
-        Save();
-    }
+    // public void SetGameCompleted(bool value)
+    // {
+    //     store.gameCompleted = value;
+    //     Save();
+    // }
 
     // Below are getters for the persistent store
     public bool QueryLevelReached(Global.Level level)
@@ -81,8 +81,8 @@ public class PersistentStoreManager : MonoBehaviour
         return store.reachedLevels.Contains(level);
     }
 
-    public bool GetGameCompleted()
-    {
-        return store.gameCompleted;
-    }
+    // public bool GetGameCompleted()
+    // {
+    //     return store.gameCompleted;
+    // }
 }

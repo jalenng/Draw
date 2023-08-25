@@ -9,7 +9,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class GameData {
-    public int sceneIndex;
+    public Global.Level level;
     public SerializablePlayerData playerData;
     public List<SerializableCheckpointData> checkpointData = new List<SerializableCheckpointData>();
     public List<SerializableCutsceneData> cutsceneData = new List<SerializableCutsceneData>();

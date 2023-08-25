@@ -37,7 +37,7 @@ public class LevelSelector : MonoBehaviour
     {
         if (LevelReached(level))
         {
-            if (!Global.levelToBuildIndexMap.TryGetValue(level, out int buildIndex)) {
+            if (!Global.LevelToBuildIndexMap.TryGetValue(level, out int buildIndex)) {
                 Debug.Log($"Tried to load scene {level} from levels menu, but the build index couldn't be found");
             }
             sceneLoader.LoadScene(buildIndex);

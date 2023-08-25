@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5963290114822669853}
   - component: {fileID: 5963290114822669852}
+  - component: {fileID: 8120458588034327859}
   - component: {fileID: 7256643252228784490}
   - component: {fileID: -5709573148860235120}
   - component: {fileID: 1345000838129360006}
-  - component: {fileID: 8120458588034327859}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: GameManager
@@ -63,6 +63,19 @@ MonoBehaviour:
       - 0
     checkpointData: []
     cutsceneData: []
+--- !u!114 &8120458588034327859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5963290114822669855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91409d68cc8b749bdf437580d33086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveFileName: store.dat
 --- !u!114 &7256643252228784490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,15 +115,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyImmediately: 1
---- !u!114 &8120458588034327859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5963290114822669855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91409d68cc8b749bdf437580d33086, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

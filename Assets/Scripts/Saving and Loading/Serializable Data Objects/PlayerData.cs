@@ -38,10 +38,15 @@ public class PlayerData : MonoBehaviour
     void Load()
     {
         GameData gameData = gameManager?.gameData;
+        if (gameData == null) return;
 
-        // Ensure build index matches
-        bool sceneIndexMatch = gameData?.sceneIndex == SceneManager.GetActiveScene().buildIndex;
-        if (sceneIndexMatch)
+        // Get the build index from the saved level
+        bool buildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameData.level, out int savedBuildIndex);
+        if (!buildIndexFound) return;
+        
+        // Ensure build index matches before using the loaded gameData
+        bool buildIndexMatch = savedBuildIndex == SceneManager.GetActiveScene().buildIndex;
+        if (buildIndexMatch)
         {
             // Ensure player data exists 
             SerializablePlayerData playerData = gameData?.playerData;

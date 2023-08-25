@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Steamworks;
 
-// NOTE: 
-// - Do not remove achievements or reorder them
-// - Only add them to the bottom of the enum
-// - Otherwise, you will mess up the other references to the enums
-
 public class AchievementUnlocker : MonoBehaviour
 {
     [SerializeField] private Global.Achievement achievement;

@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Singleton))]
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private string saveFileName = "save.dat";
+
     // Objects with attributes to save
     [Header("Save Data Objects")]
     public PlayerData player;
@@ -19,15 +21,15 @@ public class GameManager : MonoBehaviour
     public GameData gameData = null;
 
     // State variables
-    string saveFilePath;
-    ObjectSerializer<GameData> serializer;
+    private string saveFilePath;
+    private ObjectSerializer<GameData> serializer;
 
     void Awake()
     {
         // Set up the game manager
         saveFilePath = Path.Combine(
             Application.persistentDataPath,
-            "save.dat"
+            saveFileName
         );
         serializer = new ObjectSerializer<GameData>();
         gameData = null;
@@ -56,7 +58,15 @@ public class GameManager : MonoBehaviour
         GameData newGameData = new GameData();
 
         // Capture the game data
-        newGameData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
+        Global.Level currentLevel = Global.GetLevelFromBuildIndex(currentBuildIndex);
+
+        if (currentLevel == Global.Level.NONE) {
+            Debug.Log("Tried to save but current scene is not a game level");
+            return;
+        }
+
+        newGameData.level = currentLevel;
         newGameData.playerData = player?.Capture();
         
         newGameData.checkpointData = new List<SerializableCheckpointData>();
@@ -94,9 +104,11 @@ public class GameManager : MonoBehaviour
         gameData = serializer.Read(saveFilePath);
         Debug.Log("Game loaded. Reloading scene.");
 
-        // Reload the scene
-        int sceneIndex = gameData.sceneIndex;
-        FindObjectOfType<SceneLoader>().LoadScene(sceneIndex);
+        // Load the scene        
+        bool buildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameData.level, out int savedBuildIndex);
+        if (buildIndexFound) {
+            FindObjectOfType<SceneLoader>().LoadScene(savedBuildIndex);
+        }
 
         // It is now the responsibility of the saved GameObjects in the reloaded scene
         // to reference the GameManager and retrieve the loaded game data.
