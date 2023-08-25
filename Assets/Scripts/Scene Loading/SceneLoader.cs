@@ -57,7 +57,7 @@ public class SceneLoader : MonoBehaviour
     // Loads a scene
     public void LoadScene(int index)
     {
-        StartCoroutine(LoadSceneAndPause(index));
+        StartCoroutine(LoadSceneRoutine(index));
     }
 
     // A coroutine that loads a given scene
@@ -67,7 +67,7 @@ public class SceneLoader : MonoBehaviour
         if (isLoading)
             yield break;
         isLoading = true;
-
+        menuManager.enablePause(false);
         // Set the transition color based on the level index.
         bool loadingToMenu = index == config.mainMenuBuildIndex;
         Color transitionColor = loadingToMenu
@@ -93,14 +93,8 @@ public class SceneLoader : MonoBehaviour
         yield return transition.FadeIn();
 
         isLoading = false;
-    }
-    // This is a coroutine I made so I'd be able to check when a level has finished loading.
-    // Disable the pause menu when we begin loading a new level, yield until the level is loaded, then enable the pause menu for use.
-    IEnumerator LoadSceneAndPause(int index) {
-        menuManager.enablePause(false);
-        yield return StartCoroutine(LoadSceneRoutine(index));
         menuManager = FindObjectOfType<MenuManager>();
-        menuManager.enablePause(true);  
+        menuManager.enablePause(true);
     }
 
     // Returns the current scene index
