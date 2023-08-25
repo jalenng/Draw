@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 2409944388738161584}
   - component: {fileID: 6630117800846439793}
   - component: {fileID: 1013699002414176775}
+  - component: {fileID: 3726410518709639179}
   m_Layer: 5
   m_Name: UI Button
   m_TagString: Untagged
@@ -238,7 +239,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.6839622, g: 0.81295735, b: 1, a: 1}
     m_PressedColor: {r: 0.68235296, g: 0.8117647, b: 1, a: 1}
     m_SelectedColor: {r: 0.68235296, g: 0.8117647, b: 1, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0
   m_SpriteState:
@@ -294,7 +295,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -1643656973328474427, guid: f161f5ffa53013d40bd0c11e00ca8336, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 58244641d2b841243a5826ca3a5845c9, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1e648a873b171407ba4c2201e790921a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -380,3 +381,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3726410518709639179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2409944388738161586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20fd3c82646e00b4eb3da57ab8936be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabledFGColor: {r: 0, g: 0, b: 0, a: 1}
+  disabledFGColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
+  textObject: {fileID: 729725477276843120}

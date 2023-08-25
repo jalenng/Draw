@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using TMPro;
+
 public class SettingsMenu : MonoBehaviour
 {
     // Audio mixer
     [Header("Audio Mixer")]
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioMixerParamsConfig mixerParams;
-    
     // Sliders
     [Header("Sliders")]
     public Slider masterVolumeSlider;
     public Slider BGMVolumeSlider;
     public Slider SFXVolumeSlider;
-    
-    // Buttons
-    [Header("Buttons")]
-    public Button returnButton;
 
     // Object references
+    [SerializeField] private GameObject versionTMPObj;
+    [SerializeField] private MenuManager menuHolder;
+
     SceneLoader levelLoader;
-    [SerializeField] MenuManager menuHolder;
+
     // Helper function to logarithmically map (0, 1) to a decibel value used for the audio mixer attenuation.
     float RatioToDecibel(float ratio)
     {
@@ -40,6 +40,18 @@ public class SettingsMenu : MonoBehaviour
     void Start()
     {
         levelLoader = FindObjectOfType<SceneLoader>();
+
+        // Update version number text
+        TextMeshProUGUI versionTMP = versionTMPObj?.GetComponent<TextMeshProUGUI>();
+        if (versionTMP)
+        {
+            versionTMP.text = $"v{Application.version}";
+            if (Debug.isDebugBuild)
+            {
+                versionTMP.text += "-debug";
+            }
+        }
+
         // Set sliders to current values of the audio mixer
         float masterVolume;
         audioMixer.GetFloat(mixerParams.masterVolume, out masterVolume);
