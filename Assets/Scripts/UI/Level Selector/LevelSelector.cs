@@ -5,8 +5,8 @@ using UnityEngine;
 public class LevelSelector : MonoBehaviour
 {
     // Object references
-    SceneLoader levelLoader;
-    GameManager gameManager;
+    SceneLoader sceneLoader;
+    PersistentStoreManager storeManager;
 
     bool unlockAllLevels;
 
@@ -19,8 +19,8 @@ public class LevelSelector : MonoBehaviour
 
     void Start()
     {
-        levelLoader = FindObjectOfType<SceneLoader>();
-        gameManager = FindObjectOfType<GameManager>();    // GameManager is a singleton
+        sceneLoader = FindObjectOfType<SceneLoader>();
+        storeManager = FindObjectOfType<PersistentStoreManager>();
 
         if (Debug.isDebugBuild && unlockAllLevelsInDebug)
         {
@@ -28,20 +28,23 @@ public class LevelSelector : MonoBehaviour
         }
     }
 
-    public bool LevelReached(int sceneIndex)
+    public bool LevelReached(Global.Level level)
     {
-        return unlockAllLevels || gameManager.LevelReached(sceneIndex);
+        return unlockAllLevels || storeManager.QueryLevelReached(level);
     }
 
-    public void LoadScene(int sceneIndex)
+    public void LoadScene(Global.Level level)
     {
-        if (LevelReached(sceneIndex))
+        if (LevelReached(level))
         {
-            levelLoader.LoadScene(sceneIndex);
+            if (!Global.levelToBuildIndexMap.TryGetValue(level, out int buildIndex)) {
+                Debug.Log($"Tried to load scene {level} from levels menu, but the build index couldn't be found");
+            }
+            sceneLoader.LoadScene(buildIndex);
         }
         else
         {
-            Debug.Log($"Tried to load scene {sceneIndex} from levels menu, but the level has not been reached yet");
+            Debug.Log($"Tried to load scene {level} from levels menu, but the level has not been reached yet");
         }
     }
     void Update()

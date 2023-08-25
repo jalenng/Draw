@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LevelSelectorButton : MonoBehaviour
 {
     // Configuration parameters
-    [SerializeField] public int buildIndex;
+    [SerializeField] public Global.Level level;
 
     // References
     [SerializeField] public LevelSelector levelSelector;
@@ -16,12 +16,12 @@ public class LevelSelectorButton : MonoBehaviour
     {
         // Enable the button only if there exists a game save that indicates
         // the level has already been reached in the past
-        bool levelReached = levelSelector.LevelReached(buildIndex);
+        bool levelReached = levelSelector.LevelReached(level);
         GetComponent<Button>().interactable = levelReached;
     }
 
     public void OnClick()
     {
-        levelSelector.LoadScene(buildIndex);
+        levelSelector.LoadScene(level);
     }
 }

@@ -9,16 +9,18 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Singleton))]
 public class GameManager : MonoBehaviour
 {
-    // Object references with attributes to save
-    [Header("Object References")]
+    // Objects with attributes to save
+    [Header("Save Data Objects")]
     public PlayerData player;
     public List<CheckpointData> checkpointData;
     public List<CutsceneData> cutsceneData;
 
+    // Object for other saveData objects to retrieve from
+    public GameData gameData = null;
+
     // State variables
     string saveFilePath;
-    GameSerializer serializer;
-    public GameData gameData;
+    ObjectSerializer<GameData> serializer;
 
     void Awake()
     {
@@ -27,31 +29,10 @@ public class GameManager : MonoBehaviour
             Application.persistentDataPath,
             "save.dat"
         );
-        serializer = new GameSerializer();
+        serializer = new ObjectSerializer<GameData>();
         gameData = null;
 
-        SetupSaveOnQuit();
-    }
-
-    void Start()
-    {
-        SetRatio(3, 2);
-    }
-
-    void SetRatio(float w, float h)
-    {
-        if ((((float)Screen.width) / ((float)Screen.height)) > w / h)
-        {
-            Screen.SetResolution((int)(((float)Screen.height) * (w / h)), Screen.height, true);
-        }
-        else
-        {
-            Screen.SetResolution(Screen.width, (int)(((float)Screen.width) * (h / w)), true);
-        }
-    }
-
-    void SetupSaveOnQuit()
-    {
+        // Call the Save function when the game quits
         Application.quitting += Save;
     }
 
@@ -72,30 +53,30 @@ public class GameManager : MonoBehaviour
     public void Save()
     {
         // Create a game data object
-        gameData = new GameData();
+        GameData newGameData = new GameData();
 
         // Capture the game data
-        gameData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
-        gameData.playerData = player?.Capture();
+        newGameData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        newGameData.playerData = player?.Capture();
         
-        gameData.checkpointData = new List<SerializableCheckpointData>();
+        newGameData.checkpointData = new List<SerializableCheckpointData>();
         foreach (CheckpointData checkpoint in checkpointData)
         {
             if (checkpoint != null) {
-                gameData.checkpointData.Add(checkpoint.Capture());
+                newGameData.checkpointData.Add(checkpoint.Capture());
             }
         }
         
-        gameData.cutsceneData = new List<SerializableCutsceneData>();
+        newGameData.cutsceneData = new List<SerializableCutsceneData>();
         foreach (CutsceneData cutscene in cutsceneData)
         {
             if (cutscene != null) {
-                gameData.cutsceneData.Add(cutscene.Capture());
+                newGameData.cutsceneData.Add(cutscene.Capture());
             }
         }
 
         // Write to file
-        serializer.Save(gameData, saveFilePath);
+        serializer.Write(newGameData, saveFilePath);
 
         Debug.Log("Game saved");
     }
@@ -110,7 +91,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Read from file
-        gameData = serializer.Load(saveFilePath);
+        gameData = serializer.Read(saveFilePath);
         Debug.Log("Game loaded. Reloading scene.");
 
         // Reload the scene
@@ -121,18 +102,9 @@ public class GameManager : MonoBehaviour
         // to reference the GameManager and retrieve the loaded game data.
     }
 
-    public bool LevelReached(int sceneIndex) {
-        if (!CanLoad()) return false;
-
-        GameData gameData = serializer.Load(saveFilePath);
-        int savedSceneIndex = gameData.sceneIndex;
-
-        return sceneIndex <= savedSceneIndex;
-    }
-
-    // Returns true if a savefile exists, false otherwise
+    // Returns true if a game save exists, false otherwise
     public bool CanLoad()
     {
-        return File.Exists(saveFilePath);
+        return serializer.CanRead(saveFilePath);
     }
 }
