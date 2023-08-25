@@ -11,22 +11,15 @@ public class Textbox : MonoBehaviour
     [SerializeField] TextMeshProUGUI contentTMP;
     [SerializeField] Image avatarImage;
     [SerializeField] Animator CTCAnimator;
-    [SerializeField] DialogueAudio speaker;
 
     // State variables
     Sprite avatarSprite;
     string contentText;
     int CPS;
-    bool sayRunning = false;
 
     int totalCharacters;
     int i;
 
-    void Update() {
-        if(sayRunning) {
-            speaker.PlayDialogueSFX();
-        }
-    }
     // Updates the avatar image to show
     public void setAvatar(Sprite avatar)
     {
@@ -63,7 +56,6 @@ public class Textbox : MonoBehaviour
     // Updates the textbox to show the current avatar and content
     public IEnumerator Say()
     {
-        sayRunning = true;
         // Hide the CTC indicator
         CTCAnimator.SetBool("Hidden", true);
 
@@ -106,7 +98,7 @@ public class Textbox : MonoBehaviour
 
         // Show the CTC indicator
         CTCAnimator.SetBool("Hidden", false);
-        sayRunning = false;
+
     }
 
 }

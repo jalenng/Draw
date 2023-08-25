@@ -25,14 +25,10 @@ public class Enemy : MonoBehaviour
     private Vector3 originalPosition;
     private int index = 0;
     private float wait;
-    private Animator anim;
 
     void Start()
     {
         originalPosition = transform.position;
-        Animator anim = GetComponent<Animator>();
-        AnimatorStateInfo state = anim.GetCurrentAnimatorStateInfo(0);//could replace 0 by any other animation layer index
-        anim.Play(state.fullPathHash, -1, Random.Range(0f, 1f));
     }
 
     void Update()

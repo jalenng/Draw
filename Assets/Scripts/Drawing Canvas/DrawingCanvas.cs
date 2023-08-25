@@ -27,7 +27,6 @@ public class DrawingCanvas : MonoBehaviour
     Line currentLine;
     Camera cam;
     AudioSource audioSource;
-    AchievementUnlocker achievementUnlocker;
     
     public CutsceneTrigger trigger;
 
@@ -35,7 +34,6 @@ public class DrawingCanvas : MonoBehaviour
     {
         cam = Camera.main;
         audioSource = GetComponent<AudioSource>();
-        achievementUnlocker = GetComponent<AchievementUnlocker>();
     }
 
     void Update()
@@ -107,18 +105,13 @@ public class DrawingCanvas : MonoBehaviour
             if (currentLineLength < minLineLength)
                 Destroy(currentLine.gameObject);
 
-            // Otherwise...
-            else {
-                // Apply the line's body type property.
-                // This makes the line either static or dynamic, depending on whether it's affected by gravity.
+            // Otherwise, apply the line's body type property.
+            // This makes the line either static or dynamic, depending on whether it's affected by gravity.
+            else
                 currentLine.ApplyBodyTypeProperty();
-                // Then give the player the related achievement.
-                achievementUnlocker.SetAchievement();
-            }
 
             // Make currentLine null. We're done with this line.
             currentLine = null;
-
             if (trigger && !trigger.hasPlayed) trigger.TriggerCutscene();
         }
     }

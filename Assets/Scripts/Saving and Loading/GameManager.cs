@@ -9,6 +9,10 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Singleton))]
 public class GameManager : MonoBehaviour
 {
+    // Configuration parameters
+    
+    [Header("File saving")]
+
     // Object references with attributes to save
     [Header("Object References")]
     public PlayerData player;
@@ -30,7 +34,7 @@ public class GameManager : MonoBehaviour
         serializer = new GameSerializer();
         gameData = null;
 
-        SetupSaveOnQuit();
+        // SetupSaveOnQuit();
     }
 
     void Start()
@@ -58,7 +62,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // For dev and debugging convenience
-        if (Debug.isDebugBuild && Input.GetKeyDown(KeyCode.LeftShift))
+        if (Debug.isDebugBuild)
         {
             if (Input.GetKeyDown(KeyCode.S))
                 Save();
@@ -81,17 +85,19 @@ public class GameManager : MonoBehaviour
         gameData.checkpointData = new List<SerializableCheckpointData>();
         foreach (CheckpointData checkpoint in checkpointData)
         {
-            if (checkpoint != null) {
-                gameData.checkpointData.Add(checkpoint.Capture());
-            }
+            //TODO: improve this
+            if (checkpoint == null)
+                continue;
+            gameData.checkpointData.Add(checkpoint.Capture());
         }
         
         gameData.cutsceneData = new List<SerializableCutsceneData>();
         foreach (CutsceneData cutscene in cutsceneData)
         {
-            if (cutscene != null) {
-                gameData.cutsceneData.Add(cutscene.Capture());
-            }
+            //TODO: Improve this
+            if (cutscene == null)
+                continue;
+            gameData.cutsceneData.Add(cutscene.Capture());
         }
 
         // Write to file
@@ -119,15 +125,6 @@ public class GameManager : MonoBehaviour
 
         // It is now the responsibility of the saved GameObjects in the reloaded scene
         // to reference the GameManager and retrieve the loaded game data.
-    }
-
-    public bool LevelReached(int sceneIndex) {
-        if (!CanLoad()) return false;
-
-        GameData gameData = serializer.Load(saveFilePath);
-        int savedSceneIndex = gameData.sceneIndex;
-
-        return sceneIndex <= savedSceneIndex;
     }
 
     // Returns true if a savefile exists, false otherwise
