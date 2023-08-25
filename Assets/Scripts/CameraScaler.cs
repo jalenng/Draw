@@ -20,16 +20,37 @@ public class CameraScaler : MonoBehaviour
     {
         int screenWidth = Screen.width; //px
         int screenHeight = Screen.height; //px
-        
+
         bool screenSizeChanged = screenWidth != lastScreenWidth || screenHeight != lastScreenHeight;
-        if (screenSizeChanged) {
-            // Center viewport and set aspect ratio to 3:2
-            int aspectRatioWidth = (int)(screenHeight * aspectRatio);
+        if (screenSizeChanged)
+        {
+            // Resize viewport and center it while maintaining the desired aspect ratio.
 
-            float newWidth = (float)aspectRatioWidth / screenWidth;
-            float newX = (1f - newWidth) / 2;
+            float newX = 0f;
+            float newY = 0f;
+            float newWidth = 1f;
+            float newHeight = 1f;
 
-            camera.rect = new Rect(newX, 0, newWidth, 1);
+            // Check whether we need to adjust horizontally or vertically by 
+            // comparing the desired aspect ratio and the current aspect ratio
+            float currentScreenAspectRatio = (float)screenWidth / screenHeight;
+
+            // If screen is too wide, we center horizontally
+            if (currentScreenAspectRatio > aspectRatio)
+            {
+                int aspectRatioWidth = (int)(screenHeight * aspectRatio);
+                newWidth = (float)aspectRatioWidth / screenWidth;
+                newX = (1f - newWidth) / 2;
+            }
+            // else, screen is too tall, so we center vertically
+            else
+            {
+                int aspectRatioHeight = (int)(screenWidth / aspectRatio);
+                newHeight = (float)aspectRatioHeight / screenHeight;
+                newY = (1f - newHeight) / 2;
+            }
+
+            camera.rect = new Rect(newX, newY, newWidth, newHeight);
 
             // Remember width and height to track changes
             lastScreenWidth = screenWidth;
@@ -44,14 +65,14 @@ public class CameraScaler : MonoBehaviour
     {
         // Remember viewport rect
         Rect oldViewportRect = camera.rect;
-        
+
         // New viewport rect to clear the whole screen
         Rect newViewportRect = new Rect(0, 0, 1, 1);
- 
+
         // Clear the pixels with black
         camera.rect = newViewportRect;
         GL.Clear(true, true, Color.black);
-       
+
         // Restore the previous viewport rect
         camera.rect = oldViewportRect;
     }
