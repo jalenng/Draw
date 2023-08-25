@@ -15,9 +15,11 @@ public class SceneLoader : MonoBehaviour
     // State variables
     bool isLoading = false;
     AudioSystem audSysSound;
+    MenuManager menuManager;
 
     void Start() {
         audSysSound = AudioSystem.audioPlayer;
+        menuManager = FindObjectOfType<MenuManager>();
     }
     // Load the first level
     public void StartGame()
@@ -55,7 +57,7 @@ public class SceneLoader : MonoBehaviour
     // Loads a scene
     public void LoadScene(int index)
     {
-        StartCoroutine(LoadSceneRoutine(index));
+        StartCoroutine(LoadSceneAndPause(index));
     }
 
     // A coroutine that loads a given scene
@@ -91,6 +93,14 @@ public class SceneLoader : MonoBehaviour
         yield return transition.FadeIn();
 
         isLoading = false;
+    }
+    // This is a coroutine I made so I'd be able to check when a level has finished loading.
+    // Disable the pause menu when we begin loading a new level, yield until the level is loaded, then enable the pause menu for use.
+    IEnumerator LoadSceneAndPause(int index) {
+        menuManager.enablePause(false);
+        yield return StartCoroutine(LoadSceneRoutine(index));
+        menuManager = FindObjectOfType<MenuManager>();
+        menuManager.enablePause(true);  
     }
 
     // Returns the current scene index
