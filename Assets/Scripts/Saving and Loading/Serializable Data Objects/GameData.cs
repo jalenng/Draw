@@ -5,7 +5,7 @@ using UnityEngine;
 // The GameData class aggregates the data of the player and the checkpoints.
 
 // It gets serialized by the GameManager which uses
-// the GameSerializer.
+// the ObjectSerializer.
 
 [System.Serializable]
 public class GameData {
