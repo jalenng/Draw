@@ -20,16 +20,10 @@ public class MenuManager : MonoBehaviour
         if (GetCurrentSceneIndex() == config.mainMenuBuildIndex) {
             mainMenu.SetActive(true);
         }
-        // If not in the Main Menu Scene menu, enable the Pause Menu.
-        // This does not immediately make it visible though. It just allows 
-        // Pause Menu to listen to the Esc key and manage the UI visibility itself.
-        else {
-            enablePause(true);
-        }
-        
         // Disable all other canvases
         enableSettings(false);
         enableLevels(false);
+        enablePause(false);
     }
 
     // Public functions for OnClick() to call
@@ -40,7 +34,7 @@ public class MenuManager : MonoBehaviour
             Debug.Log("Tried to enable settings menu but it's undefined");
     }
     public void enablePause(bool enable) {
-        if (pauseMenu) 
+        if (pauseMenu && !(GetCurrentSceneIndex() == config.mainMenuBuildIndex)) 
             pauseMenu.SetActive(enable);
         else 
             Debug.Log("Tried to enable pause menu but it's undefined");
