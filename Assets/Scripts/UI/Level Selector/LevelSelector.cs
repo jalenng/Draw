@@ -11,21 +11,18 @@ public class LevelSelector : MonoBehaviour
     bool unlockAllLevels;
 
     [SerializeField] MenuManager menuHolder;
-    
-    // Configuration parameters
-    // For dev/debug only
-    [Header("The options below will only take effect in Debug mode")]
-    [SerializeField] private bool unlockAllLevelsInDebug = false;
 
-    void Start()
+    void Awake()
     {
         sceneLoader = FindObjectOfType<SceneLoader>();
         storeManager = FindObjectOfType<PersistentStoreManager>();
+    }
 
-        if (Debug.isDebugBuild && unlockAllLevelsInDebug)
-        {
-            unlockAllLevels = true;
-        }
+    void OnEnable()
+    {
+        // Debug build only:
+        // If left shift is held while the level selector opens, all leves are unlocked
+        unlockAllLevels = Debug.isDebugBuild && Input.GetKey(KeyCode.LeftShift);
     }
 
     public bool LevelReached(Global.Level level)
