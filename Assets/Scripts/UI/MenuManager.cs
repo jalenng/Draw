@@ -14,37 +14,34 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject levelMenu;
 
-    void Start()
+    // Public functions for OnClick() to call
+    public void enableSettings(bool enable)
     {
-        // Only enable Main Menu Canvas if we're in the Main Menu Scene
-        if (GetCurrentSceneIndex() == config.mainMenuBuildIndex) {
-            mainMenu.SetActive(true);
+        if (settingsMenu)
+            settingsMenu.SetActive(enable);
+        else
+            Debug.Log($"Tried to set settings menu enabled to {enable} but it's undefined");
+    }
+    public void enablePause(bool enable)
+    {
+        if (pauseMenu)
+        {
+            if (!(GetCurrentSceneIndex() == config.mainMenuBuildIndex))
+                pauseMenu.SetActive(enable);
+            else
+                Debug.Log($"Tried to set pause menu enabled to {enable} but we're in the main menu");
         }
-        // Disable all other canvases
-        enableSettings(false);
-        enableLevels(false);
-        enablePause(false);
+        else
+            Debug.Log($"Tried to set pause menu enabled to {enable} but it's undefined");
+    }
+    public void enableLevels(bool enable)
+    {
+        if (levelMenu)
+            levelMenu.SetActive(enable);
+        else
+            Debug.Log($"Tried to set level menu enabled to {enable} but it's undefined");
     }
 
-    // Public functions for OnClick() to call
-    public void enableSettings(bool enable) {
-        if (settingsMenu) 
-            settingsMenu.SetActive(enable);
-        else 
-            Debug.Log("Tried to enable settings menu but it's undefined");
-    }
-    public void enablePause(bool enable) {
-        if (pauseMenu && !(GetCurrentSceneIndex() == config.mainMenuBuildIndex)) 
-            pauseMenu.SetActive(enable);
-        else 
-            Debug.Log("Tried to enable pause menu but it's undefined");
-    }
-    public void enableLevels(bool enable) {
-        if (levelMenu) 
-            levelMenu.SetActive(enable);
-        else 
-            Debug.Log("Tried to enable levels menu but it's undefined");
-    }
     // Shamelessly stolen from another script
     private int GetCurrentSceneIndex()
     {
