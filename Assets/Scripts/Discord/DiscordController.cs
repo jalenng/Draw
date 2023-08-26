@@ -11,36 +11,81 @@ public class DiscordController : MonoBehaviour
 
     void Start()
     {
-        discord = new Discord.Discord(1142718120876834889, (System.UInt64)Discord.CreateFlags.Default);
-        var activityManager = discord.GetActivityManager();
+        TryToInitDiscord();
+    }
 
-        TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
-        int startTime = (int)t.TotalSeconds;
-
-        var activity = new Discord.Activity
+    void TryToInitDiscord()
+    {
+        try
         {
-            State = "",
-            Details = "",
-            Assets =
+            discord = new Discord.Discord(1142718120876834889, (System.UInt64)Discord.CreateFlags.NoRequireDiscord);
+            var activityManager = discord.GetActivityManager();
+
+            TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            int startTime = (int)t.TotalSeconds;
+
+            var activity = new Discord.Activity
+            {
+                State = "",
+                Details = "",
+                Assets =
             {
                 LargeImage = "logo",
             },
-            Timestamps = {
+                Timestamps = {
                 Start = startTime,
             }
-        };
-        activityManager.UpdateActivity(activity, (res) =>
-        {
-            if (res == Discord.Result.Ok)
+            };
+            activityManager.RegisterSteam(2473980);
+            activityManager.UpdateActivity(activity, (res) =>
             {
-                Debug.Log("Discord activity updated successfully");
-            }
-        });
+                if (res == Discord.Result.Ok)
+                {
+                    Debug.Log("Discord update activity callback registered");
+                }
+            });
+
+            Debug.Log("Discord controller initialized");
+        }
+        catch (Discord.ResultException)
+        {
+            Debug.Log("Discord controller failed to initialize");
+            DestroyDiscord();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        discord.RunCallbacks();
+        if (discord == null)
+        {
+            TryToInitDiscord();
+        }
+
+        try
+        {
+            discord?.RunCallbacks();
+        }
+        catch (Discord.ResultException)
+        {
+            Debug.Log("Discord encountered error running callbacks");
+            DestroyDiscord();
+        }
+    }
+
+    void OnApplicationQuit()
+    {
+        if (discord == null) return;
+        
+        DestroyDiscord();
+    }
+
+    void DestroyDiscord()
+    {
+        if (discord == null) return;
+        
+        discord.Dispose();
+        discord = null;
+        Debug.Log("Discord instance destroyed");
     }
 }
