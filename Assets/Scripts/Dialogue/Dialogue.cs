@@ -9,6 +9,7 @@ public class Dialogue : ScriptableObject
     [Header("Defaults")]
     [Range(0, 120)] [Tooltip("Set to 0 to disable typewriting effect")] 
     public int CPS = 30;
+    public string SFXDirectory = "";
 
     [Space(16)]
 

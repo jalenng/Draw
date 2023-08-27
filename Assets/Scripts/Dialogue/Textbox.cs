@@ -17,16 +17,12 @@ public class Textbox : MonoBehaviour
     Sprite avatarSprite;
     string contentText;
     int CPS;
+    string sfxDirectory;
     bool sayRunning = false;
 
     int totalCharacters;
     int i;
 
-    void Update() {
-        if(sayRunning) {
-            speaker.PlayDialogueSFX();
-        }
-    }
     // Updates the avatar image to show
     public void setAvatar(Sprite avatar)
     {
@@ -43,6 +39,12 @@ public class Textbox : MonoBehaviour
     public void setCPS(int newCPS)
     {
         this.CPS = newCPS;
+    }
+
+    // Updates the dialogue SFX directory
+    public void setSFXDirectory(string newSFXDirectory)
+    {
+        this.sfxDirectory = newSFXDirectory;
     }
 
     // Clears the avatar image and content text
@@ -64,6 +66,10 @@ public class Textbox : MonoBehaviour
     public IEnumerator Say()
     {
         sayRunning = true;
+
+        // Set SFX path
+        speaker.SetSFXDirectory(sfxDirectory);
+
         // Hide the CTC indicator
         CTCAnimator.SetBool("Hidden", true);
 
@@ -97,6 +103,10 @@ public class Textbox : MonoBehaviour
             for (i = 0; i <= totalCharacters; i++)
             {
                 contentTMP.text = "<color=black>" + contentText.Substring(0, i) + "<color=white>" + contentText.Substring(i);
+
+                // Play SFX
+                speaker.Speak();
+                
                 yield return new WaitForSeconds(SPC);
             }
         }
@@ -106,6 +116,10 @@ public class Textbox : MonoBehaviour
 
         // Show the CTC indicator
         CTCAnimator.SetBool("Hidden", false);
+
+        // Wrap up any SFX
+        speaker.WrapUp();
+
         sayRunning = false;
     }
 
