@@ -18,7 +18,8 @@ public class DrawingArea : MonoBehaviour
     // State variables
     Color baseOutlineColor;
 
-    private void Start() {
+    private void Start()
+    {
         lineRenderer = GetComponent<LineRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
 
@@ -71,26 +72,32 @@ public class DrawingArea : MonoBehaviour
     }
 
     // Update cursor conditionally when the mouse enters/exits the drawing area
-    private void OnMouseEnter() {
-        if (drawingCanvas.CanDraw()) {
+    private void OnMouseEnter()
+    {
+        if (drawingCanvas.CanDraw())
+        {
             cursorManager.EnableCursor("pencil");
         }
     }
 
-    private void OnMouseExit() {
-        if (!drawingCanvas.CanDraw()) {
+    private void OnMouseExit()
+    {
+        if (!drawingCanvas.CanDraw())
+        {
             cursorManager.DisableCursor("pencil");
         }
     }
 
     // Invoked when the player clicks inside the drawing area's collider
-    private void OnMouseDown() {
+    private void OnMouseDown()
+    {
         // Stops from drawing when pauseMenu enabled.
         // To do: Find better solution to this. Since our game is small, this is fine since it'll be like... 10 max Drawing Areas that need to initialize
         // a ref to PauseMenu. 
-        if(!pauseMenuOpen()) drawingCanvas.BeginDraw();
+        if (!pauseMenuOpen()) drawingCanvas.BeginDraw();
     }
-    public bool pauseMenuOpen() {
+    public bool pauseMenuOpen()
+    {
         return menuManager.pauseMenuOpen();
     }
 }
