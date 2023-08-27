@@ -88,6 +88,7 @@ public class DialogueSystem : MonoBehaviour
             // Update the textbox properties
             textbox.setAvatar(dialogueEntry.avatar);
             textbox.setText(dialogueEntry.content);
+            textbox.setSFXDirectory(dialogue.SFXDirectory);
             if (dialogueEntry.useCPS)   // If the dialogue entry uses custom CPS, use it.
                 textbox.setCPS(dialogueEntry.CPS);
             else                        // Otherwise, use the default CPS.
