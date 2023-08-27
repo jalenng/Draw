@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 public class PersistentStore
 {
     public HashSet<Global.Level> reachedLevels = new HashSet<Global.Level>();
-    // public bool gameCompleted = false;
 }
 
 [RequireComponent(typeof(Singleton))]
@@ -65,24 +64,16 @@ public class PersistentStoreManager : MonoBehaviour
     // Below are mutators for the persistent store
     public void AddLevelReached(Global.Level level)
     {
-        store.reachedLevels.Add(level);
-        Save();
+        if (!store.reachedLevels.Contains(level))
+        {
+            store.reachedLevels.Add(level);
+            Save();
+        }
     }
-
-    // public void SetGameCompleted(bool value)
-    // {
-    //     store.gameCompleted = value;
-    //     Save();
-    // }
 
     // Below are getters for the persistent store
     public bool QueryLevelReached(Global.Level level)
     {
         return store.reachedLevels.Contains(level);
     }
-
-    // public bool GetGameCompleted()
-    // {
-    //     return store.gameCompleted;
-    // }
 }

@@ -61,14 +61,21 @@ public class GameManager : MonoBehaviour
         int currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
         Global.Level currentLevel = Global.GetLevelFromBuildIndex(currentBuildIndex);
 
+        // Ensure this is a scene that we should be saving progress for
         if (currentLevel == Global.Level.NONE) {
             Debug.Log("Tried to save but current scene is not a game level");
             return;
         }
-
-        newGameData.level = currentLevel;
-        newGameData.playerData = player?.Capture();
         
+        // Capture level state
+        newGameData.level = currentLevel;
+
+        // Capture player state
+        if (player != null) {
+            newGameData.playerData = player?.Capture();
+        }
+        
+        // Capture checkpoint state
         newGameData.checkpointData = new List<SerializableCheckpointData>();
         foreach (CheckpointData checkpoint in checkpointData)
         {
@@ -77,6 +84,7 @@ public class GameManager : MonoBehaviour
             }
         }
         
+        // Capture cutscene state
         newGameData.cutsceneData = new List<SerializableCutsceneData>();
         foreach (CutsceneData cutscene in cutsceneData)
         {

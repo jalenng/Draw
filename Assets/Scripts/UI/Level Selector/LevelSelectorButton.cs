@@ -10,14 +10,20 @@ public class LevelSelectorButton : MonoBehaviour
 
     // References
     [SerializeField] public LevelSelector levelSelector;
+    private Button button;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
+    {
+        button = GetComponent<Button>();
+    }
+
+    void OnEnable()
     {
         // Enable the button only if there exists a game save that indicates
         // the level has already been reached in the past
         bool levelReached = levelSelector.LevelReached(level);
-        GetComponent<Button>().interactable = levelReached;
+        button.interactable = levelReached;
     }
 
     public void OnClick()
