@@ -13,7 +13,7 @@ public class DrawingArea : MonoBehaviour
     LineRenderer lineRenderer;
     BoxCollider2D boxCollider;
     CursorManager cursorManager;
-    PauseMenu pauseMenu;
+    MenuManager menuManager;
 
     // State variables
     Color baseOutlineColor;
@@ -25,7 +25,8 @@ public class DrawingArea : MonoBehaviour
         baseOutlineColor = drawingCanvas.GetLinePrefab().GetLineColor();
 
         cursorManager = FindObjectOfType<CursorManager>();
-        pauseMenu = FindObjectOfType<PauseMenu>();
+        menuManager = FindObjectOfType<MenuManager>();
+
         SetUpBorderOutline();
     }
 
@@ -87,9 +88,9 @@ public class DrawingArea : MonoBehaviour
         // Stops from drawing when pauseMenu enabled.
         // To do: Find better solution to this. Since our game is small, this is fine since it'll be like... 10 max Drawing Areas that need to initialize
         // a ref to PauseMenu. 
-        if(!pauseMenuEnabled()) drawingCanvas.BeginDraw();
+        if(!pauseMenuOpen()) drawingCanvas.BeginDraw();
     }
-    public bool pauseMenuEnabled() {
-        return pauseMenu.isCanvasEnabled();
+    public bool pauseMenuOpen() {
+        return menuManager.pauseMenuOpen();
     }
 }

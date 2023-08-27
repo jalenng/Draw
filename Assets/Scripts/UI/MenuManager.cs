@@ -13,6 +13,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject levelMenu;
+    PauseMenu pauseMenuScript;
 
     // Public functions for OnClick() to call
     public void enableSettings(bool enable)
@@ -26,12 +27,13 @@ public class MenuManager : MonoBehaviour
     {
         if (pauseMenu)
         {
-            if (!(GetCurrentSceneIndex() == config.mainMenuBuildIndex))
+            if (!(GetCurrentSceneIndex() == config.mainMenuBuildIndex)) {
                 pauseMenu.SetActive(enable);
-            else
+                pauseMenuScript = pauseMenu.GetComponent<PauseMenu>();
+            } else {
                 Debug.Log($"Tried to set pause menu enabled to {enable} but we're in the main menu");
-        }
-        else
+            }
+        } else 
             Debug.Log($"Tried to set pause menu enabled to {enable} but it's undefined");
     }
     public void enableLevels(bool enable)
@@ -46,5 +48,8 @@ public class MenuManager : MonoBehaviour
     private int GetCurrentSceneIndex()
     {
         return SceneManager.GetActiveScene().buildIndex;
+    }
+    public bool pauseMenuOpen() {
+        return pauseMenuScript.isCanvasEnabled();
     }
 }
