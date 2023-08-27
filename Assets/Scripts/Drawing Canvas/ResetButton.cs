@@ -39,8 +39,10 @@ public class ResetButton : MonoBehaviour
     }
 
     private void OnMouseDown() {
-        audio.Play();
-        drawingCanvas.Reset();
+        if(!drawingArea.pauseMenuOpen()) {
+            audio.Play();
+            drawingCanvas.Reset();
+        }
     }
 
 }

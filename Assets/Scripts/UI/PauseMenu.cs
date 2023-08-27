@@ -9,7 +9,6 @@ public class PauseMenu : MonoBehaviour
 
     // State variables
     bool paused = false;    // Whether the game is paused
-    bool canPause = true;    // Whether the game can be paused
 
     void Start() {
         PauseMenuCanvas.SetActive(false);
@@ -30,8 +29,6 @@ public class PauseMenu : MonoBehaviour
     // Pause the game    
     public void Pause()
     {
-        if (!canPause)
-            return;
         paused = true;
         Time.timeScale = 0;
         PauseMenuCanvas.SetActive(true);
@@ -51,13 +48,13 @@ public class PauseMenu : MonoBehaviour
         // Save the game
         FindObjectOfType<GameManager>()?.Save();
 
-        // Don't allow the player to open the pause menu
-        canPause = false;
-
         // Resume the game
         Resume();
 
         // Load the main menu with the level manager
         FindObjectOfType<SceneLoader>().LoadMainMenu();
+    }
+    public bool isCanvasEnabled() {
+        return PauseMenuCanvas.activeInHierarchy;
     }
 }
