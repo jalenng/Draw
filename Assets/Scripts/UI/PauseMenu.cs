@@ -60,4 +60,11 @@ public class PauseMenu : MonoBehaviour
         // Load the main menu with the level manager
         FindObjectOfType<SceneLoader>().LoadMainMenu();
     }
+    // Used by other scripts to enable/disable pausing.
+    public void SetCanPause(bool enabled) {
+        canPause = enabled;
+    }
+    public bool isCanvasEnabled() {
+        return PauseMenuCanvas.activeInHierarchy;
+    }
 }

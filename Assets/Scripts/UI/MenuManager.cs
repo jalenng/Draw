@@ -14,16 +14,19 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject levelMenu;
 
-    void Start()
+    // Using Awake() to initialize menu before other Start() functions 
+    void Awake()
     {
         // Only enable Main Menu Canvas if we're in the Main Menu Scene
         if (GetCurrentSceneIndex() == config.mainMenuBuildIndex) {
             mainMenu.SetActive(true);
+        } else {
+            // Enabling pauseMenu in Awake() so FindObjectOfType() in Start() will return properly
+            enablePause(true);
         }
         // Disable all other canvases
         enableSettings(false);
         enableLevels(false);
-        enablePause(false);
     }
 
     // Public functions for OnClick() to call
@@ -34,7 +37,7 @@ public class MenuManager : MonoBehaviour
             Debug.Log("Tried to enable settings menu but it's undefined");
     }
     public void enablePause(bool enable) {
-        if (pauseMenu && !(GetCurrentSceneIndex() == config.mainMenuBuildIndex)) 
+        if (pauseMenu) 
             pauseMenu.SetActive(enable);
         else 
             Debug.Log("Tried to enable pause menu but it's undefined");

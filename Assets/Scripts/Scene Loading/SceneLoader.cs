@@ -15,7 +15,7 @@ public class SceneLoader : MonoBehaviour
     // State variables
     bool isLoading = false;
     private AudioSource audioSource;
-    MenuManager menuManager;
+    PauseMenu pauseMenu;
 
     // Object references
     PersistentStoreManager storeManager;
@@ -102,8 +102,8 @@ public class SceneLoader : MonoBehaviour
         yield return transition.FadeIn();
 
         isLoading = false;
-        menuManager = FindObjectOfType<MenuManager>();
-        menuManager.enablePause(true);
+        pauseMenu = FindObjectOfType<PauseMenu>();
+        pauseMenu.SetCanPause(true);
     }
 
     // Returns the current scene index
