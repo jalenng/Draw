@@ -36,7 +36,8 @@ public class Global
         MEET_CLAIRE,
         FINISH_GAME,
         DRAW_IN_CANVAS,
-        TOUCH_ORANGE_OBJ
+        TOUCH_ORANGE_OBJ,
+        DRAW_CHAIR
     }
 
     // Mappings
@@ -67,6 +68,7 @@ public class Global
         { Achievement.FINISH_GAME, "FINISH_GAME"},
         { Achievement.DRAW_IN_CANVAS, "DRAW_IN_CANVAS"},
         { Achievement.TOUCH_ORANGE_OBJ, "TOUCH_ORANGE_OBJ"},
+        { Achievement.DRAW_CHAIR, "DRAW_CHAIR"},
     };
 
     // Methods
