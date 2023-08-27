@@ -15,7 +15,6 @@ public class SceneLoader : MonoBehaviour
     // State variables
     bool isLoading = false;
     private AudioSource audioSource;
-    PauseMenu pauseMenu;
 
     // Object references
     PersistentStoreManager storeManager;
@@ -23,8 +22,9 @@ public class SceneLoader : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        pauseMenu = FindObjectOfType<PauseMenu>();
         storeManager = FindObjectOfType<PersistentStoreManager>();
+
+        StartCoroutine(handleSceneEntrance());
     }
     // Load the first level
     public void StartGame()
@@ -68,12 +68,23 @@ public class SceneLoader : MonoBehaviour
     // A coroutine that loads a given scene
     IEnumerator LoadSceneRoutine(int index)
     {
-        // Ensure only one scene gets loaded
+        // Ensure only one scene gets loaded at a time
         if (isLoading)
             yield break;
-            
+
         isLoading = true;
-        pauseMenu.SetCanPause(false);
+        yield return LoadAndEnterScene(index);
+
+        // We should be in the new scene now
+        yield return handleSceneEntrance();
+        isLoading = false;
+    }
+
+    private IEnumerator LoadAndEnterScene(int index)
+    {
+        // Disable the pause menu in the current scene
+        FindObjectOfType<MenuManager>()?.enablePause(false);
+
         // Set the transition color based on the level index.
         bool loadingToMenu = index == config.mainMenuBuildIndex;
         Color transitionColor = loadingToMenu
@@ -94,15 +105,17 @@ public class SceneLoader : MonoBehaviour
         yield return new WaitForSeconds(config.minLoadingTime);
         yield return new WaitUntil(() => asyncLoad.progress >= 0.9f);
         asyncLoad.allowSceneActivation = true;
+    }
 
-        TrySetLevelReached(index);
+    private IEnumerator handleSceneEntrance()
+    {
+        TrySetLevelReached(GetCurrentSceneIndex());
 
-        // Start the transition animation 
+        // Start the transition animation
         yield return transition.FadeIn();
 
-        isLoading = false;
-        pauseMenu = FindObjectOfType<PauseMenu>();
-        pauseMenu.SetCanPause(true);
+        // Enable the pause menu in the new scene
+        FindObjectOfType<MenuManager>()?.enablePause(true);
     }
 
     // Returns the current scene index
