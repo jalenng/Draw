@@ -50,10 +50,15 @@ public class CutsceneData : MonoBehaviour
     void Load()
     {
         GameData gameData = gameManager?.gameData;
+        if (gameData == null) return;
 
-        // Ensure build index matches
-        bool sceneIndexMatch = gameData?.sceneIndex == SceneManager.GetActiveScene().buildIndex;
-        if (sceneIndexMatch)
+        // Get the build index from the saved level
+        bool buildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameData.level, out int savedBuildIndex);
+        if (!buildIndexFound) return;
+        
+        // Ensure build index matches before using the loaded gameData
+        bool buildIndexMatch = savedBuildIndex == SceneManager.GetActiveScene().buildIndex;
+        if (buildIndexMatch)
         {
             List<SerializableCutsceneData> allCutsceneData = gameData?.cutsceneData;
             SerializableCutsceneData cutsceneData = allCutsceneData?.Find(x => x.ID == ID);

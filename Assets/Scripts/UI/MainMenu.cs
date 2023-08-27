@@ -8,21 +8,30 @@ public class MainMenu : MonoBehaviour
     [Header("Game Objects")]
     public GameObject loadButton;
     public GameObject playConfirmation;
+    public GameObject preEndBackground;
+    public GameObject postEndBackground;
 
     SceneLoader levelLoader;
     GameManager gameManager;
+    PersistentStoreManager storeManager;
 
     private bool canLoad;
 
     void Start()
     {
         levelLoader = FindObjectOfType<SceneLoader>();
-        gameManager = FindObjectOfType<GameManager>();    // GameManager is a singleton
+        gameManager = FindObjectOfType<GameManager>();
+        storeManager = FindObjectOfType<PersistentStoreManager>();
 
         canLoad = gameManager.CanLoad();
 
         // Show the Load button only if there is a game save
         loadButton.SetActive(canLoad);
+
+        // Show the background variation if the player has completed the game.
+        bool hasCompletedGame = storeManager.QueryLevelReached(Global.Level.THE_END);
+        preEndBackground.SetActive(!hasCompletedGame);
+        postEndBackground.SetActive(hasCompletedGame);
     }
 
     public void RequestPlay()

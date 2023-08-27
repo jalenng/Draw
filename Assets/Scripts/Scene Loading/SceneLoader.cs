@@ -17,9 +17,14 @@ public class SceneLoader : MonoBehaviour
     private AudioSource audioSource;
     PauseMenu pauseMenu;
 
-    void Start() {
+    // Object references
+    PersistentStoreManager storeManager;
+
+    void Start()
+    {
         audioSource = GetComponent<AudioSource>();
         pauseMenu = FindObjectOfType<PauseMenu>();
+        storeManager = FindObjectOfType<PersistentStoreManager>();
     }
     // Load the first level
     public void StartGame()
@@ -66,6 +71,7 @@ public class SceneLoader : MonoBehaviour
         // Ensure only one scene gets loaded
         if (isLoading)
             yield break;
+            
         isLoading = true;
         pauseMenu.SetCanPause(false);
         // Set the transition color based on the level index.
@@ -85,9 +91,11 @@ public class SceneLoader : MonoBehaviour
         asyncLoad.allowSceneActivation = false;
 
         // Wait for the scene to finish loading before activating it
-        yield return new WaitForSeconds(config.minLoadingTime);    
+        yield return new WaitForSeconds(config.minLoadingTime);
         yield return new WaitUntil(() => asyncLoad.progress >= 0.9f);
         asyncLoad.allowSceneActivation = true;
+
+        TrySetLevelReached(index);
 
         // Start the transition animation 
         yield return transition.FadeIn();
@@ -103,4 +111,18 @@ public class SceneLoader : MonoBehaviour
         return SceneManager.GetActiveScene().buildIndex;
     }
 
+    // Try to mark the current scene as a reached level
+    private bool TrySetLevelReached(int buildIndex)
+    {
+        Global.Level level = Global.GetLevelFromBuildIndex(buildIndex);
+        if (level != null)
+        {
+            storeManager.AddLevelReached(level);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
