@@ -23,7 +23,7 @@ public class SceneLoader : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        menuManager = FindObjectOfType<MenuManager>();
+        pauseMenu = FindObjectOfType<PauseMenu>();
         storeManager = FindObjectOfType<PersistentStoreManager>();
     }
     // Load the first level
@@ -73,8 +73,7 @@ public class SceneLoader : MonoBehaviour
             yield break;
             
         isLoading = true;
-        menuManager.enablePause(false);
-
+        pauseMenu.SetCanPause(false);
         // Set the transition color based on the level index.
         bool loadingToMenu = index == config.mainMenuBuildIndex;
         Color transitionColor = loadingToMenu
