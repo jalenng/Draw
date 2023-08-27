@@ -95,7 +95,6 @@ public class DrawingCanvas : MonoBehaviour
 
             EndDraw();
         }
-        // Debug.Log("Ink used: " + totalDrawnLineLength + "/" + maxTotalLineLength);
     }
 
     // Stops adding points to the line to terminate the line

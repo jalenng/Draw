@@ -19,7 +19,7 @@ public class WallPoint : MonoBehaviour
         if(!isActivated && other.CompareTag("ScribbleWall"))
         {
             ScribbleWall scribbleWall = other.GetComponent<ScribbleWall>();
-            Debug.Log("New Respawn Pos: " + (transform.position + respawnOffset));
+            Debug.Log("[WallPoint] New Respawn Pos: " + (transform.position + respawnOffset));
             scribbleWall.SetRespawnPos(transform.position + respawnOffset);
             isActivated = true;
         }

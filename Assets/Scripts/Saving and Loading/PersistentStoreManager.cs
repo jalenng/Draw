@@ -43,14 +43,14 @@ public class PersistentStoreManager : MonoBehaviour
         if (File.Exists(saveFilePath))
         {
             store = serializer.Read(saveFilePath);
-            Debug.Log("Persistent data loaded from disk");
+            Debug.Log("[PersistentStoreManager] Data loaded");
         }
         // If the file doesn't exist, create one
         else
         {
             store = new PersistentStore();
             Save();
-            Debug.Log($"No persistent save file found. Created one on disk in {saveFilePath}.");
+            Debug.Log($"[PersistentStoreManager] No save file found. Created one on disk in {saveFilePath}.");
         }
     }
 
@@ -58,7 +58,7 @@ public class PersistentStoreManager : MonoBehaviour
     public void Save()
     {
         serializer.Write(store, saveFilePath);
-        Debug.Log("Persistent data written to disk");
+        Debug.Log("[PersistentStoreManager] Data saved");
     }
 
     // Below are mutators for the persistent store

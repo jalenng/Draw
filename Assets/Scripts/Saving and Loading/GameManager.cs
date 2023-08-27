@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        Debug.unityLogger.logEnabled = Debug.isDebugBuild;
+
         // Set up the game manager
         saveFilePath = Path.Combine(
             Application.persistentDataPath,
@@ -63,7 +65,7 @@ public class GameManager : MonoBehaviour
 
         // Ensure this is a scene that we should be saving progress for
         if (currentLevel == Global.Level.NONE) {
-            Debug.Log("Tried to save but current scene is not a game level");
+            Debug.Log("[GameManager] Tried to save but current scene is not a game level");
             return;
         }
         
@@ -96,7 +98,7 @@ public class GameManager : MonoBehaviour
         // Write to file
         serializer.Write(newGameData, saveFilePath);
 
-        Debug.Log("Game saved");
+        Debug.Log("[GameManager] Game saved");
     }
 
     // Load the game data from the savefile
@@ -104,13 +106,13 @@ public class GameManager : MonoBehaviour
     {
         if (!CanLoad())
         {
-            Debug.Log("No save file found");
+            Debug.Log("[GameManager] No save file found");
             return;
         }
 
         // Read from file
         gameData = serializer.Read(saveFilePath);
-        Debug.Log("Game loaded. Reloading scene.");
+        Debug.Log("[GameManager] Game loaded. Reloading scene.");
 
         // Load the scene        
         bool buildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameData.level, out int savedBuildIndex);

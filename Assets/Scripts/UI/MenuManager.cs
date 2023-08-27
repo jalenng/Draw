@@ -21,27 +21,29 @@ public class MenuManager : MonoBehaviour
         if (settingsMenu)
             settingsMenu.SetActive(enable);
         else
-            Debug.Log($"Tried to set settings menu enabled to {enable} but it's undefined");
+            Debug.LogError($"[MenuManager] Tried to set settings menu enabled to {enable} but it's undefined");
     }
     public void enablePause(bool enable)
     {
         if (pauseMenu)
         {
-            if (!(GetCurrentSceneIndex() == config.mainMenuBuildIndex)) {
+            if (!(GetCurrentSceneIndex() == config.mainMenuBuildIndex))
+            {
                 pauseMenu.SetActive(enable);
                 pauseMenuScript = pauseMenu.GetComponent<PauseMenu>();
-            } else {
-                Debug.Log($"Tried to set pause menu enabled to {enable} but we're in the main menu");
             }
-        } else 
-            Debug.Log($"Tried to set pause menu enabled to {enable} but it's undefined");
+            else
+                Debug.LogWarning($"[MenuManager] Tried to set pause menu enabled to {enable} but we're in the main menu");
+        }
+        else
+            Debug.LogError($"[MenuManager] Tried to set pause menu enabled to {enable} but it's undefined");
     }
     public void enableLevels(bool enable)
     {
         if (levelMenu)
             levelMenu.SetActive(enable);
         else
-            Debug.Log($"Tried to set level menu enabled to {enable} but it's undefined");
+            Debug.LogError($"[MenuManager] Tried to set level menu enabled to {enable} but it's undefined");
     }
 
     // Shamelessly stolen from another script
@@ -49,7 +51,8 @@ public class MenuManager : MonoBehaviour
     {
         return SceneManager.GetActiveScene().buildIndex;
     }
-    public bool pauseMenuOpen() {
+    public bool pauseMenuOpen()
+    {
         return pauseMenuScript.isCanvasEnabled();
     }
 }

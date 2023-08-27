@@ -19,7 +19,7 @@ public class SerializableCutsceneData
 public class CutsceneData : MonoBehaviour
 {
     // Configuration parameters
-    
+
     // Associates checkpoints with their save data
     [SerializeField] private string myID;
     public string ID { get { return myID; } }
@@ -55,7 +55,7 @@ public class CutsceneData : MonoBehaviour
         // Get the build index from the saved level
         bool buildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameData.level, out int savedBuildIndex);
         if (!buildIndexFound) return;
-        
+
         // Ensure build index matches before using the loaded gameData
         bool buildIndexMatch = savedBuildIndex == SceneManager.GetActiveScene().buildIndex;
         if (buildIndexMatch)
@@ -65,7 +65,7 @@ public class CutsceneData : MonoBehaviour
 
             // Ensure cutscene data exists
             if (cutsceneData == null)
-                Debug.Log("Cutscene data not found for cutscene " + ID);
+                Debug.LogWarning("[CutsceneData] Cutscene data not found for cutscene " + ID);
             else if (cutsceneData.hasPlayed)
             {
                 cutsceneTrigger.hasPlayed = true;
@@ -88,7 +88,8 @@ public class CutsceneData : MonoBehaviour
     }
 
     [ContextMenu("Regenerate GUID")]
-    private void RegenerateGUID () {
+    private void RegenerateGUID()
+    {
         myID = System.Guid.NewGuid().ToString();
     }
 }

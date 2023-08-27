@@ -11,18 +11,18 @@ public class AchievementUnlocker : MonoBehaviour
     public void SetAchievement()
     {
         if (achievement == Global.Achievement.NONE) {
-            Debug.Log("Tried to set achievement but none was specified");
+            Debug.LogError("[AchievementUnlocker] Tried to set achievement but none was specified");
             return;
         }
 
         if (!SteamManager.Initialized) {
-            Debug.Log($"Tried to set achievement but SteamManager is not initialized");
+            Debug.LogWarning($"[AchievementUnlocker] Tried to set achievement but SteamManager is not initialized");
             return;
         }
 
         // Look up achievement ID
         if (!Global.AchievementToIdMap.TryGetValue(achievement, out string achievementId)) {
-            Debug.Log("Tried to set achievement but could not lookup achievement ID");
+            Debug.LogError("[AchievementUnlocker] Tried to set achievement but could not lookup achievement ID");
             return;
         }
 
@@ -31,7 +31,7 @@ public class AchievementUnlocker : MonoBehaviour
 
         // If not, unlock it
         if (!achievementUnlocked) {
-            Debug.Log($"Unlocking achievement \"{achievementId}\"");
+            Debug.Log($"[AchievementUnlocker] Unlocking achievement \"{achievementId}\"");
             SteamUserStats.SetAchievement(achievementId);
             SteamUserStats.StoreStats();
         }
