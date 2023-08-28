@@ -15,10 +15,8 @@ public class AudioSystem : MonoBehaviour
     [SerializeField] AudioMixerParamsConfig mixerParams;
 
     // Audio source
-    [Header("Audio Sources")]
+    [Header("Audio Source")]
     [SerializeField] AudioSource BGMSource;
-    [SerializeField] AudioSource SFXSource;
-    [SerializeField] public List<AudioClip> soundEffects = new List<AudioClip>();
 
     void Start()
     {
@@ -71,21 +69,6 @@ public class AudioSystem : MonoBehaviour
         PlayerPrefs.SetFloat(SFXVolumeParam, SFXVolume);
     }
 
-    // Plays a sound effect audio clip
-    public void PlaySFX(string sound)
-    {
-        AudioClip s = soundEffects.Find(item => item.name == sound);
-        SFXSource.PlayOneShot(s);
-    }
-    public void PlaySFX(string sound, float pitch)
-    {
-        AudioClip s = soundEffects.Find(item => item.name == sound);
-        float beforePitch = SFXSource.pitch;
-        SFXSource.pitch = pitch;
-        SFXSource.PlayOneShot(s);
-        SFXSource.pitch = beforePitch;
-    }
-
     // Fades out the background music
     public IEnumerator PlayBGM(AudioClip clip, float pitch = 1f, float fadeDuration = 1f, float delay = 0f)
     {
@@ -114,9 +97,5 @@ public class AudioSystem : MonoBehaviour
         }
 
         BGMSource.volume = targetVolume;
-    }
-    public List<AudioClip> getSFX()
-    {
-        return soundEffects;
     }
 }
