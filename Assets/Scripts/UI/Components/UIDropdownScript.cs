@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ButtonScript : MonoBehaviour
+public class UIDropdownScript : MonoBehaviour
 {
     // Configuration parameters
     [SerializeField] private Color enabledFGColor = Color.black;
@@ -14,20 +14,20 @@ public class ButtonScript : MonoBehaviour
     [SerializeField] private GameObject textObject;
 
     private TextMeshProUGUI tmp;
-    private Button button;
+    private TMP_Dropdown dropdown;
     private Outline outline;
 
     private void Start()
     {
         tmp = textObject.GetComponent<TextMeshProUGUI>();
-        button = GetComponent<Button>();
+        dropdown = GetComponent<TMP_Dropdown>();
         outline = GetComponent<Outline>();
     }
 
     private void Update()
     {
-        // Get the disabled state of the button
-        bool isDisabled = !button.interactable;
+        // Get the disabled state of the dropdown
+        bool isDisabled = !dropdown.interactable;
         Color fgColor = isDisabled ? disabledFGColor : enabledFGColor;
 
         // Set text color and outline color based on the state
