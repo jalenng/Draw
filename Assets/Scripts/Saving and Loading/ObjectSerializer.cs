@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -17,26 +18,45 @@ public class ObjectSerializer<T>
     // Serialize the object and write it to disk
     public void Write(T obj, string path)
     {
-        FileStream file = File.Create(path);
-        bf.Serialize(file, obj);
-        file.Close();
+        try
+        {
+            FileStream file = File.Create(path);
+            bf.Serialize(file, obj);
+            file.Close();
+
+            Debug.Log($"[ObjectSerializer] Wrote to disk: {path}");
+        }
+
+        catch (Exception e)
+        {
+            Debug.LogError($"[ObjectSerializer] Error writing to {path}: {e}");
+        }
     }
 
     // Read the object from disk and deserialize it
     public T Read(string path)
     {
         // Check if the file exists first
-        if (!CanRead(path)) 
+        if (!CanRead(path))
         {
-            Debug.Log($"Tried to load {path} but the file does not exist");
+            Debug.Log($"[ObjectSerializer] Tried to read {path} but the file does not exist");
             return default(T);
         };
-        
-        FileStream file = File.Open(path, FileMode.Open);
-        T obj = (T)bf.Deserialize(file);
-        file.Close();
 
-        return obj;
+        try
+        {
+            FileStream file = File.Open(path, FileMode.Open);
+            T obj = (T)bf.Deserialize(file);
+            file.Close();
+
+            Debug.Log($"[ObjectSerializer] Read from disk: {path}");
+            return obj;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[ObjectSerializer] Error reading from {path}: {e}");
+            return default(T);
+        }
     }
 
     // Check if the file exists

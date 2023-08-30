@@ -30,7 +30,7 @@ public class DialogueAudio : MonoBehaviour
             }
             catch (Exception e)
             {
-                Debug.Log($"Failed to load resources from {directory}: {e}");
+                Debug.LogError($"[DialogueAudio] Failed to load resources from {directory}: {e}");
             }
         }
     }

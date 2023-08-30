@@ -14,7 +14,7 @@ public class BGMEnqueuer : MonoBehaviour
         // Get audio system
         AudioSystem audioSystem = FindObjectOfType<AudioSystem>();
         if (audioSystem == null) {
-            Debug.Log("Could not find audio system to enqueue BGM.");
+            Debug.LogError("[BGMEnqueuer] Could not find audio system to enqueue BGM");
             return;
         }
 
@@ -22,7 +22,7 @@ public class BGMEnqueuer : MonoBehaviour
         if (BGMClip) {
             StartCoroutine(audioSystem.PlayBGM(BGMClip, pitch));
         } else {
-            Debug.Log("No BGM clip assigned to BGMEnqueuer.");
+            Debug.LogError("[BGMEnqueuer] No BGM clip assigned");
         }
     }
 

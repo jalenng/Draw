@@ -41,15 +41,19 @@ public class DiscordController : MonoBehaviour
             {
                 if (res == Discord.Result.Ok)
                 {
-                    Debug.Log("Discord update activity callback registered");
+                    Debug.Log("[DiscordController] Update activity callback registered");
+                }
+                else
+                {
+                    Debug.LogError("[DiscordController] Failed to update register activity callback");
                 }
             });
 
-            Debug.Log("Discord controller initialized");
+            Debug.Log("[DiscordController] Initialized successfully");
         }
-        catch (Discord.ResultException)
+        catch (Discord.ResultException e)
         {
-            Debug.Log("Discord controller failed to initialize");
+            Debug.LogError($"[DiscordController] Failed to initialize Discord instance: {e}");
             DestroyDiscord();
         }
     }
@@ -66,9 +70,9 @@ public class DiscordController : MonoBehaviour
         {
             discord?.RunCallbacks();
         }
-        catch (Discord.ResultException)
+        catch (Discord.ResultException e)
         {
-            Debug.Log("Discord encountered error running callbacks");
+            Debug.Log($"[DiscordController] Encountered error running callbacks: {e}");
             DestroyDiscord();
         }
     }
@@ -76,16 +80,16 @@ public class DiscordController : MonoBehaviour
     void OnApplicationQuit()
     {
         if (discord == null) return;
-        
+
         DestroyDiscord();
     }
 
     void DestroyDiscord()
     {
         if (discord == null) return;
-        
+
         discord.Dispose();
         discord = null;
-        Debug.Log("Discord instance destroyed");
+        Debug.Log("[DiscordController] Discord instance destroyed");
     }
 }

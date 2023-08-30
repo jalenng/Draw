@@ -35,13 +35,13 @@ public class LevelSelector : MonoBehaviour
         if (LevelReached(level))
         {
             if (!Global.LevelToBuildIndexMap.TryGetValue(level, out int buildIndex)) {
-                Debug.Log($"Tried to load scene {level} from levels menu, but the build index couldn't be found");
+                Debug.LogError($"[LevelSelector] Tried to load scene {level} from levels menu, but the build index couldn't be found");
             }
             sceneLoader.LoadScene(buildIndex);
         }
         else
         {
-            Debug.Log($"Tried to load scene {level} from levels menu, but the level has not been reached yet");
+            Debug.LogError($"[LevelSelector] Tried to load scene {level} from levels menu, but the level has not been reached yet");
         }
     }
     void Update()

@@ -65,7 +65,6 @@ public class DrawingArea : MonoBehaviour
         // Set outline color to match the color of the line.
         // The amount of remaining ink is represented by the alpha value.
         float inkRemaining = 1.0f - drawingCanvas.GetInkRatio();
-        // Debug.Log(inkRemaining);
         Color outlineColor = new Color(baseOutlineColor.r, baseOutlineColor.g, baseOutlineColor.b, inkRemaining);
         lineRenderer.startColor = outlineColor;
         lineRenderer.endColor = outlineColor;

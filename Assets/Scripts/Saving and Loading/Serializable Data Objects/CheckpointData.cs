@@ -19,7 +19,7 @@ public class SerializableCheckpointData
 public class CheckpointData : MonoBehaviour
 {
     // Configuration parameters
-    
+
     // Associates checkpoints with their save data
     [SerializeField] private string myID;
     public string ID { get { return myID; } }
@@ -55,7 +55,7 @@ public class CheckpointData : MonoBehaviour
         // Get the build index from the saved level
         bool buildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameData.level, out int savedBuildIndex);
         if (!buildIndexFound) return;
-        
+
         // Ensure build index matches before using the loaded gameData
         bool buildIndexMatch = savedBuildIndex == SceneManager.GetActiveScene().buildIndex;
         if (buildIndexMatch)
@@ -65,7 +65,7 @@ public class CheckpointData : MonoBehaviour
 
             // Ensure checkpoint data exists
             if (checkpointData == null)
-                Debug.Log("Checkpoint data not found for checkpoint " + ID);
+                Debug.LogWarning("[CheckpointData] Checkpoint data not found for checkpoint " + ID);
             else if (checkpointData.isActivated)
                 checkpoint.Activate();
         }
@@ -82,7 +82,8 @@ public class CheckpointData : MonoBehaviour
     }
 
     [ContextMenu("Regenerate GUID")]
-    private void RegenerateGUID () {
+    private void RegenerateGUID()
+    {
         myID = System.Guid.NewGuid().ToString();
     }
 }

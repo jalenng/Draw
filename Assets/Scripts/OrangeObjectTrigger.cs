@@ -22,7 +22,7 @@ public class OrangeObjectTrigger : MonoBehaviour
         if (!hasPlayed && other.gameObject.CompareTag("OrangeObject"))
         {
             hasPlayed = true;
-            Debug.Log("OrangeObject trigger");
+            Debug.Log("[OrangeObjectTrigger] Triggered");
             other.gameObject.transform.parent = transform.parent.transform;
             // TriggerCutscene();
             StartCoroutine(TriggerCutsceneRoutine());

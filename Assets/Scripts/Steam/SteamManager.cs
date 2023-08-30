@@ -106,7 +106,7 @@ public class SteamManager : MonoBehaviour {
 			}
 		}
 		catch (System.DllNotFoundException e) { // We catch this exception here, as it will be the first occurrence of it.
-			Debug.LogError("[Steamworks.NET] Could not load [lib]steam_api.dll/so/dylib. It's likely not in the correct location. Refer to the README for more details.\n" + e, this);
+			Debug.LogError("[Steamworks.NET] Could not load [lib]steam_api.dll/so/dylib" + e, this);
 
 			Application.Quit();
 			return;
@@ -123,17 +123,17 @@ public class SteamManager : MonoBehaviour {
 		// https://partner.steamgames.com/doc/sdk/api#initialization_and_shutdown
 		m_bInitialized = SteamAPI.Init();
 		if (!m_bInitialized) {
-			Debug.LogError("[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.", this);
+			Debug.LogError("[Steamworks.NET] SteamAPI_Init() failed", this);
 
 			return;
 		}
 
 		s_EverInitialized = true;
-		Debug.Log("SteamManager initialized successfully");
+		Debug.Log("[SteamManager] Initialized successfully");
 
 		if (Debug.isDebugBuild && resetStatsOnStartInDebug) {
 			Steamworks.SteamUserStats.ResetAllStats(alsoResetAchievementsOnStartInDebug);
-			Debug.Log("SteamManager cleared all stats successfully");
+			Debug.Log("[SteamManager] Cleared all stats successfully");
 		}
 	}
 

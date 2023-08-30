@@ -38,7 +38,7 @@ public class Checkpoint : MonoBehaviour
                 Activate();
             }
             else
-                Debug.LogError("Cannot set checkpoint because PlayerController was not found");
+                Debug.LogError("[Checkpoint] Cannot set checkpoint because PlayerController was not found");
         }
     }
 
