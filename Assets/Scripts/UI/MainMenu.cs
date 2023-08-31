@@ -23,9 +23,8 @@ public class MainMenu : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         storeManager = FindObjectOfType<PersistentStoreManager>();
 
-        canLoad = gameManager.CanLoad();
-
         // Show the Load button only if there is a game save
+        canLoad = gameManager.CanLoad();
         loadButton.SetActive(canLoad);
 
         // Show the background variation if the player has completed the game.

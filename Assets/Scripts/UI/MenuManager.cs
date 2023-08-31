@@ -13,7 +13,14 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject levelMenu;
+    [SerializeField] GameObject sendFeedbackCanvas;
     PauseMenu pauseMenuScript;
+
+    private void Start()
+    {
+        // Show the "Send Feedback" canvas only if it is a debug build
+        sendFeedbackCanvas.SetActive(Debug.isDebugBuild);
+    }
 
     // Public functions for OnClick() to call
     public void enableSettings(bool enable)
