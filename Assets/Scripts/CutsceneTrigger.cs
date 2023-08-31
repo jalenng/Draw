@@ -22,9 +22,9 @@ public class CutsceneTrigger : MonoBehaviour
         if (!hasPlayed && other.gameObject.CompareTag("Player"))
         {
             hasPlayed = true;
-            Debug.Log("[CutsceneTrigger] Player triggered a cutscene");
+            Vector3 otherPosition = other.gameObject.transform.position;
+            Debug.Log($"[CutsceneTrigger] Player triggered a cutscene at {otherPosition}");
             other.gameObject.transform.parent = transform.parent.transform;
-            // TriggerCutscene();
             StartCoroutine(TriggerCutsceneRoutine());
         }
     }

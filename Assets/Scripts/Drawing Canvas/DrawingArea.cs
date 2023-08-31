@@ -97,6 +97,7 @@ public class DrawingArea : MonoBehaviour
     }
     public bool pauseMenuOpen()
     {
+        if (menuManager == null) return false;
         return menuManager.pauseMenuOpen();
     }
 }
