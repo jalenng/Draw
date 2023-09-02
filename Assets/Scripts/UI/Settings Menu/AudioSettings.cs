@@ -44,24 +44,23 @@ public class AudioSettings : MonoBehaviour
         float SFXVolume;
         audioMixer.GetFloat(mixerParams.SFXVolume, out SFXVolume);
         SFXVolumeSlider.value = DecibelToRatio(SFXVolume);
-
     }
 
     public void OnMasterVolumeChanged()
     {
-        Debug.Log($"[SettingsMenu] Setting master volume to {mixerParams.masterVolume}");
+        Debug.Log($"[AudioSettings] Setting master volume to {mixerParams.masterVolume}");
         audioMixer.SetFloat(mixerParams.masterVolume, RatioToDecibel(masterVolumeSlider.value));
     }
 
     public void OnBGMVolumeChanged()
     {
-        Debug.Log($"[SettingsMenu] Setting BGM volume to {mixerParams.BGMVolume}");
+        Debug.Log($"[AudioSettings] Setting BGM volume to {mixerParams.BGMVolume}");
         audioMixer.SetFloat(mixerParams.BGMVolume, RatioToDecibel(BGMVolumeSlider.value));
     }
 
     public void OnSFXVolumeChanged()
     {
-        Debug.Log($"[SettingsMenu] Setting SFX volume to {mixerParams.SFXVolume}");
+        Debug.Log($"[AudioSettings] Setting SFX volume to {mixerParams.SFXVolume}");
         audioMixer.SetFloat(mixerParams.SFXVolume, RatioToDecibel(SFXVolumeSlider.value));
     }
 }
