@@ -7,7 +7,6 @@ using TMPro;
 
 public class DisplaySettings : MonoBehaviour
 {
-
     // Object references
     [Header("Option widgets")]
     public TMP_Dropdown fullscreenModeDropdown;
@@ -24,28 +23,26 @@ public class DisplaySettings : MonoBehaviour
         fullScreenModes = new List<FullScreenMode>();
         // Windows only
         if (Application.platform == RuntimePlatform.WindowsPlayer)
-        {
             fullScreenModes.Add(FullScreenMode.ExclusiveFullScreen);
-        }
+
         // All platforms
         fullScreenModes.Add(FullScreenMode.FullScreenWindow);
+
         // macOS only
         if (Application.platform == RuntimePlatform.OSXPlayer)
-        {
             fullScreenModes.Add(FullScreenMode.MaximizedWindow);
-        }
+
         // Desktop platforms only
         if (SystemInfo.deviceType == DeviceType.Desktop)
-        {
             fullScreenModes.Add(FullScreenMode.Windowed);
-        }
 
         // Retrieve list of supported resolutions
         resolutions = Screen.resolutions;
 
-        // Populate options and set values for display setting dropdowns
-        UpdateFullscreenModeOptions();
-        UpdateResolutionOptions();
+        // Populate dropdown menu with options and update its selection values
+        CreateFullscreenModeOptions();
+        CreateResolutionOptions();
+        UpdateDropdownValues(Screen.currentResolution, Screen.fullScreenMode);
     }
 
     void Update()
@@ -54,7 +51,8 @@ public class DisplaySettings : MonoBehaviour
         resolutionDropdown.interactable = Screen.fullScreen;
     }
 
-    private void UpdateFullscreenModeOptions()
+    // Create the menu options for the fullscreen dropdown
+    private void CreateFullscreenModeOptions()
     {
         Dictionary<FullScreenMode, string> fullscreenModeToLabelMap = new Dictionary<FullScreenMode, string>()
         {
@@ -78,18 +76,14 @@ public class DisplaySettings : MonoBehaviour
         // Update the dropdown options
         fullscreenModeDropdown.ClearOptions();
         fullscreenModeDropdown.AddOptions(optionsList);
-
-        // Set current value
-        int index = fullScreenModes.IndexOf(Screen.fullScreenMode);
-        fullscreenModeDropdown.value = index > -1 ? index : (fullScreenModes.Count - 1);
     }
 
-    private void UpdateResolutionOptions()
+    // Create the menu options for the resolution dropdown
+    private void CreateResolutionOptions()
     {
         List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
 
         // Create options based on the supported fullscreen resolutions
-
         for (int i = 0; i < resolutions.Length; i++)
         {
             Resolution resolution = resolutions[i];
@@ -101,71 +95,75 @@ public class DisplaySettings : MonoBehaviour
         // Update the dropdown options
         resolutionDropdown.ClearOptions();
         resolutionDropdown.AddOptions(optionsList);
-
-        // Set current value if fullscreen
-        if (Screen.fullScreen)
-        {
-            Resolution currentRes = Screen.currentResolution;
-            int index = Array.FindIndex(
-                Screen.resolutions,
-                res => (
-                    res.width == currentRes.width &&
-                    res.height == currentRes.height &&
-                    res.refreshRate == currentRes.refreshRate
-                )
-            );
-            resolutionDropdown.value = index > -1 ? index : (resolutions.Length - 1);
-        }
     }
 
-    // Dropdown value change handlers
+    // Update the dropdown selection values in the UI
+    private void UpdateDropdownValues(Resolution resolution, FullScreenMode fullScreenMode)
+    {
+        // Set fullscreen mode value
+        int fullscreenModeIndex = fullScreenModes.IndexOf(fullScreenMode);
+        fullscreenModeDropdown.SetValueWithoutNotify(fullscreenModeIndex > -1 ? fullscreenModeIndex : (fullScreenModes.Count - 1));
+
+        // Set resolution value
+        int resolutionIndex = Array.FindIndex(
+            Screen.resolutions,
+            resItem => (
+                resItem.width == resolution.width &&
+                resItem.height == resolution.height &&
+                resItem.refreshRate == resolution.refreshRate
+            )
+        );
+        resolutionDropdown.SetValueWithoutNotify(resolutionIndex > -1 ? resolutionIndex : (resolutions.Length - 1));
+    }
+
+    // Handle fullscreen mode dropdown selection change
     public void OnFullScreenModeChange()
     {
-        // Cache current fullscreen mode
-        FullScreenMode oldFullScreenMode = Screen.fullScreenMode;
-
-        // Get resolution option
+        // Get fullscreen mode option
         int selectedIndex = fullscreenModeDropdown.value;
 
         // Assertion
         bool inBounds = selectedIndex >= 0 && selectedIndex < fullScreenModes.Count;
-        Debug.Assert(inBounds, "[SettingsMenu] Selected fullscreen mode is out of index");
+        Debug.Assert(inBounds, "[DisplaySettings] Tried to set fullscreen mode but index is out of range");
 
-        // Change the fullscreen mode
-        FullScreenMode selectedFullScreenMode = fullScreenModes[selectedIndex];
-        Debug.Log($"[SettingsMenu] Setting fullscreen mode to {selectedFullScreenMode}");
+        // Get resolution and fullscreen mode.
+        // If entering fullscreen mode, set to the highest resolution.
+        FullScreenMode fullscreenMode = fullScreenModes[selectedIndex];
+        bool isEnteringFullscreen = fullscreenMode != FullScreenMode.Windowed;
+        Resolution resolution = isEnteringFullscreen ? resolutions[resolutions.Length - 1] : Screen.currentResolution;
+        Debug.Log($"[DisplaySettings] Fullscreen mode dropdown value set to {fullscreenMode}");
 
-        // If coming from Windowed mode, set to the highest resolution
-        if (oldFullScreenMode == FullScreenMode.Windowed && selectedFullScreenMode != FullScreenMode.Windowed)
-        {
-            Debug.Log($"[SettingsMenu] Entering fullscreen and leaving windowed mode. Setting resolution to the highest resolution.");
-            resolutionDropdown.value = resolutions.Length - 1;
-        }
-        // Else, only just change fullscreen mode
-        else
-        {
-            Screen.fullScreenMode = selectedFullScreenMode;
-        }
+        // Apply change
+        SetResolution(resolution, fullscreenMode);
     }
+
+    // Handle resolution dropdown selection change
     public void OnResolutionChange()
     {
-        if (!Screen.fullScreen)
-        {
-            Debug.Log($"[SettingsMenu] Tried to change resolution but game is not in fullscreen");
-            return;
-        }
-
         // Get resolution option
         int selectedIndex = resolutionDropdown.value;
 
         // Assertion
         bool inBounds = selectedIndex >= 0 && selectedIndex < resolutions.Length;
-        Debug.Assert(inBounds, "[SettingsMenu] Selected resolution is out of index");
+        Debug.Assert(inBounds, "[DisplaySettings] Tried to set resolution but index is out of range");
 
-        // Change the resolution
-        Resolution selectedResolution = resolutions[selectedIndex];
-        string resolutionToString = selectedResolution.ToString();
-        Debug.Log($"[SettingsMenu] Setting resolution to {resolutionToString}");
-        Screen.SetResolution(selectedResolution.width, selectedResolution.height, Screen.fullScreenMode, selectedResolution.refreshRate);
+        // Get resolution and fullscreen mode
+        FullScreenMode fullscreenMode = Screen.fullScreenMode;
+        Resolution resolution = resolutions[selectedIndex];
+        string resolutionToString = resolution.ToString();
+        Debug.Log($"[DisplaySettings] Resolution dropdown value set to {resolutionToString}");
+
+        // Apply change
+        SetResolution(resolution, fullscreenMode);
+    }
+
+    // Set the selected resolution and fullscreen mode and update the UI
+    private void SetResolution(Resolution resolution, FullScreenMode fullScreenMode)
+    {
+        string resolutionToString = resolution.ToString();
+        Debug.Log($"[DisplaySettings] Setting resolution to {resolutionToString} and fullscreen mode to {fullScreenMode}");
+        Screen.SetResolution(resolution.width, resolution.height, fullScreenMode, resolution.refreshRate);
+
+        UpdateDropdownValues(resolution, fullScreenMode);
     }
 }
