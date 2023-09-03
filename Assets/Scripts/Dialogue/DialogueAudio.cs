@@ -44,9 +44,4 @@ public class DialogueAudio : MonoBehaviour
             source.PlayOneShot(clip);
         }
     }
-
-    public void WrapUp()
-    {
-        source.Stop();
-    }
 }
