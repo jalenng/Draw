@@ -52,13 +52,13 @@ public class Global
         { Level.MIKE_1, 7},
         { Level.MIKE_2, 8},
         { Level.IRL_MIKE_CUTOFF, 9},
-        // { Level.MIKE_3, 10},
-        { Level.CHASE, 10},
-        { Level.NATHAN_1, 11},
-        { Level.NATHAN_2, 12},
-        { Level.NATHAN_3, 13},
-        { Level.CREDITS, 14},
-        { Level.THE_END, 15},
+        { Level.MIKE_3, 10},
+        { Level.CHASE, 11},
+        { Level.NATHAN_1, 12},
+        { Level.NATHAN_2, 13},
+        { Level.NATHAN_3, 14},
+        { Level.CREDITS, 15},
+        { Level.THE_END, 16},
     };
 
     public static Dictionary<Achievement, string> AchievementToIdMap = new Dictionary<Achievement, string>()

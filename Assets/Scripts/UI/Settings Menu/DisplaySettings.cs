@@ -88,7 +88,12 @@ public class DisplaySettings : MonoBehaviour
         {
             Resolution resolution = resolutions[i];
             TMP_Dropdown.OptionData newOption = new TMP_Dropdown.OptionData();
-            newOption.text = resolution.ToString();
+
+            // Don't use resolution.ToString() because we want to round the refresh rate value
+            int roundedRefreshRate = Convert.ToInt32(resolution.refreshRateRatio.value);
+            string resolutionToString = $"{resolution.width} x {resolution.height} @ {roundedRefreshRate}Hz";
+            newOption.text = resolutionToString;
+
             optionsList.Add(newOption);
         }
 
