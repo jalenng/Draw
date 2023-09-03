@@ -3,7 +3,7 @@ guid: 731d5f5d91542494fb6417ebbb1f1eb3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,10 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -62,6 +64,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -73,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -85,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -97,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -109,6 +116,20 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1090,9 +1111,55 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Hug animation- Stickman_0: 4880016328835638944
+      Hug animation- Stickman_1: -3376000109685652884
+      Hug animation- Stickman_10: -560302750020736341
+      Hug animation- Stickman_11: -8324773190242611492
+      Hug animation- Stickman_12: -7098226540428047145
+      Hug animation- Stickman_13: 7159559889660616000
+      Hug animation- Stickman_14: -6797178318514155961
+      Hug animation- Stickman_15: 5181800792883183681
+      Hug animation- Stickman_16: -799935509393124083
+      Hug animation- Stickman_17: 7073368999940168733
+      Hug animation- Stickman_18: 1916789456508842858
+      Hug animation- Stickman_19: 6289126689702840043
+      Hug animation- Stickman_2: 8081068005778120955
+      Hug animation- Stickman_20: -3552637948508909201
+      Hug animation- Stickman_21: 8083088518757437289
+      Hug animation- Stickman_22: -397098669070402644
+      Hug animation- Stickman_23: 763212296150479283
+      Hug animation- Stickman_24: 1859519959736237177
+      Hug animation- Stickman_25: -5067728824899729940
+      Hug animation- Stickman_26: 6535284971281979698
+      Hug animation- Stickman_27: 5240909063250938697
+      Hug animation- Stickman_28: -7791013298609080859
+      Hug animation- Stickman_29: -3664895905537109924
+      Hug animation- Stickman_3: 8172301074221830071
+      Hug animation- Stickman_30: -7234548141588679828
+      Hug animation- Stickman_31: -825676971595248058
+      Hug animation- Stickman_32: -8853241498755519422
+      Hug animation- Stickman_33: 8653300440074265911
+      Hug animation- Stickman_34: 4662102349171441925
+      Hug animation- Stickman_35: 6808178736039773009
+      Hug animation- Stickman_36: -5008601405412963243
+      Hug animation- Stickman_37: -4713238986964434805
+      Hug animation- Stickman_38: 5853534472523501295
+      Hug animation- Stickman_39: 1641464026504782038
+      Hug animation- Stickman_4: -212547500987794517
+      Hug animation- Stickman_40: -3788550012419476497
+      Hug animation- Stickman_41: 3207711335961121048
+      Hug animation- Stickman_42: -6530235999718622753
+      Hug animation- Stickman_43: 7972093508547678060
+      Hug animation- Stickman_44: -2580500481249991073
+      Hug animation- Stickman_45: -3242202721016008691
+      Hug animation- Stickman_5: 6508633038674509702
+      Hug animation- Stickman_6: -7137010920156822433
+      Hug animation- Stickman_7: -3328572495636099450
+      Hug animation- Stickman_8: 197116713763037267
+      Hug animation- Stickman_9: 7526437627420484322
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

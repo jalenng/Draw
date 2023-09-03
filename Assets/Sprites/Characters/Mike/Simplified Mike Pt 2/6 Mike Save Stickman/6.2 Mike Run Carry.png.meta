@@ -279,7 +279,7 @@ TextureImporter:
       213: 4985773303402623573
     second: 2 Mike Run Carry_91
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -296,10 +296,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -338,6 +340,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -349,6 +353,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -361,6 +366,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -373,6 +379,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -385,6 +392,20 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -2332,9 +2353,101 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      2 Mike Run Carry_0: 4975339686075433477
+      2 Mike Run Carry_1: -3219797646356813911
+      2 Mike Run Carry_10: -1523814118573035389
+      2 Mike Run Carry_11: -7778180544986708325
+      2 Mike Run Carry_12: -761978099811100677
+      2 Mike Run Carry_13: 6017914047212256699
+      2 Mike Run Carry_14: -1241717083349734194
+      2 Mike Run Carry_15: -8522220765916096699
+      2 Mike Run Carry_16: 9161906128967966017
+      2 Mike Run Carry_17: 411104870326698736
+      2 Mike Run Carry_18: -2900471218454110230
+      2 Mike Run Carry_19: -7698085212851048694
+      2 Mike Run Carry_2: -6914520996768853123
+      2 Mike Run Carry_20: -433868513517049429
+      2 Mike Run Carry_21: 423691008685192444
+      2 Mike Run Carry_22: -1259699079344185969
+      2 Mike Run Carry_23: 8054798026488598416
+      2 Mike Run Carry_24: 6381672284449761891
+      2 Mike Run Carry_25: 6810931010907036141
+      2 Mike Run Carry_26: 3613914642953154328
+      2 Mike Run Carry_27: 2874393603095072041
+      2 Mike Run Carry_28: -3624182772606785864
+      2 Mike Run Carry_29: -9016031201072210883
+      2 Mike Run Carry_3: 5769136920351998036
+      2 Mike Run Carry_30: 1038698415873104117
+      2 Mike Run Carry_31: -7036261589134639584
+      2 Mike Run Carry_32: -5461104938311163154
+      2 Mike Run Carry_33: 2800146149455662897
+      2 Mike Run Carry_34: 4798730801247624557
+      2 Mike Run Carry_35: -2518010736223496105
+      2 Mike Run Carry_36: 3812131152066590336
+      2 Mike Run Carry_37: 1618106539062789517
+      2 Mike Run Carry_38: -315773184330599668
+      2 Mike Run Carry_39: 5567491854937430858
+      2 Mike Run Carry_4: -8636633048708291498
+      2 Mike Run Carry_40: 4034658931618522228
+      2 Mike Run Carry_41: 5142867883057663110
+      2 Mike Run Carry_42: -578656956292824655
+      2 Mike Run Carry_43: 4216319409275076226
+      2 Mike Run Carry_44: -8260312446498332411
+      2 Mike Run Carry_45: 7146065027736019142
+      2 Mike Run Carry_46: -885174770050596629
+      2 Mike Run Carry_47: -4234242384842505158
+      2 Mike Run Carry_48: -7749805751910138245
+      2 Mike Run Carry_49: 390335012398227782
+      2 Mike Run Carry_5: -2970606351358018787
+      2 Mike Run Carry_50: 484492292545278805
+      2 Mike Run Carry_51: 6579363381757452387
+      2 Mike Run Carry_52: -4958235265706273376
+      2 Mike Run Carry_53: -383351427777892771
+      2 Mike Run Carry_54: -4553222491323160131
+      2 Mike Run Carry_55: 5585635838860196062
+      2 Mike Run Carry_56: 4720033299765798755
+      2 Mike Run Carry_57: -4127663220524464816
+      2 Mike Run Carry_58: 2632054520751423360
+      2 Mike Run Carry_59: -7941392405876533484
+      2 Mike Run Carry_6: -7733275345399673752
+      2 Mike Run Carry_60: -5120296077041633762
+      2 Mike Run Carry_61: -5807741825500153561
+      2 Mike Run Carry_62: -1435033862067188833
+      2 Mike Run Carry_63: 7071870188357638947
+      2 Mike Run Carry_64: 642332518303906398
+      2 Mike Run Carry_65: -8949152305005888556
+      2 Mike Run Carry_66: 4949479641541121213
+      2 Mike Run Carry_67: -8434580563660922642
+      2 Mike Run Carry_68: -7951557839563555987
+      2 Mike Run Carry_69: -9077856691347234519
+      2 Mike Run Carry_7: 7520792000429356421
+      2 Mike Run Carry_70: 6038451506819441575
+      2 Mike Run Carry_71: 7813527697698821115
+      2 Mike Run Carry_72: -4204222537463411086
+      2 Mike Run Carry_73: 4391378582332265021
+      2 Mike Run Carry_74: -2548456858158860207
+      2 Mike Run Carry_75: 7188683487783001423
+      2 Mike Run Carry_76: 712007594079721967
+      2 Mike Run Carry_77: 8831410814512939841
+      2 Mike Run Carry_78: 7793711850542329189
+      2 Mike Run Carry_79: -238476541754766353
+      2 Mike Run Carry_8: 789126897183872735
+      2 Mike Run Carry_80: -5073244802712001368
+      2 Mike Run Carry_81: -1326438418847838238
+      2 Mike Run Carry_82: 8130649567320379159
+      2 Mike Run Carry_83: -2455781806918360484
+      2 Mike Run Carry_84: 1350867960750663570
+      2 Mike Run Carry_85: -7787082605338837684
+      2 Mike Run Carry_86: 2232416743316046923
+      2 Mike Run Carry_87: -8685179919149712411
+      2 Mike Run Carry_88: 3774183543382803790
+      2 Mike Run Carry_89: 5519058836199819566
+      2 Mike Run Carry_9: 4595302668373150982
+      2 Mike Run Carry_90: -2926694075248086400
+      2 Mike Run Carry_91: 4985773303402623573
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
