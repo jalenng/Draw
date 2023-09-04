@@ -101,10 +101,13 @@ public class SceneLoader : MonoBehaviour
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
         asyncLoad.allowSceneActivation = false;
 
-        // Wait for the scene to finish loading before activating it
+        // Wait for the scene to finish loading
         yield return new WaitForSeconds(config.minLoadingTime);
         yield return new WaitUntil(() => asyncLoad.progress >= 0.9f);
+        
+        // Activate the scene
         asyncLoad.allowSceneActivation = true;
+        yield return new WaitUntil(() => asyncLoad.isDone);
     }
 
     private IEnumerator handleSceneEntrance()
