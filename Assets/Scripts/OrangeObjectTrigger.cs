@@ -10,7 +10,6 @@ public class OrangeObjectTrigger : MonoBehaviour
     private TimelineTrigger trigger;
 
     public bool hasPlayed;
-    public bool triggerable;
 
     private void Start()
     {
@@ -23,8 +22,7 @@ public class OrangeObjectTrigger : MonoBehaviour
         {
             hasPlayed = true;
             Debug.Log("[OrangeObjectTrigger] Triggered");
-            other.gameObject.transform.parent = transform.parent.transform;
-            // TriggerCutscene();
+            other.gameObject.transform.SetParent(transform.parent.transform, true);
             StartCoroutine(TriggerCutsceneRoutine());
         }
     }
@@ -39,10 +37,4 @@ public class OrangeObjectTrigger : MonoBehaviour
         hasPlayed = true;
         trigger.Trigger(cutscene);
     }
-
-    public void ToggleTriggerable()
-    {
-        triggerable = true;
-    }
-    
 }

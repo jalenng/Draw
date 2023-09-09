@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
     public void TogglePause()
     {
         Debug.Log($"[PlayerMovement] Pause: {isPaused}");
-        if (isPaused) transform.parent = null;
+        if (isPaused) transform.SetParent(null);
         rb2d.velocity = Vector2.zero;
         isPaused = !isPaused;
     }
