@@ -65,7 +65,7 @@ public class DrawingCanvas : MonoBehaviour
             currentLine = Instantiate(linePrefab, this.transform).GetComponent<Line>();
 
             // Make it a child of the drawer's "Lines" (for organization)
-            currentLine.transform.parent = linesParent.transform;
+            currentLine.transform.SetParent(linesParent.transform);
 
             currentLineLength = 0;
         }

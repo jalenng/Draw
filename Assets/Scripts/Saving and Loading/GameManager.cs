@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // For dev and debugging convenience
-        if (Debug.isDebugBuild && Input.GetKeyDown(KeyCode.LeftShift))
+        if (Debug.isDebugBuild && Input.GetKey(KeyCode.LeftShift))
         {
             if (Input.GetKeyDown(KeyCode.S))
                 Save();
@@ -64,33 +64,34 @@ public class GameManager : MonoBehaviour
         Global.Level currentLevel = Global.GetLevelFromBuildIndex(currentBuildIndex);
 
         // Ensure this is a scene that we should be saving progress for
-        if (currentLevel == Global.Level.NONE) {
+        if (currentLevel == Global.Level.NONE)
+        {
             Debug.Log("[GameManager] Tried to save but current scene is not a game level");
             return;
         }
-        
+
         // Capture level state
         newGameData.level = currentLevel;
 
         // Capture player state
-        if (player != null) {
-            newGameData.playerData = player?.Capture();
-        }
+        newGameData.playerData = player?.Capture();
         
         // Capture checkpoint state
         newGameData.checkpointData = new List<SerializableCheckpointData>();
         foreach (CheckpointData checkpoint in checkpointData)
         {
-            if (checkpoint != null) {
+            if (checkpoint != null)
+            {
                 newGameData.checkpointData.Add(checkpoint.Capture());
             }
         }
-        
+
         // Capture cutscene state
         newGameData.cutsceneData = new List<SerializableCutsceneData>();
         foreach (CutsceneData cutscene in cutsceneData)
         {
-            if (cutscene != null) {
+            if (cutscene != null)
+            {
                 newGameData.cutsceneData.Add(cutscene.Capture());
             }
         }
@@ -116,7 +117,8 @@ public class GameManager : MonoBehaviour
 
         // Load the scene        
         bool buildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameData.level, out int savedBuildIndex);
-        if (buildIndexFound) {
+        if (buildIndexFound)
+        {
             FindObjectOfType<SceneLoader>().LoadScene(savedBuildIndex);
         }
 
