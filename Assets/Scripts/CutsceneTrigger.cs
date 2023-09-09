@@ -43,33 +43,34 @@ public class CutsceneTrigger : MonoBehaviour
                 return;
             }
 
-            hasTriggered = true;
-            
             Transform otherTransform = other.gameObject.transform;
-            Debug.Log($"[CutsceneTrigger] Triggered a cutscene at {otherTransform.position}", gameObject);
-
             Transform cutsceneGroupTransform = transform.parent.transform;
             other.gameObject.transform.SetParent(cutsceneGroupTransform, true);
-            StartCoroutine(TriggerCutsceneRoutine());
+
+            TriggerCutscene();
         }
     }
 
-    [ContextMenu("Trigger Cutscene")]
-    public IEnumerator TriggerCutsceneRoutine()
-    {
-        yield return trigger.StartCutscene(cutscene);
-        hasPlayed = true;
-    }
-
     [ContextMenu("Go to End State")]
-    public void GoToEndState() {
+    public void GoToEndState()
+    {
         Debug.Log($"[CutsceneTrigger] Going to end state of a cutscene", gameObject);
         trigger.GoToEndState(cutscene);
         hasPlayed = true;
     }
 
+    [ContextMenu("Trigger Cutscene")]
     public void TriggerCutscene()
     {
-        trigger.Trigger(cutscene);
+        hasTriggered = true;
+
+        Debug.Log($"[CutsceneTrigger] Cutscene triggered", gameObject);
+        StartCoroutine(CutsceneCoroutine());
+    }
+
+    public IEnumerator CutsceneCoroutine()
+    {
+        yield return trigger.StartCutscene(cutscene);
+        hasPlayed = true;
     }
 }
