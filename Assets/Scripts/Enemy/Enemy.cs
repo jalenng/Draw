@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float speed;
 
     [Header("Straight Movement")]
-    [SerializeField] private List<Transform> points = new List<Transform>();
+    [SerializeField] protected List<Transform> points = new List<Transform>();
     [SerializeField] private float distanceOffset;
 
     [Header("Circle Movement")]
@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
 
     // State variables
     private Vector3 originalPosition;
-    private int index = 0;
+    protected int index = 0;
     private float wait;
     private Animator anim;
 
@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void MoveStraight() 
+    protected void MoveStraight() 
     {
         if (points.Count > 0)
         {
