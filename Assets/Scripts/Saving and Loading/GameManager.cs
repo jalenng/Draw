@@ -74,8 +74,11 @@ public class GameManager : MonoBehaviour
         newGameData.level = currentLevel;
 
         // Capture player state
-        newGameData.playerData = player?.Capture();
-        
+        if (player != null)
+        {
+            newGameData.playerData = player.Capture();
+        }
+
         // Capture checkpoint state
         newGameData.checkpointData = new List<SerializableCheckpointData>();
         foreach (CheckpointData checkpoint in checkpointData)
