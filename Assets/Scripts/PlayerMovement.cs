@@ -130,12 +130,23 @@ public class PlayerMovement : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = false;
     }
 
+    [Obsolete]
     public void TogglePause()
     {
-        Debug.Log($"[PlayerMovement] Pause: {isPaused}");
         if (isPaused) transform.SetParent(null);
         rb2d.velocity = Vector2.zero;
         isPaused = !isPaused;
+    }
+
+    public void SetMovementPaused(bool value)
+    {
+        rb2d.velocity = Vector2.zero;
+        if (!value)
+        {
+            transform.SetParent(null);
+        }
+        isPaused = value;
+        Debug.Log($"[PlayerMovement] Player movement paused set to {value}");
     }
 
     private void Walk()
@@ -149,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
         rb2d.AddForce(movement * Vector2.right, ForceMode2D.Impulse);
 
         // The basic audio logic is: if not on ground, then stop footsteps.
-        // If velocity isn't 0 and right now we are9.n't playing sound, then play a sound.
+        // If velocity isn't 0 and right now we aren't playing sound, then play a sound.
         if (!feetCollider.IsTouchingLayers(ground))
         {
             footstepAudioSource.Stop();
