@@ -117,9 +117,6 @@ public class Textbox : MonoBehaviour
         // Show the CTC indicator
         CTCAnimator.SetBool("Hidden", false);
 
-        // Wrap up any SFX
-        speaker.WrapUp();
-
         sayRunning = false;
     }
 
