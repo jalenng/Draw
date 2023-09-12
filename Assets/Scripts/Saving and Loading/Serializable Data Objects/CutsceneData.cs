@@ -64,21 +64,19 @@ public class CutsceneData : MonoBehaviour
 
         // Ensure build index matches before using the loaded gameData
         bool buildIndexMatch = savedBuildIndex == SceneManager.GetActiveScene().buildIndex;
-        if (buildIndexMatch)
+        if (!buildIndexMatch) return;
+
+        // Ensure cutscene data exists
+        List<SerializableCutsceneData> allCutsceneData = gameData?.cutsceneData;
+        SerializableCutsceneData cutsceneData = allCutsceneData?.Find(x => x.ID == ID);
+
+        if (cutsceneData == null)
+            Debug.LogWarning($"[CutsceneData] Cutscene data not found for cutscene {ID}", gameObject);
+        else if (cutsceneData.hasPlayed)
         {
-            List<SerializableCutsceneData> allCutsceneData = gameData?.cutsceneData;
-            SerializableCutsceneData cutsceneData = allCutsceneData?.Find(x => x.ID == ID);
-
-            // Ensure cutscene data exists
-            if (cutsceneData == null)
-                Debug.LogWarning($"[CutsceneData] Cutscene data not found for cutscene {ID}", gameObject);
-            else if (cutsceneData.hasPlayed)
-            {
-                cutsceneTrigger.hasPlayed = true;
-                cutsceneTrigger.GoToEndState();
-            }
+            cutsceneTrigger.hasPlayed = true;
+            cutsceneTrigger.GoToEndState();
         }
-
     }
 
     // Returns a serializable version of the player's data

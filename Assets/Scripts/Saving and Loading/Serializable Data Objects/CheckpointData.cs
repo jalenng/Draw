@@ -58,17 +58,16 @@ public class CheckpointData : MonoBehaviour
 
         // Ensure build index matches before using the loaded gameData
         bool buildIndexMatch = savedBuildIndex == SceneManager.GetActiveScene().buildIndex;
-        if (buildIndexMatch)
-        {
-            List<SerializableCheckpointData> allCheckpointData = gameManager?.gameData?.checkpointData;
-            SerializableCheckpointData checkpointData = allCheckpointData?.Find(x => x.ID == ID);
+        if (!buildIndexMatch) return;
 
-            // Ensure checkpoint data exists
-            if (checkpointData == null)
-                Debug.LogWarning("[CheckpointData] Checkpoint data not found for checkpoint " + ID);
-            else if (checkpointData.isActivated)
-                checkpoint.Activate();
-        }
+        // Ensure checkpoint data exists
+        List<SerializableCheckpointData> allCheckpointData = gameManager?.gameData?.checkpointData;
+        SerializableCheckpointData checkpointData = allCheckpointData?.Find(x => x.ID == ID);
+
+        if (checkpointData == null)
+            Debug.LogWarning("[CheckpointData] Checkpoint data not found for checkpoint " + ID);
+        else if (checkpointData.isActivated)
+            checkpoint.Activate();
     }
 
     // Returns a serializable version of the player's data
