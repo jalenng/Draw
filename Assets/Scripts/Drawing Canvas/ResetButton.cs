@@ -31,8 +31,9 @@ public class ResetButton : MonoBehaviour
 
         Vector3 offset = new Vector3(
             (drawingAreaLocalScale.x * drawingAreaHalfWidth) + resetButtonHalfWidth,
-            (drawingAreaLocalScale.y * drawingAreaHalfHeight) - resetButtonHalfHeight
-            );
+            (drawingAreaLocalScale.y * drawingAreaHalfHeight) - resetButtonHalfHeight,
+            drawingArea.transform.position.z - 5 // bring it closer to the camera so it can be intercepted by OnMouseDown
+        );
 
         Vector3 trc = drawingArea.transform.position + offset;
         transform.position = trc;
