@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
         serializer = new ObjectSerializer<GameData>();
         gameData = null;
 
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         // Call the Save function when the game quits
         Application.quitting += Save;
     }
@@ -133,5 +135,21 @@ public class GameManager : MonoBehaviour
     public bool CanLoad()
     {
         return serializer.CanRead(saveFilePath);
+    }
+
+    // Action for when a new scene is loaded.
+    // If the new scene doesn't match the scene for the save file, clear the cached save.
+    public void OnSceneLoaded(Scene scene, LoadSceneMode _) {
+        // If no cached save file, there's nothing to clear
+        if (gameData == null) return;
+
+        // Check if the build indices match
+        int loadedSceneIndex = scene.buildIndex;
+        bool loadedSaveBuildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameData.level, out int loadedSaveBuildIndex);
+        bool currentGameDataIsValid = loadedSaveBuildIndexFound && (loadedSceneIndex == loadedSaveBuildIndex);
+        if (!currentGameDataIsValid) {
+            gameData = null;
+            Debug.Log($"[GameManager] The loaded scene ({loadedSceneIndex}) didn't match the saved scene ({loadedSaveBuildIndex}). Cleared the cached game save.");
+        }
     }
 }
