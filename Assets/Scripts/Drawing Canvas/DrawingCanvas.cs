@@ -16,7 +16,7 @@ public class DrawingCanvas : MonoBehaviour
     [Header("Line Drawing Settings")]
     [SerializeField] LayerMask cantDrawOverLayer;
     [SerializeField] float minLineLength = 0.5f;
-    [Range(0, 30)]
+    [Range(0, 50)]
     [SerializeField] float maxTotalLineLength = 10f;
     
     [Header("SFX Settings")]
@@ -104,7 +104,7 @@ public class DrawingCanvas : MonoBehaviour
                     audioSource.Play();
                 }
                 float sfxIntensity = Mathf.Log(1 + distance, sfxIntensityLogBase);
-                audioSource.pitch = (1 + sfxIntensity) * sfxIntensityToPitchScale;
+                audioSource.pitch = 1 + (sfxIntensity * sfxIntensityToPitchScale);
                 audioSource.volume = sfxIntensity * sfxIntensityToVolumeScale;
             }
             else {
