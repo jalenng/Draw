@@ -8,53 +8,56 @@ public class PlayerMovement : MonoBehaviour
     // Configuration parameters
     [SerializeField] private bool animateSpawnOnLoad = false;
 
-    [Header("Movement")] [SerializeField] private float speed;
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float movementSmoothing = 0.05f;
-    [SerializeField] private int jumpBufferFramesMax = 5;
-    private float SFXDelay = 0.09f;
+    [Header("Movement")]
+    [SerializeField] private float speed = 4.25f;
+    [SerializeField] private float jumpForce = 30f;
+    [SerializeField] private float deferredJumpDelay = 0.1f;
+    [SerializeField] private float coyoteJumpDelay = 0.1f;
 
-
-    [Header("Ground Check")] [SerializeField]
-    private LayerMask ground;
-
+    [Header("Ground Check")]
+    [SerializeField] private LayerMask ground;
     [SerializeField] private Collider2D feetCollider;
 
-    [Header("Auto Respawn")] [SerializeField]
-    private float minY = -20f;
+    [Header("Auto Respawn")]
+    [SerializeField] private float minY = -20f;
+
+    [Header("Audio Sources")]
+    // Audio sources
+    [SerializeField] private AudioSource jumpAudioSource;
+    [SerializeField] private AudioSource footstepAudioSource;
+    [SerializeField] private AudioSource deathAudioSource;
+    [SerializeField] private AudioSource spawnAudioSource;
 
     // Cached components
     private Rigidbody2D rb2d;
     private Animator anim;
-    private AudioSource footstepAS;
-    [SerializeField] private AudioSource jumpAS;
-    [SerializeField] private AudioSource deathAS;
-    [SerializeField] private AudioSource SpawnAS;
-    // State variables
 
+    // State variables
+    private float SFXDelay = 0.09f;
     private float curSFXDelay;
     public RespawnManager respawner;
     public Vector3 respawnPos;
-    private Vector3 prevPos;
-
     private bool isDead = false;
-    [SerializeField] private bool isPaused = false;
+    private bool isPaused = false;
 
     // Input variables
     private bool jumpRequested = false;
-    private int jumpBufferFrames = 0;
-    private float horizontal;
+    private float horizontal = 0f;
+    private float lastGroundContactTime = 0f;
+    private float lastJumpRequestedTime = 0f;
 
     private void Awake()
     {
         // Get components
-        footstepAS = GetComponent<AudioSource>();
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         respawner = FindObjectOfType<RespawnManager>();
+
         // Set initial respawn position
-        prevPos = respawnPos = transform.position;
-        if (animateSpawnOnLoad) {
+        SetRespawnPos(transform.position);
+
+        if (animateSpawnOnLoad)
+        {
             rb2d.simulated = false;
             Spawn();
         }
@@ -62,10 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (isDead)
-        {
-            return;
-        }
+        if (isDead) return;
 
         if (isPaused)
         {
@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
         if (transform.position.y < minY)
             Die();
 
-        anim.SetBool("Moving", (transform.position.x - prevPos.x) != 0 && horizontal != 0);
+        anim.SetBool("Moving", rb2d.velocity.x != 0 && horizontal != 0);
         anim.SetFloat("YVelocity", rb2d.velocity.y);
     }
 
@@ -93,39 +93,33 @@ public class PlayerMovement : MonoBehaviour
 
         Walk();
 
-        if (feetCollider.IsTouchingLayers(ground))
-            anim.SetBool("isTouchingGround", true);
-        else
-            anim.SetBool("isTouchingGround", false);
+        // Check if the player is currently touching the ground
+        bool isTouchingGround = feetCollider.IsTouchingLayers(ground);
+        anim.SetBool("isTouchingGround", isTouchingGround);
 
-        if (jumpRequested)
+        // Get the last time the values are true.
+        // We will use this for jump deferring and coyote jump
+        if (isTouchingGround) lastGroundContactTime = Time.time;
+        if (jumpRequested) lastJumpRequestedTime = Time.time;
+        jumpRequested = false;
+
+        bool recentlyContactedGround = (Time.time - lastGroundContactTime) < deferredJumpDelay;
+        bool recentlyRequestedJump = (Time.time - lastJumpRequestedTime) < coyoteJumpDelay;
+
+        bool shouldJumpNow = recentlyContactedGround && recentlyRequestedJump;
+        if (shouldJumpNow)
         {
-            if (feetCollider.IsTouchingLayers(ground))
-            {
-                Jump();
-                jumpAS.Play();
-                anim.SetTrigger("Jump");
-                jumpRequested = false;
-            }
-            else
-            {
-                jumpBufferFrames--;
-                if (jumpBufferFrames < 0)
-                    jumpRequested = false;
-            }
+            lastGroundContactTime = -1f;
+            lastJumpRequestedTime = -1f;
+            Jump();
         }
-        prevPos = transform.position;
     }
 
     private void GetInput()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-        if(horizontal == 0) footstepAS.Stop();
-        if (Input.GetButtonDown("Jump"))
-        {
-            jumpRequested = true;
-            jumpBufferFrames = jumpBufferFramesMax;
-        }
+        if (Input.GetButtonDown("Jump")) jumpRequested = true;
+        if (horizontal == 0) footstepAudioSource.Stop();
     }
 
     private void UpdateSpriteDirection()
@@ -136,13 +130,23 @@ public class PlayerMovement : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = false;
     }
 
+    [Obsolete]
     public void TogglePause()
     {
-        Debug.Log($"[PlayerMovement] Pause: {isPaused}");
-        if (isPaused) transform.parent = null;
-
+        if (isPaused) transform.SetParent(null);
         rb2d.velocity = Vector2.zero;
         isPaused = !isPaused;
+    }
+
+    public void SetMovementPaused(bool value)
+    {
+        rb2d.velocity = Vector2.zero;
+        if (!value)
+        {
+            transform.SetParent(null);
+        }
+        isPaused = value;
+        Debug.Log($"[PlayerMovement] Player movement paused set to {value}");
     }
 
     private void Walk()
@@ -150,25 +154,39 @@ public class PlayerMovement : MonoBehaviour
         // The SFXDelay stuff is added so that it will only play sounds after the player
         // has been walking for a certaint amount of time, just so things like
         // walking up stairs doesnt spam a bunch of short audio clips.
-        rb2d.velocity = new Vector2(horizontal * speed, rb2d.velocity.y);
+        float targetVelocity = horizontal * speed;
+        float velocityDiff = targetVelocity - rb2d.velocity.x;
+        float movement = Mathf.Pow(Mathf.Abs(velocityDiff), 2) * Mathf.Sign(velocityDiff);
+        rb2d.AddForce(movement * Vector2.right, ForceMode2D.Impulse);
+
         // The basic audio logic is: if not on ground, then stop footsteps.
         // If velocity isn't 0 and right now we aren't playing sound, then play a sound.
-        if(!feetCollider.IsTouchingLayers(ground)) {
-            footstepAS.Stop();
+        if (!feetCollider.IsTouchingLayers(ground))
+        {
+            footstepAudioSource.Stop();
             curSFXDelay = SFXDelay;
-        } else if((anim.GetBool("Moving")) && !footstepAS.isPlaying) {
-            if(curSFXDelay > 0) {
+        }
+        else if ((anim.GetBool("Moving")) && !footstepAudioSource.isPlaying)
+        {
+            if (curSFXDelay > 0)
+            {
                 curSFXDelay -= Time.deltaTime;
-            } else {
-                footstepAS.Play();
+            }
+            else
+            {
+                footstepAudioSource.Play();
                 curSFXDelay = SFXDelay;
-            }   
+            }
         }
     }
 
     private void Jump()
     {
-        rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
+        rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+        rb2d.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
+
+        anim.SetTrigger("Jump");
+        jumpAudioSource.Play();
     }
 
     public void SetRespawnPos(Vector3 respawnPos)
@@ -179,13 +197,13 @@ public class PlayerMovement : MonoBehaviour
     public void Die()
     {
         if (isDead) return;
-        
+
         isDead = true;
-        
+
         // Freeze the player
         rb2d.simulated = false;
-        footstepAS.Stop();
-        deathAS.Play();
+        footstepAudioSource.Stop();
+        deathAudioSource.Play();
 
         // Trigger death animation
         anim.SetTrigger("Dead");
@@ -195,8 +213,8 @@ public class PlayerMovement : MonoBehaviour
     {
         anim.SetTrigger("Spawn");
     }
-    // Code to check if the player position is inside of another collider 
 
+    // Code to check if the player position is inside of another collider 
     IEnumerator Respawn()
     {
         yield return new WaitForSeconds(1f);
@@ -205,14 +223,17 @@ public class PlayerMovement : MonoBehaviour
         rb2d.simulated = true;
         rb2d.velocity = Vector2.zero;
 
-        respawner?.StartObjectRespawn();    
+        respawner?.StartObjectRespawn();
+
         // Move the player to the respawn position
-        SpawnAS.Play();
+        spawnAudioSource.Play();
         transform.position = respawnPos;
 
         isDead = false;
     }
-    public void setCanMove(int isOne) {
+
+    public void setCanMove(int isOne)
+    {
         rb2d.simulated = (isOne == 1);
     }
 }

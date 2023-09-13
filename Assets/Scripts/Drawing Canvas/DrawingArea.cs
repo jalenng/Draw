@@ -7,7 +7,6 @@ public class DrawingArea : MonoBehaviour
 {
     // Configuration parameters
     [SerializeField] DrawingCanvas drawingCanvas;
-    [SerializeField] float outlineWidth = 0.3f;
 
     // Cached components
     LineRenderer lineRenderer;
@@ -54,10 +53,6 @@ public class DrawingArea : MonoBehaviour
         };
 
         lineRenderer.SetPositions(positions);
-
-        // Set outline width
-        lineRenderer.startWidth = outlineWidth;
-        lineRenderer.endWidth = outlineWidth;
     }
 
     private void UpdateBorderOutlineColor()

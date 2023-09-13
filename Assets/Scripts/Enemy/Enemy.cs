@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float speed;
 
     [Header("Straight Movement")]
-    [SerializeField] private List<Transform> points = new List<Transform>();
+    [SerializeField] protected List<Transform> points = new List<Transform>();
     [SerializeField] private float distanceOffset;
 
     [Header("Circle Movement")]
@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
 
     // State variables
     private Vector3 originalPosition;
-    private int index = 0;
+    protected int index = 0;
     private float wait;
     private Animator anim;
 
@@ -32,7 +32,9 @@ public class Enemy : MonoBehaviour
         originalPosition = transform.position;
         Animator anim = GetComponent<Animator>();
         AnimatorStateInfo state = anim.GetCurrentAnimatorStateInfo(0);//could replace 0 by any other animation layer index
-        anim.Play(state.fullPathHash, -1, Random.Range(0f, 1f));
+        // anim.Play(state.fullPathHash, -1, Random.Range(0f, 1f));
+        // Choose a random frame (there are 8 frames)
+        anim.playbackTime = Random.Range(0, 7) * (state.length / 8f);
     }
 
     void Update()
@@ -50,7 +52,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void MoveStraight() 
+    protected void MoveStraight() 
     {
         if (points.Count > 0)
         {
