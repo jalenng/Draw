@@ -50,10 +50,10 @@ public class Textbox : MonoBehaviour
     // Clears the avatar image and content text
     public void Clear()
     {
-        this.avatarSprite = null;
-        this.contentText = "";
+        this.avatarSprite = avatarImage.sprite = null;
+        this.contentText = contentTMP.text = "";
         this.CPS = 0;
-        StartCoroutine(Say());
+        CTCAnimator.SetBool("Hidden", true);
     }
 
     // Stops the typewriting effect for the current dialogue entry, and shows all the text
@@ -106,7 +106,7 @@ public class Textbox : MonoBehaviour
 
                 // Play SFX
                 speaker.Speak();
-                
+
                 yield return new WaitForSeconds(SPC);
             }
         }
