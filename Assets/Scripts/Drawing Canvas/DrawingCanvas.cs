@@ -18,6 +18,11 @@ public class DrawingCanvas : MonoBehaviour
     [SerializeField] float minLineLength = 0.5f;
     [Range(0, 30)]
     [SerializeField] float maxTotalLineLength = 10f;
+    
+    [Header("SFX Settings")]
+    [SerializeField] private float sfxIntensityLogBase = 5f;
+    [SerializeField] private float sfxIntensityToPitchScale = 5f;
+    [SerializeField] private float sfxIntensityToVolumeScale = 5f;
 
     // State variables
     Vector3 lastPointPos;
@@ -41,14 +46,17 @@ public class DrawingCanvas : MonoBehaviour
         achievementUnlocker = GetComponent<AchievementUnlocker>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // If current line exists, draw
         if (currentLine != null)
         {
             Draw();
         }
+    }
 
+    void Update()
+    {
         // If the mouse button is released, end drawing
         if (Input.GetMouseButtonUp(0))
             EndDraw();
@@ -76,9 +84,6 @@ public class DrawingCanvas : MonoBehaviour
     {
         if (CanDraw())
         {
-            // Play SFX
-            if (!audioSource.isPlaying) audioSource.Play();
-
             // Account for canvas position
             Vector2 pointPosition = GetMousePosInWorldSpace();
             currentLine.AddPoint(pointPosition);
@@ -91,12 +96,24 @@ public class DrawingCanvas : MonoBehaviour
 
             // Update last point position
             lastPointPos = pointPosition;
+
+            // Play and update SFX
+            if (distance > 0)
+            {
+                if (!audioSource.isPlaying) {
+                    audioSource.Play();
+                }
+                float sfxIntensity = Mathf.Log(1 + distance, sfxIntensityLogBase);
+                audioSource.pitch = (1 + sfxIntensity) * sfxIntensityToPitchScale;
+                audioSource.volume = sfxIntensity * sfxIntensityToVolumeScale;
+            }
+            else {
+                audioSource.pitch = 0;
+                audioSource.volume = 0;
+            }
         }
         else
         {
-            // Stop SFX
-            audioSource.Stop();
-
             EndDraw();
         }
     }
@@ -125,6 +142,9 @@ public class DrawingCanvas : MonoBehaviour
             // Make currentLine null. We're done with this line.
             currentLine = null;
         }
+
+        // Stop SFX
+        audioSource.Stop();
     }
 
     // Returns the prefab of the line that will be drawn
