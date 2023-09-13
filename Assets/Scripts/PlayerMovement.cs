@@ -143,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
         rb2d.velocity = Vector2.zero;
         if (!value)
         {
-            transform.SetParent(null);
+            transform.SetParent(null, true);
         }
         isPaused = value;
         Debug.Log($"[PlayerMovement] Player movement paused set to {value}");
