@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca9cc05aca58144c693df5982ac2993d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePrefab: {fileID: 2487916907362762922, guid: ecc87263502f346f19eff11641a8d62e, type: 3}
+  linePrefab: {fileID: 5434204094653489069, guid: e4988e8dce3115e49910cb86eebee306, type: 3}
   linesParent: {fileID: 2158349128190063131}
   cantDrawOverLayer:
     serializedVersion: 2
@@ -88,8 +88,8 @@ MonoBehaviour:
   minLineLength: 0.1
   maxTotalLineLength: 10
   sfxIntensityLogBase: 3
-  sfxIntensityToPitchScale: 0.9
-  sfxIntensityToVolumeScale: 3
+  sfxIntensityToPitchScale: 0.25
+  sfxIntensityToVolumeScale: 2
   onReset:
     m_PersistentCalls:
       m_Calls: []
@@ -234,7 +234,7 @@ Transform:
   m_GameObject: {fileID: 6013472230435510633}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
