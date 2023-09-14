@@ -18,7 +18,8 @@ public class FocusArea : MonoBehaviour
     [Tooltip("How far to zoom the camera relative to the focus area's size")]
     [Range(0, 2)]
     float zoomFactor = 0.8f;
-    bool isLocked = false;
+    private bool isLocked = false;
+    private bool playerEntered = false;
 
     // Cached object references
     CameraBlender blender;
@@ -30,16 +31,16 @@ public class FocusArea : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        playerEntered = true;
         if (isLocked)
             return;
         if (other.CompareTag("Player"))
-        {
             Focus();
-        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        playerEntered = false;
         if (isLocked)
             return;
         if (other.CompareTag("Player"))
@@ -118,7 +119,7 @@ public class FocusArea : MonoBehaviour
         isLocked = locked;
         if (isLocked)
             Focus();
-        else
+        else if (!playerEntered)
             Unfocus();
     }
 }

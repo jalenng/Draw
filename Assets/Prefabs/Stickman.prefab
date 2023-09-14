@@ -266,6 +266,7 @@ MonoBehaviour:
     m_Signals:
     - {fileID: 11400000, guid: 02c251ef8dad843f9913495a851ffa85, type: 2}
     - {fileID: 11400000, guid: d02815e2ab2fb17438a2d4ce331cda91, type: 2}
+    - {fileID: 11400000, guid: 103cecbc9a373b34e9c9dd509083ba54, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -294,6 +295,20 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 1
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1450883229827684620}
+          m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &3343981970825247549
 GameObject:
