@@ -72,8 +72,8 @@ public class AudioSystem : MonoBehaviour
     // Fades out the background music
     public IEnumerator PlayBGM(AudioClip clip, float pitch = 1f, float fadeDuration = 1f, float delay = 0f)
     {
-        // Do not replay the clip if it is already playing
-        if (BGMSource.clip != clip)
+        // Do not replay the clip if it is already playing at the given pitch
+        if (BGMSource.clip != clip || BGMSource.pitch != pitch)
         {
             yield return FadeBGMVolume(0f, fadeDuration);
             BGMSource.clip = clip;

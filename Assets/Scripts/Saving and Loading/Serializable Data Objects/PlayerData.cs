@@ -71,9 +71,9 @@ public class PlayerData : MonoBehaviour
         return new SerializablePlayerData()
         {
             position = new float[] {
-                transform.position.x,
-                transform.position.y,
-                transform.position.z
+                playerMovement.lastUnpausedPos.x,
+                playerMovement.lastUnpausedPos.y,
+                playerMovement.lastUnpausedPos.z
             },
             respawnPos = new float[] {
                 playerMovement.respawnPos.x,

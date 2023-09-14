@@ -76,10 +76,7 @@ public class DrawingArea : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!drawingCanvas.CanDraw())
-        {
-            cursorManager.DisableCursor("pencil");
-        }
+        cursorManager.DisableCursor("pencil");
     }
 
     // Invoked when the player clicks inside the drawing area's collider
