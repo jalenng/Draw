@@ -37,14 +37,15 @@ public class PlayerMovement : MonoBehaviour
     private float curSFXDelay;
     public RespawnManager respawner;
     public Vector3 respawnPos;
+    public Vector3 lastUnpausedPos;
     private bool isDead = false;
     private bool isPaused = false;
 
     // Input variables
     private bool jumpRequested = false;
     private float horizontal = 0f;
-    private float lastGroundContactTime = 0f;
-    private float lastJumpRequestedTime = 0f;
+    private float lastGroundContactTime = -1f;
+    private float lastJumpRequestedTime = -1f;
 
     private void Awake()
     {
@@ -79,6 +80,8 @@ public class PlayerMovement : MonoBehaviour
         GetInput();
         UpdateSpriteDirection();
 
+        lastUnpausedPos = this.transform.position;
+
         // Trigger respawn when Stickman falls too far
         if (transform.position.y < minY)
             Die();
@@ -103,15 +106,18 @@ public class PlayerMovement : MonoBehaviour
         if (jumpRequested) lastJumpRequestedTime = Time.time;
         jumpRequested = false;
 
-        bool recentlyContactedGround = (Time.time - lastGroundContactTime) < deferredJumpDelay;
-        bool recentlyRequestedJump = (Time.time - lastJumpRequestedTime) < coyoteJumpDelay;
-
-        bool shouldJumpNow = recentlyContactedGround && recentlyRequestedJump;
-        if (shouldJumpNow)
+        if (lastGroundContactTime > 0 && lastJumpRequestedTime > 0)
         {
-            lastGroundContactTime = -1f;
-            lastJumpRequestedTime = -1f;
-            Jump();
+            bool recentlyContactedGround = (Time.time - lastGroundContactTime) < deferredJumpDelay;
+            bool recentlyRequestedJump = (Time.time - lastJumpRequestedTime) < coyoteJumpDelay;
+
+            bool shouldJumpNow = recentlyContactedGround && recentlyRequestedJump;
+            if (shouldJumpNow)
+            {
+                lastGroundContactTime = -1f;
+                lastJumpRequestedTime = -1f;
+                Jump();
+            }
         }
     }
 
