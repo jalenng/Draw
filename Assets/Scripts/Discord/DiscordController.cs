@@ -8,6 +8,7 @@ public class DiscordController : MonoBehaviour
 {
 
     public Discord.Discord discord;
+    private bool alreadyLoggedInitError = false;
 
     void Start()
     {
@@ -49,11 +50,16 @@ public class DiscordController : MonoBehaviour
                 }
             });
 
+            alreadyLoggedInitError = false;
             Debug.Log("[DiscordController] Initialized successfully");
         }
         catch (Discord.ResultException e)
         {
-            Debug.LogError($"[DiscordController] Failed to initialize Discord instance: {e}");
+            if (!alreadyLoggedInitError)
+            {
+                Debug.LogError($"[DiscordController] Failed to initialize Discord instance: {e}");
+            }
+            alreadyLoggedInitError = true;
             DestroyDiscord();
         }
     }
