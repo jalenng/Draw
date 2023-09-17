@@ -50,6 +50,7 @@ public class OrangeObject : RespawnInterface
         {
             rb2d.bodyType = RigidbodyType2D.Static;
         }
+        rb2d.velocity = Vector2.zero;
         transform.position = respawnPos;
         transform.rotation = respawnRotation;
     }
