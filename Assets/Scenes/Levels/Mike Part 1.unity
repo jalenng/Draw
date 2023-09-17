@@ -1151,7 +1151,7 @@ Transform:
   m_GameObject: {fileID: 58024203}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10, y: -11, z: 0.26381436}
+  m_LocalPosition: {x: 10, y: -10.983, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2769,12 +2769,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5231622865541214430, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
-      propertyPath: m_PlayableAsset
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5231622865541214430, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 212
+      value: 213
       objectReference: {fileID: 0}
     - target: {fileID: 5231622865541214430, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_SceneBindings.Array.data[17].key
@@ -3557,6 +3553,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -247983521374242237, guid: 3f1596b1b9f784b44966256adbb663d5, type: 2}
     - target: {fileID: 5231622865541214430, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
+      propertyPath: m_SceneBindings.Array.data[212].key
+      value: 
+      objectReference: {fileID: -5488456623616208642, guid: 1c89de86049ee8d42894783a62ca2765, type: 2}
+    - target: {fileID: 5231622865541214430, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_SceneBindings.Array.data[17].value
       value: 
       objectReference: {fileID: 1399723615}
@@ -4156,6 +4156,10 @@ PrefabInstance:
       propertyPath: m_SceneBindings.Array.data[211].value
       value: 
       objectReference: {fileID: 1256590537236634895}
+    - target: {fileID: 5231622865541214430, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
+      propertyPath: m_SceneBindings.Array.data[212].value
+      value: 
+      objectReference: {fileID: 943483343}
     - target: {fileID: 5231622865541214431, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Name
       value: Cutscene Manager
@@ -4197,7 +4201,7 @@ Transform:
   m_GameObject: {fileID: 175375447}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10, y: -11, z: 0.26381436}
+  m_LocalPosition: {x: 10, y: -10.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6371,6 +6375,10 @@ PrefabInstance:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[11].y
       value: -0.515
       objectReference: {fileID: 0}
+    - target: {fileID: 6244367843685489988, guid: c0fd5c6ca22e64d47b5622faab9795cc, type: 3}
+      propertyPath: m_Mass
+      value: 6.821959
+      objectReference: {fileID: 0}
     - target: {fileID: 7949143088991643367, guid: c0fd5c6ca22e64d47b5622faab9795cc, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -6460,6 +6468,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3900287203105456683, guid: c7b7c60df71bac042b7a2107dcdce88d, type: 3}
   m_PrefabInstance: {fileID: 370071477}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &370071479 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8932038743439898534, guid: c7b7c60df71bac042b7a2107dcdce88d, type: 3}
+  m_PrefabInstance: {fileID: 370071477}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e06dcb08e545843028d67237c6abbe2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &373215656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9307,12 +9326,12 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 3f1596b1b9f784b44966256adbb663d5, type: 2}
     - target: {fileID: 8932038743439898534, guid: c7b7c60df71bac042b7a2107dcdce88d, type: 3}
       propertyPath: dependencies.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8932038743439898534, guid: c7b7c60df71bac042b7a2107dcdce88d, type: 3}
       propertyPath: dependencies.Array.data[0]
       value: 
-      objectReference: {fileID: 1629712218}
+      objectReference: {fileID: 370071479}
     - target: {fileID: 9153597354835231105, guid: c7b7c60df71bac042b7a2107dcdce88d, type: 3}
       propertyPath: m_Name
       value: Cutscene Trigger
@@ -9419,7 +9438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &943483344
 Transform:
   m_ObjectHideFlags: 0
@@ -13172,7 +13191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1618234120724272604, guid: c0fd5c6ca22e64d47b5622faab9795cc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.72
+      value: -11.66
       objectReference: {fileID: 0}
     - target: {fileID: 1618234120724272604, guid: c0fd5c6ca22e64d47b5622faab9795cc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16256,7 +16275,7 @@ Transform:
   m_GameObject: {fileID: 1986486556}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.5, y: -11.75, z: 0.26381436}
+  m_LocalPosition: {x: 11.5, y: -11.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
