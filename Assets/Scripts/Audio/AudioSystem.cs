@@ -69,17 +69,31 @@ public class AudioSystem : MonoBehaviour
         PlayerPrefs.SetFloat(SFXVolumeParam, SFXVolume);
     }
 
-    // Fades out the background music
+    // Fade out the current BGM, then fade in a new BGM
     public IEnumerator PlayBGM(AudioClip clip, float pitch = 1f, float fadeDuration = 1f, float delay = 0f)
     {
         // Do not replay the clip if it is already playing at the given pitch
         if (BGMSource.clip != clip || BGMSource.pitch != pitch)
         {
-            yield return FadeBGMVolume(0f, fadeDuration);
+            // If currently playing a clip, fade out first
+            if (BGMSource.clip != null)
+            {
+                yield return FadeBGMVolume(0f, fadeDuration);
+            }
             BGMSource.clip = clip;
             BGMSource.pitch = pitch;
             BGMSource.PlayDelayed(delay);
             yield return FadeBGMVolume(1f, fadeDuration);
+        }
+    }
+
+    // Fade out the current BGM to silence
+    public IEnumerator StopBGM(float fadeDuration = 1f)
+    {
+        if (BGMSource.clip != null)
+        {
+            yield return FadeBGMVolume(0f, fadeDuration);
+            BGMSource.clip = null;
         }
     }
 

@@ -20,9 +20,11 @@ public class BGMEnqueuer : MonoBehaviour
 
         // Enqueue the BGM
         if (BGMClip) {
+            Debug.Log($"[BGMEnqueuer] Enqueuing BGM clip {BGMClip} with pitch {pitch}");
             StartCoroutine(audioSystem.PlayBGM(BGMClip, pitch));
         } else {
-            Debug.LogError("[BGMEnqueuer] No BGM clip assigned");
+            Debug.Log($"[BGMEnqueuer] No BGM clip assigned. Stopping BGM.");
+            StartCoroutine(audioSystem.StopBGM());
         }
     }
 
