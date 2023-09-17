@@ -80,14 +80,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca9cc05aca58144c693df5982ac2993d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePrefab: {fileID: 2487916907362762922, guid: ecc87263502f346f19eff11641a8d62e, type: 3}
+  linePrefab: {fileID: 5434204094653489069, guid: e4988e8dce3115e49910cb86eebee306, type: 3}
   linesParent: {fileID: 2158349128190063131}
   cantDrawOverLayer:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 33088
   minLineLength: 0.1
   maxTotalLineLength: 10
-  trigger: {fileID: 0}
+  sfxIntensityLogBase: 3
+  sfxIntensityToPitchScale: 0.25
+  sfxIntensityToVolumeScale: 2
+  onReset:
+    m_PersistentCalls:
+      m_Calls: []
+  onEndDraw:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &6086853913905144535
 AudioSource:
   m_ObjectHideFlags: 0
@@ -98,7 +106,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -1643656973328474427, guid: f161f5ffa53013d40bd0c11e00ca8336, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 1e648a873b171407ba4c2201e790921a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3715eca40895ab34ea65a530f0793fd3, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -226,7 +234,7 @@ Transform:
   m_GameObject: {fileID: 6013472230435510633}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -452,49 +460,9 @@ PrefabInstance:
       propertyPath: drawingCanvas
       value: 
       objectReference: {fileID: 3121044882252102164}
-    - target: {fileID: 3722581281183600478, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
-      value: 0.067
-      objectReference: {fileID: 0}
-    - target: {fileID: 3722581281183600478, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
-      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].value
-      value: 0.067
-      objectReference: {fileID: 0}
     - target: {fileID: 5998983189275153447, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
       propertyPath: m_Name
       value: Drawing Area
-      objectReference: {fileID: 0}
-    - target: {fileID: 7316794802047645502, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7316794802047645502, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7316794802047645502, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7316794802047645502, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7316794802047645502, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7316794802047645502, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7316794802047645502, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7316794802047645502, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7316794802047645502, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

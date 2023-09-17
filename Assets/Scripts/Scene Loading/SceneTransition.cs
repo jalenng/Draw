@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SceneTransition : MonoBehaviour
 {
     [SerializeField] Image loadingAnimation;
-    
+
     // Cached components
     Animator anim;
     Image image;
@@ -15,8 +15,6 @@ public class SceneTransition : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         image = GetComponent<Image>();
-
-        StartCoroutine(FadeIn());
     }
 
     public void SetTransitionColor(Color color)
@@ -24,21 +22,27 @@ public class SceneTransition : MonoBehaviour
         image.color = color;
 
         loadingAnimation.color = new Color(
-            1f - color.r, 
-            1f - color.g, 
+            1f - color.r,
+            1f - color.g,
             1f - color.b);
     }
 
     public IEnumerator FadeIn()
     {
-        anim.SetTrigger("fadeIn");
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        if (anim != null)
+        {
+            anim.SetTrigger("fadeIn");
+            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        }
     }
 
     public IEnumerator FadeOut()
     {
-        anim.SetTrigger("fadeOut");
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        if (anim != null)
+        {
+            anim.SetTrigger("fadeOut");
+            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        }
     }
 
 }

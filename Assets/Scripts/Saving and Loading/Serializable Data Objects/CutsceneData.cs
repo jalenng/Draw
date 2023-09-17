@@ -43,6 +43,12 @@ public class CutsceneData : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         gameManager.cutsceneData.Add(this);
 
+        // Show warning if no GUID
+        if (myID == "")
+        {
+            Debug.Log($"[CutsceneData] Cutscene data is missing a GUID!", gameObject);
+        }
+
         Load();
     }
 
@@ -58,23 +64,19 @@ public class CutsceneData : MonoBehaviour
 
         // Ensure build index matches before using the loaded gameData
         bool buildIndexMatch = savedBuildIndex == SceneManager.GetActiveScene().buildIndex;
-        if (buildIndexMatch)
+        if (!buildIndexMatch) return;
+
+        // Ensure cutscene data exists
+        List<SerializableCutsceneData> allCutsceneData = gameData?.cutsceneData;
+        SerializableCutsceneData cutsceneData = allCutsceneData?.Find(x => x.ID == ID);
+
+        if (cutsceneData == null)
+            Debug.LogWarning($"[CutsceneData] Cutscene data not found for cutscene {ID}", gameObject);
+        else if (cutsceneData.hasPlayed)
         {
-            List<SerializableCutsceneData> allCutsceneData = gameData?.cutsceneData;
-            SerializableCutsceneData cutsceneData = allCutsceneData?.Find(x => x.ID == ID);
-
-            // Ensure cutscene data exists
-            if (cutsceneData == null)
-                Debug.LogWarning("[CutsceneData] Cutscene data not found for cutscene " + ID);
-            else if (cutsceneData.hasPlayed)
-            {
-                cutsceneTrigger.hasPlayed = true;
-                // Get all siblings of cutscene trigger and disable them
-                foreach (Transform child in transform.parent)
-                    child.gameObject.SetActive(false);
-            }
+            cutsceneTrigger.hasPlayed = true;
+            cutsceneTrigger.GoToEndState();
         }
-
     }
 
     // Returns a serializable version of the player's data

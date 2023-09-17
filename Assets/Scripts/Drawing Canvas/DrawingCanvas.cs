@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Events;
 
 public class DrawingCanvas : MonoBehaviour
 {
@@ -15,21 +16,28 @@ public class DrawingCanvas : MonoBehaviour
     [Header("Line Drawing Settings")]
     [SerializeField] LayerMask cantDrawOverLayer;
     [SerializeField] float minLineLength = 0.5f;
-    [Range(0, 30)] 
+    [Range(0, 50)]
     [SerializeField] float maxTotalLineLength = 10f;
     
+    [Header("SFX Settings")]
+    [SerializeField] private float sfxIntensityLogBase = 5f;
+    [SerializeField] private float sfxIntensityToPitchScale = 5f;
+    [SerializeField] private float sfxIntensityToVolumeScale = 5f;
+
     // State variables
     Vector3 lastPointPos;
     float currentLineLength = 0f;
     float totalDrawnLineLength = 0f;
+
+    // Actions
+    [SerializeField] private UnityEvent onReset;
+    [SerializeField] private UnityEvent onEndDraw;
 
     // Cached components
     Line currentLine;
     Camera cam;
     AudioSource audioSource;
     AchievementUnlocker achievementUnlocker;
-    
-    public CutsceneTrigger trigger;
 
     void Start()
     {
@@ -38,13 +46,17 @@ public class DrawingCanvas : MonoBehaviour
         achievementUnlocker = GetComponent<AchievementUnlocker>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // If current line exists, draw
-        if (currentLine != null) {
+        if (currentLine != null)
+        {
             Draw();
         }
+    }
 
+    void Update()
+    {
         // If the mouse button is released, end drawing
         if (Input.GetMouseButtonUp(0))
             EndDraw();
@@ -61,7 +73,7 @@ public class DrawingCanvas : MonoBehaviour
             currentLine = Instantiate(linePrefab, this.transform).GetComponent<Line>();
 
             // Make it a child of the drawer's "Lines" (for organization)
-            currentLine.transform.parent = linesParent.transform;
+            currentLine.transform.SetParent(linesParent.transform);
 
             currentLineLength = 0;
         }
@@ -72,12 +84,9 @@ public class DrawingCanvas : MonoBehaviour
     {
         if (CanDraw())
         {
-            // Play SFX
-            if (!audioSource.isPlaying) audioSource.Play();
-            
             // Account for canvas position
             Vector2 pointPosition = GetMousePosInWorldSpace();
-            currentLine.AddPoint(pointPosition);    
+            currentLine.AddPoint(pointPosition);
 
             // Calculate distance between the points and update ink counters
             bool isFirstPoint = currentLine.pointsCount == 1;
@@ -87,12 +96,24 @@ public class DrawingCanvas : MonoBehaviour
 
             // Update last point position
             lastPointPos = pointPosition;
+
+            // Play and update SFX
+            if (distance > 0)
+            {
+                if (!audioSource.isPlaying) {
+                    audioSource.Play();
+                }
+                float sfxIntensity = Mathf.Log(1 + distance, sfxIntensityLogBase);
+                audioSource.pitch = 1 + (sfxIntensity * sfxIntensityToPitchScale);
+                audioSource.volume = sfxIntensity * sfxIntensityToVolumeScale;
+            }
+            else {
+                audioSource.pitch = 0;
+                audioSource.volume = 0;
+            }
         }
         else
         {
-            // Stop SFX
-            audioSource.Stop();
-
             EndDraw();
         }
     }
@@ -107,7 +128,10 @@ public class DrawingCanvas : MonoBehaviour
                 Destroy(currentLine.gameObject);
 
             // Otherwise...
-            else {
+            else
+            {
+                onEndDraw.Invoke();
+
                 // Apply the line's body type property.
                 // This makes the line either static or dynamic, depending on whether it's affected by gravity.
                 currentLine.ApplyBodyTypeProperty();
@@ -117,9 +141,10 @@ public class DrawingCanvas : MonoBehaviour
 
             // Make currentLine null. We're done with this line.
             currentLine = null;
-
-            if (trigger && !trigger.hasPlayed) trigger.TriggerCutscene();
         }
+
+        // Stop SFX
+        audioSource.Stop();
     }
 
     // Returns the prefab of the line that will be drawn
@@ -137,6 +162,8 @@ public class DrawingCanvas : MonoBehaviour
         // Delete all Lines pertaining to the LineParent
         foreach (Transform child in linesParent.transform.GetComponentInChildren<Transform>())
             GameObject.Destroy(child.gameObject);
+
+        onReset.Invoke();
     }
 
     // Helper function to retrieve the mouse position in world space
@@ -162,11 +189,8 @@ public class DrawingCanvas : MonoBehaviour
 
         // Check if there is enough ink
         bool inkRemaining = totalDrawnLineLength < maxTotalLineLength;
-        
-        //Check if cutscene has been triggered
-        bool triggered = trigger ? trigger && trigger.triggerable : true;
 
-        return !hitCantDraw && hitDrawingArea && inkRemaining && triggered;
+        return !hitCantDraw && hitDrawingArea && inkRemaining;
     }
 
     // Returns the ratio of ink used to the maximum ink

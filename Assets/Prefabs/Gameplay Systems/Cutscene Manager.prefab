@@ -26,12 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5231622865541214431}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!320 &5231622865541214430
 PlayableDirector:
@@ -42,7 +43,7 @@ PlayableDirector:
   m_GameObject: {fileID: 5231622865541214431}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: cb40b62bb80374251b27716369d206b1, type: 2}
+  m_PlayableAsset: {fileID: 0}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -81,6 +82,8 @@ PlayableDirector:
   - key: {fileID: 4650552496500950986, guid: 04fa26cf28cca4ce4a60b308251098a5, type: 2}
     value: {fileID: 5231622865541214400}
   - key: {fileID: -1840911709038246424, guid: 04fa26cf28cca4ce4a60b308251098a5, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -2337217139166169528, guid: cb40b62bb80374251b27716369d206b1, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References: []

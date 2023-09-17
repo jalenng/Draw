@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
         serializer = new ObjectSerializer<GameData>();
         gameData = null;
 
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         // Call the Save function when the game quits
         Application.quitting += Save;
     }
@@ -43,7 +45,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // For dev and debugging convenience
-        if (Debug.isDebugBuild && Input.GetKeyDown(KeyCode.LeftShift))
+        if (Debug.isDebugBuild && Input.GetKey(KeyCode.LeftShift))
         {
             if (Input.GetKeyDown(KeyCode.S))
                 Save();
@@ -64,33 +66,37 @@ public class GameManager : MonoBehaviour
         Global.Level currentLevel = Global.GetLevelFromBuildIndex(currentBuildIndex);
 
         // Ensure this is a scene that we should be saving progress for
-        if (currentLevel == Global.Level.NONE) {
+        if (currentLevel == Global.Level.NONE)
+        {
             Debug.Log("[GameManager] Tried to save but current scene is not a game level");
             return;
         }
-        
+
         // Capture level state
         newGameData.level = currentLevel;
 
         // Capture player state
-        if (player != null) {
-            newGameData.playerData = player?.Capture();
+        if (player != null)
+        {
+            newGameData.playerData = player.Capture();
         }
-        
+
         // Capture checkpoint state
         newGameData.checkpointData = new List<SerializableCheckpointData>();
         foreach (CheckpointData checkpoint in checkpointData)
         {
-            if (checkpoint != null) {
+            if (checkpoint != null)
+            {
                 newGameData.checkpointData.Add(checkpoint.Capture());
             }
         }
-        
+
         // Capture cutscene state
         newGameData.cutsceneData = new List<SerializableCutsceneData>();
         foreach (CutsceneData cutscene in cutsceneData)
         {
-            if (cutscene != null) {
+            if (cutscene != null)
+            {
                 newGameData.cutsceneData.Add(cutscene.Capture());
             }
         }
@@ -116,7 +122,8 @@ public class GameManager : MonoBehaviour
 
         // Load the scene        
         bool buildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameData.level, out int savedBuildIndex);
-        if (buildIndexFound) {
+        if (buildIndexFound)
+        {
             FindObjectOfType<SceneLoader>().LoadScene(savedBuildIndex);
         }
 
@@ -128,5 +135,21 @@ public class GameManager : MonoBehaviour
     public bool CanLoad()
     {
         return serializer.CanRead(saveFilePath);
+    }
+
+    // Action for when a new scene is loaded.
+    // If the new scene doesn't match the scene for the save file, clear the cached save.
+    public void OnSceneLoaded(Scene scene, LoadSceneMode _) {
+        // If no cached save file, there's nothing to clear
+        if (gameData == null) return;
+
+        // Check if the build indices match
+        int loadedSceneIndex = scene.buildIndex;
+        bool loadedSaveBuildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameData.level, out int loadedSaveBuildIndex);
+        bool currentGameDataIsValid = loadedSaveBuildIndexFound && (loadedSceneIndex == loadedSaveBuildIndex);
+        if (!currentGameDataIsValid) {
+            gameData = null;
+            Debug.Log($"[GameManager] The loaded scene ({loadedSceneIndex}) didn't match the saved scene ({loadedSaveBuildIndex}). Cleared the cached game save.");
+        }
     }
 }

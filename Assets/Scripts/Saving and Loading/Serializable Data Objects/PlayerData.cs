@@ -46,23 +46,22 @@ public class PlayerData : MonoBehaviour
         
         // Ensure build index matches before using the loaded gameData
         bool buildIndexMatch = savedBuildIndex == SceneManager.GetActiveScene().buildIndex;
-        if (buildIndexMatch)
+        if (!buildIndexMatch) return;
+        
+        // Ensure player data exists 
+        SerializablePlayerData playerData = gameData?.playerData;
+        if (playerData != null)
         {
-            // Ensure player data exists 
-            SerializablePlayerData playerData = gameData?.playerData;
-            if (playerData != null)
-            {
-                transform.position = new Vector3(
-                    playerData.position[0],
-                    playerData.position[1],
-                    playerData.position[2]
-                );
-                playerMovement.respawnPos = new Vector3(
-                    playerData.respawnPos[0],
-                    playerData.respawnPos[1],
-                    playerData.respawnPos[2]
-                );
-            }
+            transform.position = new Vector3(
+                playerData.position[0],
+                playerData.position[1],
+                playerData.position[2]
+            );
+            playerMovement.respawnPos = new Vector3(
+                playerData.respawnPos[0],
+                playerData.respawnPos[1],
+                playerData.respawnPos[2]
+            );
         }
     }
 
@@ -72,9 +71,9 @@ public class PlayerData : MonoBehaviour
         return new SerializablePlayerData()
         {
             position = new float[] {
-                transform.position.x,
-                transform.position.y,
-                transform.position.z
+                playerMovement.lastUnpausedPos.x,
+                playerMovement.lastUnpausedPos.y,
+                playerMovement.lastUnpausedPos.z
             },
             respawnPos = new float[] {
                 playerMovement.respawnPos.x,

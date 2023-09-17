@@ -20,7 +20,8 @@ using Steamworks;
 // It handles the basics of starting up and shutting down the SteamAPI for use.
 //
 [DisallowMultipleComponent]
-public class SteamManager : MonoBehaviour {
+public class SteamManager : MonoBehaviour
+{
 #if !DISABLESTEAMWORKS
 
 	// For dev/debug only
@@ -124,7 +125,6 @@ public class SteamManager : MonoBehaviour {
 		m_bInitialized = SteamAPI.Init();
 		if (!m_bInitialized) {
 			Debug.LogError("[Steamworks.NET] SteamAPI_Init() failed", this);
-
 			return;
 		}
 
@@ -178,11 +178,15 @@ public class SteamManager : MonoBehaviour {
 		}
 
 		// Run Steam client callbacks
-		SteamAPI.RunCallbacks();
+		if(s_EverInitialized) {
+			SteamAPI.RunCallbacks();
+		}
 	}
 #else
-	public static bool Initialized {
-		get {
+	public static bool Initialized
+	{
+		get
+		{
 			return false;
 		}
 	}

@@ -17,9 +17,18 @@ public class TimelineTrigger : MonoBehaviour
         yield return new WaitForSeconds(.1f);
 
         timeline.playableAsset = cutscene;
+        timeline.time = 0;
         timeline.Play();
 
         // Wait for timeline to finish playing
         yield return new WaitUntil(() => timeline.state == PlayState.Paused);
+    }
+
+    public void GoToEndState(PlayableAsset cutscene)
+    {
+        timeline.playableAsset = cutscene;
+        timeline.time = timeline.duration;
+        timeline.Evaluate();
+        timeline.Stop();
     }
 }
