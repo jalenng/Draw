@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class ResetBlock : MonoBehaviour
 {
-    public OrangeObject orangeObject;
+    public List<RespawnInterface> objs;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.gameObject.tag == "Player") orangeObject.enableOrangeObject();
+        if(other.gameObject.tag == "Player") {
+            foreach(RespawnInterface o in objs) {
+                o.StartRespawn();
+            }
+        }
     }
 }
