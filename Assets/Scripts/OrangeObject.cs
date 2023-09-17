@@ -41,4 +41,10 @@ public class OrangeObject : RespawnInterface
         transform.position = respawnPos;
         transform.rotation = respawnRotation;
     }
+    public void enableOrangeObject() {
+        rb2d.velocity = Vector2.zero;
+        transform.position = respawnPos;
+        transform.rotation = respawnRotation;
+        rb2d.bodyType = RigidbodyType2D.Dynamic;
+    }
 }
