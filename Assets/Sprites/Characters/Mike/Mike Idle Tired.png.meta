@@ -63,7 +63,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -87,7 +87,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 16384
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -137,131 +137,144 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mike Tired Hunched Over Idle Sprite Sheet_0
+      name: Mike Idle Tired-0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 250
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 6
+        width: 145
+        height: 167
+      alignment: 9
+      pivot: {x: 0.5724138, y: 0.5329341}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5b01a968e597dd40800000000000000
-      internalID: 5609116686350355293
+      spriteID: 71c88383089510044b8af7e166b8f313
+      internalID: -1473008967
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mike Tired Hunched Over Idle Sprite Sheet_1
+      name: Mike Idle Tired-1
       rect:
         serializedVersion: 2
-        x: 250
-        y: 250
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 175
+        width: 145
+        height: 167
+      alignment: 9
+      pivot: {x: 0.5724138, y: 0.5329341}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f8725a9849f32c660800000000000000
-      internalID: 7404550644547528591
+      spriteID: 747c25e71fdfff44085ff4c2f2493191
+      internalID: 1161003733
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mike Tired Hunched Over Idle Sprite Sheet_2
+      name: Mike Idle Tired-2
       rect:
         serializedVersion: 2
-        x: 500
-        y: 250
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 295
+        y: 179
+        width: 145
+        height: 165
+      alignment: 9
+      pivot: {x: 0.5724138, y: 0.53939396}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae9993cc4f1b8bec0800000000000000
-      internalID: -3550892641225172502
+      spriteID: ddf1efd4d9cdc1347b7df45978323269
+      internalID: 1518956288
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mike Tired Hunched Over Idle Sprite Sheet_3
+      name: Mike Idle Tired-3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 295
+        y: 346
+        width: 145
+        height: 165
+      alignment: 9
+      pivot: {x: 0.5724138, y: 0.53939396}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 113283d64d0fa2880800000000000000
-      internalID: -8634824540373376239
+      spriteID: 58c4e4d17dd5a7b45a2f31ba680f1633
+      internalID: 274077945
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mike Tired Hunched Over Idle Sprite Sheet_4
+      name: Mike Idle Tired-4
       rect:
         serializedVersion: 2
-        x: 250
-        y: 0
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 148
+        y: 345
+        width: 145
+        height: 166
+      alignment: 9
+      pivot: {x: 0.5724138, y: 0.53614455}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 45af40cbfc00b2d70800000000000000
-      internalID: 9019303570952223316
+      spriteID: 388f666c100214743a8fe33691130c70
+      internalID: -749679248
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mike Tired Hunched Over Idle Sprite Sheet_5
+      name: Mike Idle Tired-5
       rect:
         serializedVersion: 2
-        x: 500
-        y: 0
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 344
+        width: 145
+        height: 167
+      alignment: 9
+      pivot: {x: 0.5724138, y: 0.5329341}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 80aa012c05a5bf5f0800000000000000
-      internalID: -721884012363077112
+      spriteID: 9d4572d128f29904e9974d0f03d4bc35
+      internalID: -1469557199
       vertices: []
       indices: 
       edges: []
@@ -277,12 +290,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Mike Tired Hunched Over Idle Sprite Sheet_0: 5609116686350355293
-      Mike Tired Hunched Over Idle Sprite Sheet_1: 7404550644547528591
-      Mike Tired Hunched Over Idle Sprite Sheet_2: -3550892641225172502
-      Mike Tired Hunched Over Idle Sprite Sheet_3: -8634824540373376239
-      Mike Tired Hunched Over Idle Sprite Sheet_4: 9019303570952223316
-      Mike Tired Hunched Over Idle Sprite Sheet_5: -721884012363077112
+      Mike Idle Tired-0: -1473008967
+      Mike Idle Tired-1: 1161003733
+      Mike Idle Tired-2: 1518956288
+      Mike Idle Tired-3: 274077945
+      Mike Idle Tired-4: -749679248
+      Mike Idle Tired-5: -1469557199
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

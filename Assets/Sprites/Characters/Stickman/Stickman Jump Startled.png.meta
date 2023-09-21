@@ -63,7 +63,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -87,7 +87,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 16384
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -137,131 +137,144 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Startled Jump Sprite Sheet_0
+      name: Stickman Jump Startled-0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 200
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 43
+        width: 73
+        height: 164
+      alignment: 9
+      pivot: {x: 0.3561644, y: 0.5365854}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 133ab4e1328baf9c0800000000000000
-      internalID: -3892596466936732879
+      spriteID: 3871082a88107884993ed9df86dc3a18
+      internalID: 798352858
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Startled Jump Sprite Sheet_1
+      name: Stickman Jump Startled-1
       rect:
         serializedVersion: 2
-        x: 200
-        y: 200
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 209
+        width: 84
+        height: 137
+      alignment: 9
+      pivot: {x: 0.39285713, y: 0.6423358}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b716afc3b4370e00800000000000000
-      internalID: 1010834588255524792
+      spriteID: fd40e72bfbc147d4b98d160233f0aeb1
+      internalID: -1950278392
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Startled Jump Sprite Sheet_2
+      name: Stickman Jump Startled-2
       rect:
         serializedVersion: 2
-        x: 400
-        y: 200
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 120
+        y: 339
+        width: 85
+        height: 172
+      alignment: 9
+      pivot: {x: 0.48235294, y: 0.51744187}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b655e5a0febeeb040800000000000000
-      internalID: 4665425675906078059
+      spriteID: 182d5220714d63845a46bd8941622f17
+      internalID: 734785311
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Startled Jump Sprite Sheet_3
+      name: Stickman Jump Startled-3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 348
+        width: 117
+        height: 163
+      alignment: 9
+      pivot: {x: 0.5982906, y: 0.5460123}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df50844f7234eb800800000000000000
-      internalID: 630014836759594493
+      spriteID: aa69d6c8cad931c428a77582ea68b45d
+      internalID: 77987082
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Startled Jump Sprite Sheet_4
+      name: Stickman Jump Startled-4
       rect:
         serializedVersion: 2
-        x: 200
-        y: 0
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 76
+        y: 45
+        width: 75
+        height: 162
+      alignment: 9
+      pivot: {x: 0.6933333, y: 0.5493827}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 582ddf7be055bd6d0800000000000000
-      internalID: -2964682407988571515
+      spriteID: b8f630e78ef45ef40878a7908359a7a5
+      internalID: -1351855289
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Startled Jump Sprite Sheet_5
+      name: Stickman Jump Startled-5
       rect:
         serializedVersion: 2
-        x: 400
-        y: 0
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 153
+        y: 183
+        width: 78
+        height: 154
+      alignment: 9
+      pivot: {x: 0.67948717, y: 0.5714286}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f372dc19758557f20800000000000000
-      internalID: 3419736625189300031
+      spriteID: 3477802f9efb1c347b760a5584385512
+      internalID: -179354171
       vertices: []
       indices: 
       edges: []
@@ -277,12 +290,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Startled Jump Sprite Sheet_0: -3892596466936732879
-      Startled Jump Sprite Sheet_1: 1010834588255524792
-      Startled Jump Sprite Sheet_2: 4665425675906078059
-      Startled Jump Sprite Sheet_3: 630014836759594493
-      Startled Jump Sprite Sheet_4: -2964682407988571515
-      Startled Jump Sprite Sheet_5: 3419736625189300031
+      Stickman Jump Startled-0: 798352858
+      Stickman Jump Startled-1: -1950278392
+      Stickman Jump Startled-2: 734785311
+      Stickman Jump Startled-3: 77987082
+      Stickman Jump Startled-4: -1351855289
+      Stickman Jump Startled-5: -179354171
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
