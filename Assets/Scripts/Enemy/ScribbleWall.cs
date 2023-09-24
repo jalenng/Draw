@@ -6,10 +6,11 @@ using Random=UnityEngine.Random;
 
 public class ScribbleWall : Enemy
 {
-    [SerializeField] Rigidbody2D rb2d;
     [SerializeField] private float respawnOffset;
     [SerializeField] private PlayerMovement playerMovement;
-    Vector3 playerPos;
+
+    private Vector3 playerPos;
+    public bool isMovementVertical;
     private bool respawning;
 
     void Update() {
@@ -22,15 +23,22 @@ public class ScribbleWall : Enemy
             } else {
             // Otherwise, move forward and update the last position of the player.    
                 MoveStraight();
+                UpdateDirection();
                 playerPos = playerMovement.transform.position;
             }
         }
+    }
+    // Vector3(-45,121.220001,0)
+    private void UpdateDirection() {
+        Vector3 movementDirection = points[index].transform.position - transform.position;
+        isMovementVertical = (Math.Abs(movementDirection.y) > Math.Abs(movementDirection.x));
     }
     public void StartRespawn() {
         StartCoroutine(Respawn(1f));
     }
     IEnumerator Respawn(float wait)
     {
+        float distToRespawn;
         yield return new WaitForSeconds(wait);
 
         // Get direction of previous point in path
@@ -38,7 +46,11 @@ public class ScribbleWall : Enemy
         direction = direction.normalized;
 
         // Find distance of player to last respawn point to add to offset
-        float distToRespawn = Vector3.Distance(playerPos, playerMovement.respawnPos);
+        if(isMovementVertical) {
+            distToRespawn = Math.Abs(playerPos.y - playerMovement.respawnPos.y);
+        } else {
+            distToRespawn = Math.Abs(playerPos.x - playerMovement.respawnPos.x);
+        }
 
         // Create Vector3 with magnitude of distance to respawnpoint plus our offset
         direction *= (respawnOffset + distToRespawn);
