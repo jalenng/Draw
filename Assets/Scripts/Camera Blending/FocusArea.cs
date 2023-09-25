@@ -32,19 +32,21 @@ public class FocusArea : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Only player can trigger
-        if (!other.CompareTag("Player")) return;
-
-        playerEntered = true;
-        if (!isLocked) Focus();
+        if (other.CompareTag("Player"))
+        {
+            playerEntered = true;
+            if (!isLocked) Focus();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         // Only player can trigger
-        if (!other.CompareTag("Player")) return;
-
-        playerEntered = false;
-        if (!isLocked) Unfocus();
+        if (other.CompareTag("Player"))
+        {
+            playerEntered = false;
+            if (!isLocked) Unfocus();
+        }
     }
 
     private void Update()

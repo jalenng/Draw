@@ -63,7 +63,7 @@ public class CutsceneTrigger : MonoBehaviour
         Debug.Log($"[CutsceneTrigger] Cutscene triggered", gameObject);
 
         // Bring player into the cutscene group GameObject
-        Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        Transform playerTransform = GameObject.FindWithTag("Player").transform;
         Transform cutsceneGroupTransform = transform.parent.transform;
         playerTransform.SetParent(cutsceneGroupTransform, true);
 

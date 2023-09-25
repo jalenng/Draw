@@ -95,6 +95,10 @@ public class PlayerMovement : MonoBehaviour
 
         anim.SetBool("Moving", rb2d.velocity.x != 0 && horizontal != 0);
         anim.SetFloat("YVelocity", rb2d.velocity.y);
+
+        // Draw velocity vector in editor
+        Color velocityDebugLineColor = Color.red;
+        Debug.DrawLine(transform.position, transform.position + (Vector3)rb2d.velocity, velocityDebugLineColor);
     }
 
     private void FixedUpdate()
