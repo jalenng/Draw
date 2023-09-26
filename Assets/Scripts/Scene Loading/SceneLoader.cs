@@ -9,9 +9,6 @@ public class SceneLoader : MonoBehaviour
     [Header("Object references")]
     [SerializeField] SceneTransition transition;
 
-    [Header("Configuration")]
-    [SerializeField] SceneLoaderParamsConfig config;
-
     // State variables
     bool isLoading = false;
     private AudioSource audioSource;
@@ -29,13 +26,21 @@ public class SceneLoader : MonoBehaviour
     // Load the first level
     public void StartGame()
     {
-        LoadScene(config.gameStartBuildIndex);
+        Global.Level gameStartLevel = Global.Level.IRL_DRAWING;
+        bool buildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameStartLevel, out int buildIndex);
+        if (buildIndexFound) {
+            LoadScene(buildIndex);
+        }
     }
 
     // Loads the main menu
     public void LoadMainMenu()
-    {
-        LoadScene(config.mainMenuBuildIndex);
+    {        
+        Global.UIScene mainMenuScene = Global.UIScene.MAIN_MENU;
+        bool buildIndexFound = Global.UISceneToBuildIndexMap.TryGetValue(mainMenuScene, out int buildIndex);
+        if (buildIndexFound) {
+            LoadScene(buildIndex);
+        }
     }
 
     // Loads the next scene, or the main menu if there are no more scenes
@@ -86,9 +91,9 @@ public class SceneLoader : MonoBehaviour
         FindObjectOfType<MenuManager>()?.enablePause(false);
 
         // Set the transition color based on the level index.
-        bool loadingToMenu = index == config.mainMenuBuildIndex;
-        Color transitionColor = loadingToMenu
-            ? Color.white   // White for transitioning to a menu
+        bool loadingToUIScene = Global.GetUISceneFromBuildIndex(index) != Global.UIScene.NONE;
+        Color transitionColor = loadingToUIScene
+            ? Color.white   // White for transitioning to UI
             : Color.black;  // Black for transitioning to a level
 
         transition.SetTransitionColor(transitionColor);
@@ -102,7 +107,6 @@ public class SceneLoader : MonoBehaviour
         asyncLoad.allowSceneActivation = false;
 
         // Wait for the scene to finish loading
-        yield return new WaitForSeconds(config.minLoadingTime);
         yield return new WaitUntil(() => asyncLoad.progress >= 0.9f);
         
         // Activate the scene

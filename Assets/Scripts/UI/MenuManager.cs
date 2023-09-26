@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    [Header("Configuration")]
-    [SerializeField] SceneLoaderParamsConfig config;
-
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject pauseMenu;
@@ -34,13 +31,13 @@ public class MenuManager : MonoBehaviour
     {
         if (pauseMenu)
         {
-            if (!(GetCurrentSceneIndex() == config.mainMenuBuildIndex))
+            if (Global.GetLevelFromBuildIndex(GetCurrentSceneIndex()) != Global.Level.NONE)
             {
                 pauseMenu.SetActive(enable);
                 pauseMenuScript = pauseMenu.GetComponent<PauseMenu>();
             }
             else
-                Debug.LogWarning($"[MenuManager] Tried to set pause menu enabled to {enable} but we're in the main menu");
+                Debug.LogWarning($"[MenuManager] Tried to set pause menu enabled to {enable} but we're not in a game level");
         }
         else
             Debug.LogError($"[MenuManager] Tried to set pause menu enabled to {enable} but it's undefined");

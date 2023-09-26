@@ -9,6 +9,12 @@ using System.Collections.Generic;
 public class Global
 {
     // Enums
+    public enum UIScene
+    {
+        NONE,
+        MAIN_MENU,
+        CONTENT_WARNING
+    }
     public enum Level
     {
         NONE,
@@ -42,24 +48,30 @@ public class Global
     }
 
     // Mappings
+    public static Dictionary<UIScene, int> UISceneToBuildIndexMap = new Dictionary<UIScene, int>()
+    {
+        { UIScene.CONTENT_WARNING, 0},
+        { UIScene.MAIN_MENU, 1},
+    };
+
     public static Dictionary<Level, int> LevelToBuildIndexMap = new Dictionary<Level, int>()
     {
-        { Level.IRL_DRAWING, 1},
-        { Level.TUTORIAL, 2},
-        { Level.CLAIRE_1, 3},
-        { Level.IRL_CLAIRE_RUNS_INTO_NATHAN, 4},
-        { Level.CLAIRE_2, 5},
-        { Level.IRL_CLAIRE_CUTOFF, 6},
-        { Level.MIKE_1, 7},
-        { Level.MIKE_2, 8},
-        { Level.IRL_MIKE_CUTOFF, 9},
-        { Level.MIKE_3, 10},
-        { Level.CHASE, 11},
-        { Level.NATHAN_1, 12},
-        { Level.NATHAN_2, 13},
-        { Level.NATHAN_3, 14},
-        { Level.CREDITS, 15},
-        { Level.THE_END, 16},
+        { Level.IRL_DRAWING, 2},
+        { Level.TUTORIAL, 3},
+        { Level.CLAIRE_1, 4},
+        { Level.IRL_CLAIRE_RUNS_INTO_NATHAN, 5},
+        { Level.CLAIRE_2, 6},
+        { Level.IRL_CLAIRE_CUTOFF, 7},
+        { Level.MIKE_1, 8},
+        { Level.MIKE_2, 9},
+        { Level.IRL_MIKE_CUTOFF, 10},
+        { Level.MIKE_3, 11},
+        { Level.CHASE, 12},
+        { Level.NATHAN_1, 13},
+        { Level.NATHAN_2, 14},
+        { Level.NATHAN_3, 15},
+        { Level.CREDITS, 16},
+        { Level.THE_END, 17},
     };
 
     public static Dictionary<Achievement, string> AchievementToIdMap = new Dictionary<Achievement, string>()
@@ -74,17 +86,33 @@ public class Global
     };
 
     // Methods
+    public static Global.UIScene GetUISceneFromBuildIndex(int buildIndex)
+    {
+        return GetKeyFromValue<Global.UIScene, int>(
+            Global.UISceneToBuildIndexMap,
+            buildIndex,
+            Global.UIScene.NONE
+        );
+    }
     public static Global.Level GetLevelFromBuildIndex(int buildIndex)
     {
-        // Try to see which level this scene is
-        foreach (KeyValuePair<Global.Level, int> pair in Global.LevelToBuildIndexMap)
+        return GetKeyFromValue<Global.Level, int>(
+            Global.LevelToBuildIndexMap,
+            buildIndex,
+            Global.Level.NONE
+        );
+    }
+
+    // Helper functions
+    private static K GetKeyFromValue<K, V>(Dictionary<K, V> map, V value, K fallback)
+    {
+        foreach (KeyValuePair<K, V> pair in map)
         {
-            // If found, set it as a reached level
-            if (pair.Value == buildIndex)
+            if (pair.Value.Equals(value))
             {
                 return pair.Key;
             }
         }
-        return Global.Level.NONE;
+        return fallback;
     }
 }
