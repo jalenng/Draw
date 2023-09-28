@@ -43,9 +43,10 @@ public class CutsceneTrigger : MonoBehaviour
                 return;
             }
 
-            Transform otherTransform = other.gameObject.transform;
+            // Bring player into the cutscene group GameObject
+            Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             Transform cutsceneGroupTransform = transform.parent.transform;
-            other.gameObject.transform.SetParent(cutsceneGroupTransform, true);
+            playerTransform.SetParent(cutsceneGroupTransform, true);
 
             TriggerCutscene();
         }

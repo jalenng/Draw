@@ -31,15 +31,17 @@ public class PlayerMovement : MonoBehaviour
     // Cached components
     private Rigidbody2D rb2d;
     private Animator anim;
+    private AchievementUnlocker achievementUnlocker;
 
     // State variables
     private float SFXDelay = 0.09f;
     private float curSFXDelay;
     public RespawnManager respawner;
     public Vector3 respawnPos;
-    public Vector3 lastUnpausedPos;
+    private Vector3 lastUnpausedPos;
     private bool isDead = false;
     private bool isPaused = false;
+    private int numRespawnsAtRespawnPoint = 0;
 
     // Input variables
     private bool jumpRequested = false;
@@ -47,11 +49,16 @@ public class PlayerMovement : MonoBehaviour
     private float lastGroundContactTime = -1f;
     private float lastJumpRequestedTime = -1f;
 
+    // Consts
+    private const int numRespawnsAtPointForAchievement = 10;
+
     private void Awake()
     {
         // Get components
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        achievementUnlocker = GetComponent<AchievementUnlocker>();
+
         respawner = FindObjectOfType<RespawnManager>();
 
         // Set initial respawn position
@@ -198,6 +205,7 @@ public class PlayerMovement : MonoBehaviour
     public void SetRespawnPos(Vector3 respawnPos)
     {
         this.respawnPos = respawnPos;
+        numRespawnsAtRespawnPoint = 0;
     }
 
     public void Die()
@@ -235,11 +243,28 @@ public class PlayerMovement : MonoBehaviour
         spawnAudioSource.Play();
         transform.position = respawnPos;
 
+        // Unlock achievement if respawned a given number of times at the same point
+        numRespawnsAtRespawnPoint += 1;
+        if (numRespawnsAtRespawnPoint >= numRespawnsAtPointForAchievement)
+        {
+            achievementUnlocker.SetAchievement();
+        }
+
         isDead = false;
     }
 
-    public void setCanMove(int isOne)
+    public void SetCanMove(int isOne)
     {
         rb2d.simulated = (isOne == 1);
+    }
+
+    public Vector3 GetLastUnpausedPos()
+    {
+        return lastUnpausedPos;
+    }
+
+    public Vector3 GetRespawnPos()
+    {
+        return respawnPos;
     }
 }

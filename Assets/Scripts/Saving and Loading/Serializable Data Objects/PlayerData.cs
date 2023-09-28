@@ -43,11 +43,11 @@ public class PlayerData : MonoBehaviour
         // Get the build index from the saved level
         bool buildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameData.level, out int savedBuildIndex);
         if (!buildIndexFound) return;
-        
+
         // Ensure build index matches before using the loaded gameData
         bool buildIndexMatch = savedBuildIndex == SceneManager.GetActiveScene().buildIndex;
         if (!buildIndexMatch) return;
-        
+
         // Ensure player data exists 
         SerializablePlayerData playerData = gameData?.playerData;
         if (playerData != null)
@@ -57,10 +57,12 @@ public class PlayerData : MonoBehaviour
                 playerData.position[1],
                 playerData.position[2]
             );
-            playerMovement.respawnPos = new Vector3(
-                playerData.respawnPos[0],
-                playerData.respawnPos[1],
-                playerData.respawnPos[2]
+            playerMovement.SetRespawnPos(
+                new Vector3(
+                    playerData.respawnPos[0],
+                    playerData.respawnPos[1],
+                    playerData.respawnPos[2]
+                )
             );
         }
     }
@@ -68,17 +70,19 @@ public class PlayerData : MonoBehaviour
     // Returns a serializable version of the player's data
     public SerializablePlayerData Capture()
     {
+        Vector3 respawnPos = playerMovement.GetRespawnPos();
+        Vector3 currentPos = playerMovement.GetLastUnpausedPos();
         return new SerializablePlayerData()
         {
             position = new float[] {
-                playerMovement.lastUnpausedPos.x,
-                playerMovement.lastUnpausedPos.y,
-                playerMovement.lastUnpausedPos.z
+                currentPos.x,
+                currentPos.y,
+                currentPos.z
             },
             respawnPos = new float[] {
-                playerMovement.respawnPos.x,
-                playerMovement.respawnPos.y,
-                playerMovement.respawnPos.z,
+                respawnPos.x,
+                respawnPos.y,
+                respawnPos.z,
             }
         };
     }
