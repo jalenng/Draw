@@ -1785,7 +1785,6 @@ GameObject:
   - component: {fileID: 432865537}
   - component: {fileID: 432865539}
   - component: {fileID: 432865538}
-  - component: {fileID: 432865540}
   m_Layer: 0
   m_Name: Claire Hugging
   m_TagString: Untagged
@@ -1881,19 +1880,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &432865540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 432865536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c095af9d8d9c46cf914dd7733ab2bd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 432865538}
 --- !u!1 &433920811
 GameObject:
   m_ObjectHideFlags: 0
@@ -2689,7 +2675,7 @@ PrefabInstance:
     - target: {fileID: 5231622865541214400, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Events.m_Events.Array.data[7].m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 432865540}
+      objectReference: {fileID: 0}
     - target: {fileID: 5231622865541214400, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Events.m_Events.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2697,7 +2683,7 @@ PrefabInstance:
     - target: {fileID: 5231622865541214400, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Events.m_Events.Array.data[8].m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 432865540}
+      objectReference: {fileID: 0}
     - target: {fileID: 5231622865541214400, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Events.m_Events.Array.data[9].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2717,7 +2703,7 @@ PrefabInstance:
     - target: {fileID: 5231622865541214400, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Events.m_Events.Array.data[10].m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 432865540}
+      objectReference: {fileID: 0}
     - target: {fileID: 5231622865541214400, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Events.m_Events.Array.data[10].m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -2729,7 +2715,7 @@ PrefabInstance:
     - target: {fileID: 5231622865541214400, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Events.m_Events.Array.data[11].m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 432865540}
+      objectReference: {fileID: 0}
     - target: {fileID: 5231622865541214400, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Events.m_Events.Array.data[11].m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -4947,6 +4933,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6459940120406708764, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459940120406708764, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459940120406708764, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8723482651956380621, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -5394,7 +5392,6 @@ GameObject:
   - component: {fileID: 716653037}
   - component: {fileID: 716653040}
   - component: {fileID: 716653039}
-  - component: {fileID: 716653038}
   m_Layer: 0
   m_Name: Claire Tired
   m_TagString: Untagged
@@ -5417,19 +5414,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 300410425}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &716653038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 716653036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c095af9d8d9c46cf914dd7733ab2bd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 716653039}
 --- !u!95 &716653039
 Animator:
   serializedVersion: 5
@@ -9252,7 +9236,6 @@ GameObject:
   - component: {fileID: 1310002246}
   - component: {fileID: 1310002249}
   - component: {fileID: 1310002248}
-  - component: {fileID: 1310002247}
   m_Layer: 0
   m_Name: Claire Standing
   m_TagString: Untagged
@@ -9275,19 +9258,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 32804685}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1310002247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1310002245}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c095af9d8d9c46cf914dd7733ab2bd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 1310002248}
 --- !u!95 &1310002248
 Animator:
   serializedVersion: 5
@@ -9899,7 +9869,6 @@ GameObject:
   - component: {fileID: 1454955821}
   - component: {fileID: 1454955824}
   - component: {fileID: 1454955823}
-  - component: {fileID: 1454955822}
   m_Layer: 0
   m_Name: Claire Back
   m_TagString: Untagged
@@ -9922,19 +9891,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 300410425}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1454955822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1454955820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c095af9d8d9c46cf914dd7733ab2bd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 1454955823}
 --- !u!95 &1454955823
 Animator:
   serializedVersion: 5
@@ -11098,7 +11054,6 @@ GameObject:
   - component: {fileID: 1882121359}
   - component: {fileID: 1882121362}
   - component: {fileID: 1882121361}
-  - component: {fileID: 1882121360}
   m_Layer: 0
   m_Name: Claire Walking Away
   m_TagString: Untagged
@@ -11121,19 +11076,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 300410425}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1882121360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882121358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c095af9d8d9c46cf914dd7733ab2bd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 1882121361}
 --- !u!95 &1882121361
 Animator:
   serializedVersion: 5
@@ -12066,11 +12008,11 @@ PrefabInstance:
       objectReference: {fileID: 1521747329}
     - target: {fileID: 242199389748082403, guid: 81556ccb1927e3044ad98f2c790e52cb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.62
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 242199389748082403, guid: 81556ccb1927e3044ad98f2c790e52cb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 88.35
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 242199389748082403, guid: 81556ccb1927e3044ad98f2c790e52cb, type: 3}
       propertyPath: m_LocalPosition.z

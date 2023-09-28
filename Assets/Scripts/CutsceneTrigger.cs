@@ -43,11 +43,6 @@ public class CutsceneTrigger : MonoBehaviour
                 return;
             }
 
-            // Bring player into the cutscene group GameObject
-            Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-            Transform cutsceneGroupTransform = transform.parent.transform;
-            playerTransform.SetParent(cutsceneGroupTransform, true);
-
             TriggerCutscene();
         }
     }
@@ -66,6 +61,12 @@ public class CutsceneTrigger : MonoBehaviour
         hasTriggered = true;
 
         Debug.Log($"[CutsceneTrigger] Cutscene triggered", gameObject);
+
+        // Bring player into the cutscene group GameObject
+        Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        Transform cutsceneGroupTransform = transform.parent.transform;
+        playerTransform.SetParent(cutsceneGroupTransform, true);
+
         StartCoroutine(CutsceneCoroutine());
     }
 
