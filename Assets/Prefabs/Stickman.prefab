@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7165906262281608555}
   - component: {fileID: 1450883229827684611}
   - component: {fileID: 9021474605006994560}
+  - component: {fileID: 6685939009530859009}
   m_Layer: 8
   m_Name: Stickman
   m_TagString: Player
@@ -68,7 +69,6 @@ MonoBehaviour:
   spawnAudioSource: {fileID: 4335315624671786684}
   respawner: {fileID: 0}
   respawnPos: {x: 0, y: 0, z: 0}
-  lastUnpausedPos: {x: 0, y: 0, z: 0}
 --- !u!114 &1882610119951218810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +311,19 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &6685939009530859009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450883229827684621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b831a69ea18d5f438604183defc7831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achievement: 8
 --- !u!1 &3343981970825247549
 GameObject:
   m_ObjectHideFlags: 0
