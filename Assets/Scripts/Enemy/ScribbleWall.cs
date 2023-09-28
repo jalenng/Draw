@@ -6,42 +6,33 @@ using Random=UnityEngine.Random;
 
 public class ScribbleWall : Enemy
 {
-    [SerializeField] Rigidbody2D rb2d;
+    [SerializeField] private PlayerMovement playerMovement;
 
-    [SerializeField] private float respawnOffset;
-
-    Vector3 respawnPos;
-    bool playerDead = false;
-    void Awake()
-    {
-        respawnPos = transform.position;
-    }
+    private bool respawning = false;
     void Update() {
-        if(!playerDead) MoveStraight();
-    }
-    public void SetRespawnPos(Vector3 pos) 
-    {
-        respawnPos = pos;
-    }
-    private void OnCollisionEnter2D(Collision2D other) 
-    {
-        if(other.gameObject.CompareTag("Player"))
-        {
-            other.gameObject.GetComponent<PlayerMovement>().Die();
-            playerDead = true;
-            StartCoroutine(Respawn(1f));
+        // If we're respawning, don't do anything.
+        if(!respawning) {
+            // If the player is dead & wall is not respawning, respawn this
+            if(playerMovement.GetPlayerDead()) {
+                respawning = true;
+                StartRespawn(); 
+            } else {
+            // Otherwise, move forward
+                MoveStraight();
+            }
         }
     }
+    // Vector3(-45,121.220001,0) OG Starting Position 
     public void StartRespawn() {
         StartCoroutine(Respawn(1f));
     }
     IEnumerator Respawn(float wait)
     {
         yield return new WaitForSeconds(wait);
-        Vector3 direction = transform.position - points[index - 1].transform.position;
-        direction = direction.normalized;
-        direction *= respawnOffset;
-        transform.position -= direction;
-        playerDead = false;
+        transform.position = originalPosition;
+        respawning = false;
+    }
+    public void setRespawnPosition(Vector3 pos) {
+        originalPosition = pos;
     }
 }

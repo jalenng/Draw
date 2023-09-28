@@ -258,6 +258,11 @@ public class PlayerMovement : MonoBehaviour
         rb2d.simulated = (isOne == 1);
     }
 
+    public bool GetPlayerDead()
+    {
+        return isDead;
+    }
+
     public Vector3 GetLastUnpausedPos()
     {
         return lastUnpausedPos;
