@@ -17,7 +17,7 @@ public class LevelEndTrigger : MonoBehaviour
     public void LoadNextScene() {
         if(!triggered) {
             FindObjectOfType<SceneLoader>().LoadNextScene();
-            FindObjectOfType<PlayerMovement>()?.setCanMove(0);
+            FindObjectOfType<PlayerMovement>()?.SetCanMove(0);
             triggered = true;
         }
     }

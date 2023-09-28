@@ -44,7 +44,11 @@ public class Global
         DRAW_IN_CANVAS,
         TOUCH_ORANGE_OBJ,
         DRAW_CHAIR,
-        MEET_NATHAN
+        MEET_NATHAN,
+        CHECKPOINT_RESPAWN,
+        LEAVE_MIKE_BEHIND,
+        CHASE_FAKE_ROUTE,
+        CHASE_SHORTCUT
     }
 
     // Mappings
@@ -83,6 +87,10 @@ public class Global
         { Achievement.TOUCH_ORANGE_OBJ, "TOUCH_ORANGE_OBJ"},
         { Achievement.DRAW_CHAIR, "DRAW_CHAIR"},
         { Achievement.MEET_NATHAN, "MEET_NATHAN"},
+        { Achievement.CHECKPOINT_RESPAWN, "CHECKPOINT_RESPAWN"},
+        { Achievement.LEAVE_MIKE_BEHIND, "LEAVE_MIKE_BEHIND"},
+        { Achievement.CHASE_FAKE_ROUTE, "CHASE_FAKE_ROUTE"},
+        { Achievement.CHASE_SHORTCUT, "CHASE_SHORTCUT"},
     };
 
     // Methods

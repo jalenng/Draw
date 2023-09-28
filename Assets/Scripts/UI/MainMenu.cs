@@ -37,7 +37,7 @@ public class MainMenu : MonoBehaviour
     {
         // If there is an existing game save, prompt for confirmation
         if (canLoad) {
-            playConfirmation.GetComponent<Canvas>().enabled = true;
+            playConfirmation.GetComponent<CanvasGroupVisibility>().SetVisibility(true);
         }
         else {
             Play();
