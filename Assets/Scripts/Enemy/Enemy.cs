@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
 
 
     // State variables
-    private Vector3 originalPosition;
+    protected Vector3 originalPosition;
     protected int index = 0;
 
     // Cached components

@@ -9,7 +9,7 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] Vector3 respawnOffset = new Vector3(0.5f, 1.25f, 0.0f);
 
     // State variables
-    bool isActivated = false;
+    protected bool isActivated = false;
     public bool IsActivated { 
         get { return isActivated; } 
         set { isActivated = value; }
