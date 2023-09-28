@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 
 public class DialogueSystem : MonoBehaviour
 {
     // Configuration parameters
     [SerializeField] Dialogue dialogue;
     [SerializeField] KeyCode advanceKey = KeyCode.Space;
+    [SerializeField] GameObject dialogueCanvas;
     [SerializeField] Textbox textbox;
     [SerializeField] GameObject skipButton;
     [SerializeField] GameObject skipConfirmationDialog;
@@ -18,7 +20,7 @@ public class DialogueSystem : MonoBehaviour
     // State variables
     int entryIndex = 0;
     bool skip = false;
-    bool advKeyPressed = false;
+    bool advanceRequested = false;
 
     private void Start()
     {
@@ -29,23 +31,29 @@ public class DialogueSystem : MonoBehaviour
     {
         // Fast forward current dialogue entry if the advance key is pressed.
         // Allows players to advance the dialogue while the typewriting effect is still in progress.
-        if (CheckIfAdvanceKeyPressed()) {
+        if (CheckIfShouldAdvance())
+        {
             textbox.FastForward();
         }
     }
     // Function called at the end of all other updates, to let DisplayDialogue check advKeyPressed before we reset it.
-    private void LateUpdate() {
-        advKeyPressed = false;
-    }
-
-    private bool CheckIfAdvanceKeyPressed()
+    private void LateUpdate()
     {
-        // AdvKeyPressed is a bool that represents a mouse press basically. It gets set by the SkipCheck Button.
-        if (skipConfirmationDialog.activeInHierarchy) return false;
-        return (advKeyPressed || Input.GetKeyDown(advanceKey));
+        advanceRequested = false;
     }
 
-    public void Skip() {
+    private bool CheckIfShouldAdvance()
+    {
+        // If the game is paused, do not advance
+        if (Time.timeScale <= 0) return false; 
+
+        bool skipConfirmationVisible = skipConfirmationDialog.GetComponent<CanvasGroup>().interactable;
+        bool keyDown = !skipConfirmationVisible && Input.GetKeyDown(advanceKey);
+        return advanceRequested || keyDown;
+    }
+
+    public void Skip()
+    {
         textbox.FastForward();
         skip = true;
         entryIndex = dialogue.entries.Count;
@@ -67,12 +75,10 @@ public class DialogueSystem : MonoBehaviour
     public void PauseTimeline()
     {
         director.playableGraph.GetRootPlayable(0).SetSpeed(0);
-        // director.Pause();
     }
     public void ResumeTimeline()
     {
         director.playableGraph.GetRootPlayable(0).SetSpeed(1);
-        // director.Resume();
     }
 
     // Display the next entry in the dialogue
@@ -98,7 +104,7 @@ public class DialogueSystem : MonoBehaviour
             yield return textbox.Say();
 
             // Wait for the user to advance the dialogue
-            yield return new WaitUntil(() => CheckIfAdvanceKeyPressed() || skip || advKeyPressed);
+            yield return new WaitUntil(() => CheckIfShouldAdvance() || skip);
             skip = false;
 
             // Move to the next entry, or end the dialogue if we're at the end
@@ -118,10 +124,12 @@ public class DialogueSystem : MonoBehaviour
     // Set the visibility of the textbox
     private void SetTextboxVisibility(bool visible)
     {
-        textbox.gameObject.SetActive(visible);
-        skipButton.SetActive(visible);
+        dialogueCanvas.GetComponent<CanvasGroupVisibility>().SetVisibility(visible);
     }
-    public void setAdvPressed(bool pressed) {
-        advKeyPressed = pressed;   
+
+    // Request to advance the dialogue
+    public void RequestAdvance()
+    {
+        advanceRequested = true;
     }
 }
