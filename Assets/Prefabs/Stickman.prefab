@@ -130,11 +130,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba6a4e3db9184083be23f88b0769fa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animateSpawnOnLoad: 0
   speed: 4.25
+  maxWalkForce: 4
   jumpForce: 29.5
   deferredJumpDelay: 0.1
   coyoteJumpDelay: 0.1
+  quickFallGravityScale: 1.5
   ground:
     serializedVersion: 2
     m_Bits: 33856
