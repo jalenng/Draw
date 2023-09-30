@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CanvasGroupVisibility))]
 public class LevelSelector : MonoBehaviour
 {
     // Object references
-    SceneLoader sceneLoader;
-    PersistentStoreManager storeManager;
+    private SceneLoader sceneLoader;
+    private PersistentStoreManager storeManager;
+    private CanvasGroupVisibility levelSelectorCanvas;
 
+    // State variables
     bool unlockAllLevels;
 
-    [SerializeField] MenuManager menuHolder;
 
     void Awake()
     {
         sceneLoader = FindObjectOfType<SceneLoader>();
         storeManager = FindObjectOfType<PersistentStoreManager>();
+        levelSelectorCanvas = GetComponent<CanvasGroupVisibility>();
     }
 
     void OnEnable()
@@ -44,11 +47,12 @@ public class LevelSelector : MonoBehaviour
             Debug.LogError($"[LevelSelector] Tried to load scene {level} from levels menu, but the level has not been reached yet");
         }
     }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            menuHolder.enableLevels(false);
+            levelSelectorCanvas.SetVisibility(false);
         }
     }
 }

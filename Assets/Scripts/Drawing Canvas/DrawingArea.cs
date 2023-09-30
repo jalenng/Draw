@@ -85,11 +85,6 @@ public class DrawingArea : MonoBehaviour
         // Stops from drawing when pauseMenu enabled.
         // To do: Find better solution to this. Since our game is small, this is fine since it'll be like... 10 max Drawing Areas that need to initialize
         // a ref to PauseMenu. 
-        if (!pauseMenuOpen()) drawingCanvas.BeginDraw();
-    }
-    public bool pauseMenuOpen()
-    {
-        if (menuManager == null) return false;
-        return menuManager.pauseMenuOpen();
+        if (Time.timeScale > 0) drawingCanvas.BeginDraw();
     }
 }

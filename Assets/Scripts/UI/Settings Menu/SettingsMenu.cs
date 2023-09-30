@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(CanvasGroupVisibility))]
 public class SettingsMenu : MonoBehaviour
 {
     // Object references
     [SerializeField] private GameObject versionTMPObj;
-    [SerializeField] private MenuManager menuHolder;
+    private CanvasGroupVisibility settingsMenuCanvas;
 
     void Start()
     {
+        settingsMenuCanvas = GetComponent<CanvasGroupVisibility>();
+
         // Update version number text
         TextMeshProUGUI versionTMP = versionTMPObj?.GetComponent<TextMeshProUGUI>();
         if (versionTMP)
@@ -27,7 +30,7 @@ public class SettingsMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            menuHolder.enableSettings(false);
+            settingsMenuCanvas.SetVisibility(false);
         }
     }
 }
