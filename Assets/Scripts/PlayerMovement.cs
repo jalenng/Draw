@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isPaused)
         {
-            anim.SetBool("Moving", false);
+            anim.SetBool("Walking", false);
             anim.SetFloat("YVelocity", 0);
             anim.SetBool("TouchingGround", true);
             return;
@@ -176,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
             footstepAudioSource.Stop();
             curSFXDelay = SFXDelay;
         }
-        else if ((anim.GetBool("Moving")) && !footstepAudioSource.isPlaying)
+        else if ((anim.GetBool("Walking")) && !footstepAudioSource.isPlaying)
         {
             if (curSFXDelay > 0)
             {
