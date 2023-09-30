@@ -14,7 +14,8 @@ public class CanvasGroupVisibility : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void SetVisibility(bool visibility) {
+    public void SetVisibility(bool visibility)
+    {
         canvasGroup.alpha = visibility ? 1f : 0f;
         canvasGroup.blocksRaycasts = visibility;
         canvasGroup.interactable = visibility;

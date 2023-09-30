@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CanvasGroupVisibility))]
 public class PauseMenu : MonoBehaviour
 {
-    // Configuration parameters
-    public GameObject PauseMenuCanvas;
+    private CanvasGroupVisibility pauseMenuCanvas;
 
     // State variables
     bool paused = false;    // Whether the game is paused
-
-    void Start() {
-        PauseMenuCanvas.SetActive(false);
-    }
     
+    void Start() {
+        pauseMenuCanvas = GetComponent<CanvasGroupVisibility>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -31,7 +31,7 @@ public class PauseMenu : MonoBehaviour
     {
         paused = true;
         Time.timeScale = 0;
-        PauseMenuCanvas.SetActive(true);
+        pauseMenuCanvas.SetVisibility(true);
     }
 
     // Resume the game
@@ -39,7 +39,7 @@ public class PauseMenu : MonoBehaviour
     {
         paused = false;
         Time.timeScale = 1;
-        PauseMenuCanvas.SetActive(false);
+        pauseMenuCanvas.SetVisibility(false);
     }
 
     // Transition to the main menu with an animation
@@ -53,8 +53,5 @@ public class PauseMenu : MonoBehaviour
 
         // Load the main menu with the level manager
         FindObjectOfType<SceneLoader>().LoadMainMenu();
-    }
-    public bool isCanvasEnabled() {
-        return PauseMenuCanvas.activeInHierarchy;
     }
 }

@@ -9,14 +9,15 @@ public class ResetButton : MonoBehaviour
     public DrawingArea drawingArea;
     public AudioSource audio;
 
-    private void Start() {
+    private void Start()
+    {
         SetUpPosition();
         audio = GetComponent<AudioSource>();
     }
 
     // Set up reset button position relative to the folder
     private void SetUpPosition()
-    {        
+    {
         // Get position of top-right corner of drawing area
         BoxCollider2D drawingAreaCollider = drawingArea.GetComponent<BoxCollider2D>();
         float drawingAreaHalfWidth = drawingAreaCollider.size.x / 2f;
@@ -39,8 +40,10 @@ public class ResetButton : MonoBehaviour
         transform.position = trc;
     }
 
-    private void OnMouseDown() {
-        if(!drawingArea.pauseMenuOpen()) {
+    private void OnMouseDown()
+    {
+        if (Time.timeScale > 0)
+        {
             audio.Play();
             drawingCanvas.Reset();
         }

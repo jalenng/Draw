@@ -6,24 +6,23 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] GameObject mainMenu;
-    [SerializeField] GameObject settingsMenu;
+    [SerializeField] CanvasGroupVisibility settingsMenu;
     [SerializeField] GameObject pauseMenu;
-    [SerializeField] GameObject levelMenu;
+    [SerializeField] CanvasGroupVisibility levelMenu;
     [SerializeField] GameObject sendFeedbackCanvas;
     PauseMenu pauseMenuScript;
 
     private void Start()
     {
         // Show the "Send Feedback" canvas only if it is a debug build
-        sendFeedbackCanvas.SetActive(Debug.isDebugBuild);
+        sendFeedbackCanvas?.SetActive(Debug.isDebugBuild);
     }
 
     // Public functions for OnClick() to call
     public void enableSettings(bool enable)
     {
         if (settingsMenu)
-            settingsMenu.SetActive(enable);
+            settingsMenu.SetVisibility(enable);
         else
             Debug.LogError($"[MenuManager] Tried to set settings menu enabled to {enable} but it's undefined");
     }
@@ -31,7 +30,8 @@ public class MenuManager : MonoBehaviour
     {
         if (pauseMenu)
         {
-            if (Global.GetLevelFromBuildIndex(GetCurrentSceneIndex()) != Global.Level.NONE)
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            if (Global.GetLevelFromBuildIndex(currentSceneIndex) != Global.Level.NONE)
             {
                 pauseMenu.SetActive(enable);
                 pauseMenuScript = pauseMenu.GetComponent<PauseMenu>();
@@ -45,18 +45,8 @@ public class MenuManager : MonoBehaviour
     public void enableLevels(bool enable)
     {
         if (levelMenu)
-            levelMenu.SetActive(enable);
+            levelMenu.SetVisibility(enable);
         else
             Debug.LogError($"[MenuManager] Tried to set level menu enabled to {enable} but it's undefined");
-    }
-
-    // Shamelessly stolen from another script
-    private int GetCurrentSceneIndex()
-    {
-        return SceneManager.GetActiveScene().buildIndex;
-    }
-    public bool pauseMenuOpen()
-    {
-        return pauseMenuScript.isCanvasEnabled();
     }
 }
