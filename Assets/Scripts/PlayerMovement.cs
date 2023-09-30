@@ -5,14 +5,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Configuration parameters
-    [SerializeField] private bool animateSpawnOnLoad = false;
-
     [Header("Movement")]
     [SerializeField] private float speed = 4.25f;
     [SerializeField] private float jumpForce = 30f;
     [SerializeField] private float deferredJumpDelay = 0.1f;
     [SerializeField] private float coyoteJumpDelay = 0.1f;
+    [SerializeField] private float quickFallGravityScale = 1.5f;
 
     [Header("Ground Check")]
     [SerializeField] private LayerMask ground;
@@ -63,12 +61,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Set initial respawn position
         SetRespawnPos(transform.position);
-
-        if (animateSpawnOnLoad)
-        {
-            rb2d.simulated = false;
-            Spawn();
-        }
     }
 
     private void Update()
@@ -79,8 +71,7 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetBool("Moving", false);
             anim.SetFloat("YVelocity", 0);
-            anim.SetBool("isTouchingGround", true);
-            anim.SetTrigger("Reset");
+            anim.SetBool("TouchingGround", true);
             return;
         }
 
@@ -93,19 +84,24 @@ public class PlayerMovement : MonoBehaviour
         if (transform.position.y < minY)
             Die();
 
-        anim.SetBool("Moving", rb2d.velocity.x != 0 && horizontal != 0);
+        anim.SetBool("Walking", horizontal != 0);
         anim.SetFloat("YVelocity", rb2d.velocity.y);
+
+        // Draw velocity vector in editor
+        Debug.DrawLine(transform.position, transform.position + (Vector3)rb2d.velocity, Color.red);
     }
 
     private void FixedUpdate()
     {
         if (isDead || isPaused) return;
 
+        UpdateGravityScale();
+
         Walk();
 
         // Check if the player is currently touching the ground
         bool isTouchingGround = feetCollider.IsTouchingLayers(ground);
-        anim.SetBool("isTouchingGround", isTouchingGround);
+        anim.SetBool("TouchingGround", isTouchingGround);
 
         // Get the last time the values are true.
         // We will use this for jump deferring and coyote jump
@@ -143,14 +139,6 @@ public class PlayerMovement : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = false;
     }
 
-    [Obsolete]
-    public void TogglePause()
-    {
-        if (isPaused) transform.SetParent(null);
-        rb2d.velocity = Vector2.zero;
-        isPaused = !isPaused;
-    }
-
     public void SetMovementPaused(bool value)
     {
         rb2d.velocity = Vector2.zero;
@@ -160,6 +148,15 @@ public class PlayerMovement : MonoBehaviour
         }
         isPaused = value;
         Debug.Log($"[PlayerMovement] Player movement paused set to {value}");
+    }
+
+    private void UpdateGravityScale()
+    {
+        // Update gravity scale so player falls down quicker
+        float max = 5f;
+        float downVelocity = -Mathf.Clamp(rb2d.velocity.y, -max, 0);
+        float ratio = downVelocity / max;
+        rb2d.gravityScale = Mathf.Lerp(1, quickFallGravityScale, ratio);
     }
 
     private void Walk()
@@ -208,6 +205,7 @@ public class PlayerMovement : MonoBehaviour
         numRespawnsAtRespawnPoint = 0;
     }
 
+    [ContextMenu("Die")]
     public void Die()
     {
         if (isDead) return;
@@ -223,12 +221,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetTrigger("Dead");
         StartCoroutine(Respawn());
     }
-    void Spawn()
-    {
-        anim.SetTrigger("Spawn");
-    }
 
-    // Code to check if the player position is inside of another collider 
     IEnumerator Respawn()
     {
         yield return new WaitForSeconds(1f);
