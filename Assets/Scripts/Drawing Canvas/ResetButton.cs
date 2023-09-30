@@ -8,17 +8,20 @@ public class ResetButton : MonoBehaviour
     // Configuration parameters
     [SerializeField] private Vector3 offset;
 
-    // Cached components and object references
-    public DrawingCanvas drawingCanvas;
-    public DrawingArea drawingArea;
-    public AudioSource audio;
+    // Object references
+    [SerializeField] private DrawingCanvas drawingCanvas;
+    [SerializeField] private DrawingArea drawingArea;
 
+    // Cached components
+    private AudioSource audio;
+    private Animator anim;
     private BoxCollider2D drawingAreaCollider;
     private BoxCollider2D resetButtonCollider;
 
     private void Start()
     {
         audio = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
         drawingAreaCollider = drawingArea.GetComponent<BoxCollider2D>();
         resetButtonCollider = GetComponent<BoxCollider2D>();
     }
@@ -49,7 +52,7 @@ public class ResetButton : MonoBehaviour
             -resetButtonHalfHeight,
             0
         );
-        
+
         transform.position = drawingArea.transform.position + positioning + anchoringOffset + offset; ;
     }
 
@@ -59,6 +62,7 @@ public class ResetButton : MonoBehaviour
         {
             audio.Play();
             drawingCanvas.Reset();
+            anim.SetTrigger("Spin");
         }
     }
 
