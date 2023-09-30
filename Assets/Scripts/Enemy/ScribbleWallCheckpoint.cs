@@ -8,6 +8,7 @@ public class ScribbleWallCheckpoint : Checkpoint
 
     private void Start() 
     {
+        anim = GetComponent<Animator>();
         wall = FindObjectOfType<ScribbleWall>();
     }
     private void OnTriggerEnter2D(Collider2D other) 
@@ -17,6 +18,16 @@ public class ScribbleWallCheckpoint : Checkpoint
         if (!isActivated && other.CompareTag("Player")) 
         {
             wall.setRespawnPosition(wallRespawnPos);
+
+            PlayerMovement playerMovement = other.GetComponent<PlayerMovement>();
+            if (playerMovement)
+            {
+                // Update the player's respawn position
+                playerMovement.SetRespawnPos(transform.position + respawnOffset);
+                Activate();
+            }
+            else
+                Debug.LogError("[Checkpoint] Cannot set checkpoint because PlayerController was not found");
         }
     }
 }
