@@ -91,7 +91,7 @@ public class Enemy : MonoBehaviour
         Vector3 radiusCorrectionOffset = noOffset ? Vector3.right : offset;
         Vector3 targetPosition = originalPosition + (radiusCorrectionOffset.normalized * radius);
         Vector3 correctionVelocity = targetPosition - transform.position;
-        
+
         // Update velocity
         rb2d.velocity = tangentVelocity + correctionVelocity;
     }
