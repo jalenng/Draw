@@ -70,17 +70,14 @@ public class ScribbleWall : Enemy
     {
         float distanceFromPlayer = Vector3.Distance(transform.position, playerMovement.transform.position);
         Debug.Log("distance: " + distanceFromPlayer);
-        if (distanceFromPlayer > speedUpDistance)
-        {
+        if(distanceFromPlayer > speedUpDistance) {
             // Find how far away from "speedUpDistance" the wall is
             distanceFromPlayer -= speedUpDistance;
             // Divide by number to make smaller ;p
             // Add exponential number to speed based on this number
             distanceFromPlayer = distanceFromPlayer * 10;
             this.speed = baseSpeed + 5 + distanceFromPlayer;
-        }
-        else
-        {
+        } else {
             // If the wall gets within the threshhold, set speed back to the original speed.
             this.speed = baseSpeed;
         }
