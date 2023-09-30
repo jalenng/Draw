@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawingCanvas: {fileID: 0}
+  startOpacity: 1
+  endOpacity: 0
 --- !u!61 &7620995093816381027
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -147,7 +149,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.067
+        value: 0.05
         inSlope: 0
         outSlope: 0
         tangentMode: 0
