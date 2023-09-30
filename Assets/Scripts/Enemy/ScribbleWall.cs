@@ -29,7 +29,7 @@ public class ScribbleWall : Enemy
     }
     // Vector3(-45,121.220001,0) OG Starting Position 
     public void StartRespawn() {
-        StartCoroutine(Respawn(1f));
+        StartCoroutine(Respawn(.99f));
     }
     IEnumerator Respawn(float wait)
     {
@@ -42,7 +42,6 @@ public class ScribbleWall : Enemy
     }
     private void UpdateSpeed() {
         float distanceFromPlayer = Vector3.Distance(transform.position, playerMovement.transform.position);
-        Debug.Log("distance: " + distanceFromPlayer);
         if(distanceFromPlayer > speedUpDistance) {
             // Find how far away from "speedUpDistance" the wall is
             distanceFromPlayer -= speedUpDistance;

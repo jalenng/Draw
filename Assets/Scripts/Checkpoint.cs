@@ -6,7 +6,7 @@ public class Checkpoint : MonoBehaviour
 {
     // Configuration parameters
     [Tooltip("How much to offset from the checkpoint's position (bottom of pole) when respawning the player")]
-    [SerializeField] Vector3 respawnOffset = new Vector3(0.5f, 1.25f, 0.0f);
+    [SerializeField] protected Vector3 respawnOffset = new Vector3(0.5f, 1.25f, 0.0f);
 
     // State variables
     protected bool isActivated = false;
@@ -16,7 +16,7 @@ public class Checkpoint : MonoBehaviour
     }
 
     // Cached component references
-    Animator anim;
+    protected Animator anim;
 
     private void Start() 
     {
