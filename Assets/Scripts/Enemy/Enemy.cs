@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
 {
     // Configuration parameters
     [SerializeField] MovementType movementType = MovementType.Straight;
-    [SerializeField] private float speed;
+    [SerializeField] protected float speed;
 
     [Header("Straight Movement")]
     [SerializeField] protected List<Transform> points = new List<Transform>();
