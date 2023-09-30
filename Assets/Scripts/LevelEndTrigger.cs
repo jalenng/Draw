@@ -5,20 +5,28 @@ using UnityEngine.Events;
 
 public class LevelEndTrigger : MonoBehaviour
 {
-    private bool triggered;
-    void Start() {
-        triggered = false;
+    [SerializeField] private LayerMask triggerableLayers;
+    private bool hasTriggered;
+
+    void Start()
+    {
+        hasTriggered = false;
     }
-    private void OnTriggerEnter2D(Collider2D other) {
-        LoadNextScene();
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        bool layerIsTriggerable = triggerableLayers == (triggerableLayers | (1 << other.gameObject.layer));
+        if (!hasTriggered && layerIsTriggerable)
+        {
+            LoadNextScene();
+        }
     }
 
     [ContextMenu("Load Next Scene")]
-    public void LoadNextScene() {
-        if(!triggered) {
-            FindObjectOfType<SceneLoader>().LoadNextScene();
-            FindObjectOfType<PlayerMovement>()?.SetCanMove(0);
-            triggered = true;
-        }
+    public void LoadNextScene()
+    {
+        FindObjectOfType<SceneLoader>().LoadNextScene();
+        FindObjectOfType<PlayerMovement>()?.SetCanMove(0);
+        hasTriggered = true;
     }
 }
