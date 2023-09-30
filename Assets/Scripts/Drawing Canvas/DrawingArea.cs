@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteAlways]
+[RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class DrawingArea : MonoBehaviour
 {
     // Configuration parameters
     [SerializeField] DrawingCanvas drawingCanvas;
+    [Range(0, 1)]
+    [SerializeField] private float startOpacity = 1f;
+    [Range(0, 1)]
+    [SerializeField] private float endOpacity = 0f;
 
     // Cached components
     LineRenderer lineRenderer;
@@ -59,7 +65,7 @@ public class DrawingArea : MonoBehaviour
     {
         // Set outline color to match the color of the line.
         // The amount of remaining ink is represented by the alpha value.
-        float inkRemaining = 1.0f - drawingCanvas.GetInkRatio();
+        float inkRemaining = Mathf.Lerp(startOpacity, endOpacity, drawingCanvas.GetInkRatio());
         Color outlineColor = new Color(baseOutlineColor.r, baseOutlineColor.g, baseOutlineColor.b, inkRemaining);
         lineRenderer.startColor = outlineColor;
         lineRenderer.endColor = outlineColor;

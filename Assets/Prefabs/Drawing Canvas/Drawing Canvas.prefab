@@ -252,6 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad0fb33fd0b71464886ba3c852f80982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: {x: 0.15, y: -0.1, z: -1}
   drawingCanvas: {fileID: 3121044882252102164}
   drawingArea: {fileID: 7562454472242513397}
   audio: {fileID: 0}
@@ -343,14 +344,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.47, y: 0.48}
+    oldSize: {x: 0.48, y: 0.48}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.66666, y: 0.66666}
   m_EdgeRadius: 0
 --- !u!82 &2652519995096693943
 AudioSource:
