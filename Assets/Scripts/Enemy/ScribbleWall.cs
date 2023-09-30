@@ -7,8 +7,8 @@ using Random=UnityEngine.Random;
 public class ScribbleWall : Enemy
 {
     [SerializeField] private PlayerMovement playerMovement;
-    [SerializeField] private float speedUpDistance;
-    private float baseSpeed;
+    [SerializeField] private float speedUpDistance = 40;
+    [SerializeField] private float baseSpeed;
     private bool respawning = false;
     void FixedUpdate() {
         // If we're respawning, don't do anything.
@@ -42,15 +42,14 @@ public class ScribbleWall : Enemy
     }
     private void UpdateSpeed() {
         float distanceFromPlayer = Vector3.Distance(transform.position, playerMovement.transform.position);
-        Debug.Log("Distance: " + distanceFromPlayer);
+        Debug.Log("distance: " + distanceFromPlayer);
         if(distanceFromPlayer > speedUpDistance) {
             // Find how far away from "speedUpDistance" the wall is
             distanceFromPlayer -= speedUpDistance;
             // Divide by number to make smaller ;p
-            distanceFromPlayer /= 10;
             // Add exponential number to speed based on this number
-            distanceFromPlayer = distanceFromPlayer * distanceFromPlayer;
-            this.speed = baseSpeed + distanceFromPlayer;
+            distanceFromPlayer = distanceFromPlayer * 10;
+            this.speed = baseSpeed + 5 + distanceFromPlayer;
         } else {
             // If the wall gets within the threshhold, set speed back to the original speed.
             this.speed = baseSpeed;
