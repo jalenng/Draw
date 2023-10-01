@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class SerializableOrangeObjectData
 {
     public float[] savedPosition = new float[3];
+    public float savedRotation;
     public bool staticBody;
     public string ID;
 }
@@ -64,6 +65,7 @@ public class OrangeObjectData : MonoBehaviour
                 orangeObjectData.savedPosition[1],
                 orangeObjectData.savedPosition[2]
             );
+            transform.Rotate(0, 0, orangeObjectData.savedRotation, Space.Self);
         }
     }
 
@@ -79,6 +81,7 @@ public class OrangeObjectData : MonoBehaviour
                 currentPos.y,
                 currentPos.z
             },
+            savedRotation = transform.rotation.eulerAngles.z,
             staticBody = orangeObject.staticBodyByDefault,
             ID = ID
         };
