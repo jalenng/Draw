@@ -13,4 +13,5 @@ public class GameData {
     public SerializablePlayerData playerData;
     public List<SerializableCheckpointData> checkpointData = new List<SerializableCheckpointData>();
     public List<SerializableCutsceneData> cutsceneData = new List<SerializableCutsceneData>();
+    public List<SerializableOrangeObjectData> orangeObjectData = new List<SerializableOrangeObjectData>();
 }
