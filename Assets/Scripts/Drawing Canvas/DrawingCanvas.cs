@@ -18,7 +18,7 @@ public class DrawingCanvas : MonoBehaviour
     [SerializeField] float minLineLength = 0.5f;
     [Range(0, 50)]
     [SerializeField] float maxTotalLineLength = 10f;
-    
+
     [Header("SFX Settings")]
     [SerializeField] private float sfxIntensityLogBase = 5f;
     [SerializeField] private float sfxIntensityToPitchScale = 5f;
@@ -100,14 +100,16 @@ public class DrawingCanvas : MonoBehaviour
             // Play and update SFX
             if (distance > 0)
             {
-                if (!audioSource.isPlaying) {
+                if (!audioSource.isPlaying)
+                {
                     audioSource.Play();
                 }
                 float sfxIntensity = Mathf.Log(1 + distance, sfxIntensityLogBase);
                 audioSource.pitch = 1 + (sfxIntensity * sfxIntensityToPitchScale);
                 audioSource.volume = sfxIntensity * sfxIntensityToVolumeScale;
             }
-            else {
+            else
+            {
                 audioSource.pitch = 0;
                 audioSource.volume = 0;
             }
