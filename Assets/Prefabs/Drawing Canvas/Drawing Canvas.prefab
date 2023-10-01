@@ -235,7 +235,7 @@ Transform:
   m_GameObject: {fileID: 6013472230435510633}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.1143303, y: 2.1976695, z: -2}
+  m_LocalPosition: {x: 3.11433, y: 2.1976702, z: -1.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -256,7 +256,6 @@ MonoBehaviour:
   offset: {x: 0.15, y: -0.1, z: -1}
   drawingCanvas: {fileID: 3121044882252102164}
   drawingArea: {fileID: 7562454472242513397}
-  audio: {fileID: 2652519995096693943}
 --- !u!212 &1421605840355200629
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -486,6 +485,10 @@ PrefabInstance:
     - target: {fileID: 5998983189275153447, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
       propertyPath: m_Name
       value: Drawing Area
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316794802047645502, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 7316794802047645502, guid: 7772daae3cf1b6d44bcfa18525b82548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
