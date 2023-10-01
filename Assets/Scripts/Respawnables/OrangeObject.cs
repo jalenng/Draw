@@ -55,7 +55,4 @@ public class OrangeObject : RespawnInterface
         transform.position = respawnPos;
         transform.rotation = respawnRotation;
     }
-    public void SetBodyType(RigidbodyType2D bodyType) {
-        rb2d.bodyType = bodyType;
-    }
 }
