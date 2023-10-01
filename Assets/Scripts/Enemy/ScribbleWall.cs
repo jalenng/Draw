@@ -11,29 +11,10 @@ public class ScribbleWall : Enemy
     [SerializeField] private float speedUpDistance = 40;
     [SerializeField] private float baseSpeed;
     private bool respawning = false;
-
-    void Update()
-    {
-        // Iterate through the points and connect them with a line in the editor.
-        // This makes it easier to see the path that the scribble wall will take.
-        if (points.Count > 0)
-        {
-            Vector3 pos1 = points[0].position;
-            for (int i = 1; i < points.Count; i++)
-            {
-                Vector3 pos2 = points[i].position;
-                Debug.DrawLine(pos1, pos2, Color.red);
-                pos1 = pos2;
-            }
-        }
-    }
-
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         // If we're respawning, don't do anything.
         UpdateSpeed();
-        if (!respawning)
-        {
+        if(!respawning) {
             // If the player is dead & wall is not respawning, respawn this
             if (playerMovement.GetPlayerDead())
             {
@@ -47,8 +28,7 @@ public class ScribbleWall : Enemy
             }
         }
     }
-    void Awake()
-    {
+    void Awake() {
         baseSpeed = speed;
     }
     // Vector3(-45,121.220001,0) OG Starting Position 
@@ -65,8 +45,7 @@ public class ScribbleWall : Enemy
     {
         originalPosition = pos;
     }
-    private void UpdateSpeed()
-    {
+    private void UpdateSpeed() {
         float distanceFromPlayer = Vector3.Distance(transform.position, playerMovement.transform.position);
         if(distanceFromPlayer > speedUpDistance) {
             // Find how far away from "speedUpDistance" the wall is
