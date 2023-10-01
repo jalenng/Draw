@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class SerializableOrangeObjectData
 {
-    public Vector3 savedPosition;
-    public RigidbodyType2D bodyType;
+    public float[] savedPosition = new float[3];
+    public bool staticBody;
     public string ID;
 }
 
@@ -33,6 +33,7 @@ public class OrangeObjectData : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
 
         gameManager = FindObjectOfType<GameManager>();
+        gameManager.orangeObjectData.Add(this);
         Load();
     }
 
@@ -57,20 +58,28 @@ public class OrangeObjectData : MonoBehaviour
             Debug.LogWarning($"[OrangeObjectData] OrangeObject data not found for cutscene {ID}", gameObject);
         else
         {
-            orangeObject.SetBodyType(orangeObjectData.bodyType);
-            orangeObject.transform.position = orangeObjectData.savedPosition; 
+            orangeObject.staticBodyByDefault = orangeObjectData.staticBody;
+            transform.position = new Vector3(
+                orangeObjectData.savedPosition[0],
+                orangeObjectData.savedPosition[1],
+                orangeObjectData.savedPosition[2]
+            );
         }
     }
 
     // Returns a serializable version of the player's data
     public SerializableOrangeObjectData Capture()
     {
-        Vector3 pos = transform.position;
+        Vector3 currentPos = transform.position;
         RigidbodyType2D type = rb2d.bodyType;
         return new SerializableOrangeObjectData()
         {
-            savedPosition = pos,
-            bodyType = type,
+            savedPosition = new float[] {
+                currentPos.x,
+                currentPos.y,
+                currentPos.z
+            },
+            staticBody = orangeObject.staticBodyByDefault,
             ID = ID
         };
     }

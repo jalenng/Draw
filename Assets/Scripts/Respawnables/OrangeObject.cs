@@ -6,7 +6,7 @@ public class OrangeObject : RespawnInterface
 {
     Rigidbody2D rb2d;
     [SerializeField] Vector3 respawnPos;
-    [SerializeField] private bool staticBodyByDefault = true;
+    [SerializeField] public bool staticBodyByDefault = true;
     Quaternion respawnRotation;
     AudioSource audioSource;
     AchievementUnlocker achievementUnlocker;
@@ -32,6 +32,7 @@ public class OrangeObject : RespawnInterface
     {
         if (rb2d.bodyType != RigidbodyType2D.Dynamic)
         {
+            staticBodyByDefault = false;
             audioSource.Play();
             rb2d.bodyType = RigidbodyType2D.Dynamic;
             achievementUnlocker.SetAchievement();
