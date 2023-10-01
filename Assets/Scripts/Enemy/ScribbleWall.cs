@@ -11,7 +11,6 @@ public class ScribbleWall : Enemy
     [SerializeField] private float speedUpDistance = 40;
     [SerializeField] private float baseSpeed;
     private bool respawning = false;
-
     void Update()
     {
         // Iterate through the points and connect them with a line in the editor.
@@ -27,7 +26,6 @@ public class ScribbleWall : Enemy
             }
         }
     }
-
     void FixedUpdate()
     {
         // If we're respawning, don't do anything.
@@ -54,7 +52,7 @@ public class ScribbleWall : Enemy
     // Vector3(-45,121.220001,0) OG Starting Position 
     public void StartRespawn()
     {
-        StartCoroutine(Respawn(1f));
+        StartCoroutine(Respawn(.99f));
     }
     IEnumerator Respawn(float wait)
     {
@@ -69,7 +67,6 @@ public class ScribbleWall : Enemy
     private void UpdateSpeed()
     {
         float distanceFromPlayer = Vector3.Distance(transform.position, playerMovement.transform.position);
-        Debug.Log("distance: " + distanceFromPlayer);
         if (distanceFromPlayer > speedUpDistance)
         {
             // Find how far away from "speedUpDistance" the wall is
