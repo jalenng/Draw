@@ -127,8 +127,10 @@ public class PlayerMovement : MonoBehaviour
     private void GetInput()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-        if (Input.GetButtonDown("Jump")) jumpRequested = true;
-        if (horizontal == 0) footstepAudioSource.Stop();
+        if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Submit"))
+            jumpRequested = true;
+        if (horizontal == 0)
+            footstepAudioSource.Stop();
     }
 
     private void UpdateSpriteDirection()
