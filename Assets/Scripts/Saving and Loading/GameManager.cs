@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public PlayerData player;
     public List<CheckpointData> checkpointData;
     public List<CutsceneData> cutsceneData;
+    public List<OrangeObjectData> orangeObjectData;
 
     // Object for other saveData objects to retrieve from
     public GameData gameData = null;
@@ -98,6 +99,14 @@ public class GameManager : MonoBehaviour
             if (cutscene != null)
             {
                 newGameData.cutsceneData.Add(cutscene.Capture());
+            }
+        }
+        newGameData.orangeObjectData = new List<SerializableOrangeObjectData>();
+        foreach (OrangeObjectData orangeObject in orangeObjectData)
+        {
+            if (orangeObject != null)
+            {
+                newGameData.orangeObjectData.Add(orangeObject.Capture());
             }
         }
 

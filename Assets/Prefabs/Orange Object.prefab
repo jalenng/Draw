@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 156424493162379790}
   - component: {fileID: 7928050161254408662}
   - component: {fileID: 4291443857318051985}
+  - component: {fileID: 7509213699450060437}
   m_Layer: 15
   m_Name: Orange Object
   m_TagString: OrangeObject
@@ -192,7 +193,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95cec21136c7cbf4bbb6247a85314983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  staticBodyByDefault: 1
   respawnPos: {x: 0, y: 0, z: 0}
+  respawnRot: 0
 --- !u!82 &7928050161254408662
 AudioSource:
   m_ObjectHideFlags: 0
@@ -302,3 +305,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   achievement: 5
+--- !u!114 &7509213699450060437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8669401566246642394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 589a05f3e53f41b47acc37153f8a888a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myID: 
