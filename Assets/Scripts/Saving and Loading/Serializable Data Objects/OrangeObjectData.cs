@@ -7,15 +7,17 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class SerializableOrangeObjectData
 {
-    public float[] savedPosition = new float[3];
-    public float savedRotation;
-    public bool staticBody;
+    public float[] position = new float[3];
+    public float rotation;
+    public float[] respawnPos = new float[3];
+    public float respawnRot;
+    public bool isDynamic;
     public string ID;
 }
 
-// PlayerData has two responsibilities:
-// 1. Upon scene load, it attempts to load the player data from the GameManager
-// 2. It captures the player data for the GameManager to serialize
+// OrangeObjectData has two responsibilities:
+// 1. Upon scene load, it attempts to load the orange object data from the GameManager
+// 2. It captures the orange object data for the GameManager to serialize
 [RequireComponent(typeof(OrangeObject))]
 public class OrangeObjectData : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class OrangeObjectData : MonoBehaviour
     // Associates checkpoints with their save data
     [SerializeField] private string myID;
     public string ID { get { return myID; } }
+
     // Cached component references
     private OrangeObject orangeObject;
     private GameManager gameManager;
@@ -52,37 +55,61 @@ public class OrangeObjectData : MonoBehaviour
         bool buildIndexMatch = savedBuildIndex == SceneManager.GetActiveScene().buildIndex;
         if (!buildIndexMatch) return;
 
-        // Ensure player data exists 
+        // Ensure orange object data exists 
         List<SerializableOrangeObjectData> allOrangeObjectData = gameData?.orangeObjectData;
         SerializableOrangeObjectData orangeObjectData = allOrangeObjectData?.Find(x => x.ID == ID);
-        if(orangeObjectData == null)
-            Debug.LogWarning($"[OrangeObjectData] OrangeObject data not found for cutscene {ID}", gameObject);
+        if (orangeObjectData == null)
+            Debug.LogWarning($"[OrangeObjectData] OrangeObject data not found for object {ID}", gameObject);
         else
         {
-            orangeObject.staticBodyByDefault = orangeObjectData.staticBody;
+            // Set current pos and rot
             transform.position = new Vector3(
-                orangeObjectData.savedPosition[0],
-                orangeObjectData.savedPosition[1],
-                orangeObjectData.savedPosition[2]
+                orangeObjectData.position[0],
+                orangeObjectData.position[1],
+                orangeObjectData.position[2]
             );
-            transform.Rotate(0, 0, orangeObjectData.savedRotation, Space.Self);
+            transform.eulerAngles = new Vector3(0, 0, orangeObjectData.rotation);
+
+            // Set respawn pos and rot
+            orangeObject.respawnPos = new Vector3(
+                orangeObjectData.respawnPos[0],
+                orangeObjectData.respawnPos[1],
+                orangeObjectData.respawnPos[2]
+            );
+            orangeObject.respawnRot = orangeObjectData.respawnRot;
+
+            // Set body type
+            if (orangeObjectData.isDynamic)
+                rb2d.bodyType = RigidbodyType2D.Dynamic;
         }
     }
 
-    // Returns a serializable version of the player's data
+    // Returns a serializable version of the orange object's data
     public SerializableOrangeObjectData Capture()
     {
         Vector3 currentPos = transform.position;
+        Vector3 respawnPos = orangeObject.respawnPos;
         RigidbodyType2D type = rb2d.bodyType;
         return new SerializableOrangeObjectData()
         {
-            savedPosition = new float[] {
+            // Get current pos and rot
+            position = new float[] {
                 currentPos.x,
                 currentPos.y,
                 currentPos.z
             },
-            savedRotation = transform.rotation.eulerAngles.z,
-            staticBody = orangeObject.staticBodyByDefault,
+            rotation = transform.eulerAngles.z,
+
+            // Get respawn pos and rot
+            respawnPos = new float[] {
+                respawnPos.x,
+                respawnPos.y,
+                respawnPos.z,
+            },
+            respawnRot = orangeObject.respawnRot,
+
+            // Get body type
+            isDynamic = rb2d.bodyType == RigidbodyType2D.Dynamic,
             ID = ID
         };
     }

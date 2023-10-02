@@ -5,26 +5,26 @@ using UnityEngine;
 public class OrangeObject : RespawnInterface
 {
     Rigidbody2D rb2d;
-    [SerializeField] Vector3 respawnPos;
-    [SerializeField] public bool staticBodyByDefault = true;
-    Quaternion respawnRotation;
+    [SerializeField] private bool staticBodyByDefault = true;
+    public Vector3 respawnPos;
+    public float respawnRot;
     AudioSource audioSource;
     AchievementUnlocker achievementUnlocker;
 
-
-    // Make object static and unaffected by gravity
-    void Start()
+    // Run initialization in Awake so OrangeObjectData's Start() can 
+    // override the initialized values
+    private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
         achievementUnlocker = GetComponent<AchievementUnlocker>();
 
-        if (staticBodyByDefault)
-        {
-            rb2d.bodyType = RigidbodyType2D.Static;
-        }
+        // Set body type to default
+        rb2d.bodyType = staticBodyByDefault ? RigidbodyType2D.Static : RigidbodyType2D.Dynamic;
+
+        // Save original position as respawn position
         respawnPos = transform.position;
-        respawnRotation = transform.rotation;
+        respawnRot = transform.eulerAngles.z;
     }
 
     // Make object affected by gravity upon collision
@@ -32,7 +32,6 @@ public class OrangeObject : RespawnInterface
     {
         if (rb2d.bodyType != RigidbodyType2D.Dynamic)
         {
-            staticBodyByDefault = false;
             audioSource.Play();
             rb2d.bodyType = RigidbodyType2D.Dynamic;
             achievementUnlocker.SetAchievement();
@@ -43,16 +42,14 @@ public class OrangeObject : RespawnInterface
     {
         StartCoroutine(Respawn(0f));
     }
-    
+
     IEnumerator Respawn(float wait)
     {
         yield return new WaitForSeconds(wait);
-        if (staticBodyByDefault)
-        {
-            rb2d.bodyType = RigidbodyType2D.Static;
-        }
+
+        rb2d.bodyType = staticBodyByDefault ? RigidbodyType2D.Static : RigidbodyType2D.Dynamic;
         rb2d.velocity = Vector2.zero;
         transform.position = respawnPos;
-        transform.rotation = respawnRotation;
+        transform.eulerAngles = new Vector3(0, 0, respawnRot);
     }
 }
