@@ -2,11 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ResetButtonPlacement
+{
+    TopLeft,
+    TopRight,
+    BottomLeft,
+    BottomRight
+}
+
 [ExecuteAlways]
 public class ResetButton : MonoBehaviour
 {
     // Configuration parameters
     [SerializeField] private Vector3 offset;
+    [SerializeField] private ResetButtonPlacement placement = ResetButtonPlacement.TopRight;
 
     // Object references
     [SerializeField] private DrawingCanvas drawingCanvas;
@@ -16,14 +25,14 @@ public class ResetButton : MonoBehaviour
     private AudioSource audio;
     private Animator anim;
     private BoxCollider2D drawingAreaCollider;
-    private BoxCollider2D resetButtonCollider;
+    private CircleCollider2D resetButtonCollider;
 
     private void Start()
     {
         audio = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         drawingAreaCollider = drawingArea.GetComponent<BoxCollider2D>();
-        resetButtonCollider = GetComponent<BoxCollider2D>();
+        resetButtonCollider = GetComponent<CircleCollider2D>();
     }
 
     private void Update()
@@ -35,25 +44,39 @@ public class ResetButton : MonoBehaviour
     private void SetUpPosition()
     {
         // Get position of top-right corner of drawing area
-        float drawingAreaHalfWidth = drawingAreaCollider.size.x / 2f;
-        float drawingAreaHalfHeight = drawingAreaCollider.size.y / 2f;
         Vector3 drawingAreaLocalScale = drawingArea.transform.localScale;
+        float drawingAreaHalfWidthScaled = drawingAreaLocalScale.x * (drawingAreaCollider.size.x / 2f);
+        float drawingAreaHalfHeightScaled = drawingAreaLocalScale.y * (drawingAreaCollider.size.y / 2f);
+
+        // Calculate the position of the top-right corner of the drawing area
         Vector3 positioning = new Vector3(
-            (drawingAreaLocalScale.x * drawingAreaHalfWidth),
-            (drawingAreaLocalScale.y * drawingAreaHalfHeight),
+            drawingAreaHalfWidthScaled,
+            drawingAreaHalfHeightScaled,
             0
         );
 
-        // Calculate the offset to result in the desired location
-        float resetButtonHalfWidth = resetButtonCollider.size.x / 2f;
-        float resetButtonHalfHeight = resetButtonCollider.size.y / 2f;
+        // Calculate the offset from the top-right corner to result in the desired location
+        float resetButtonRadius = resetButtonCollider.radius;
         Vector3 anchoringOffset = new Vector3(
-            resetButtonHalfWidth,
-            -resetButtonHalfHeight,
+            resetButtonRadius,
+            -resetButtonRadius,
             0
         );
 
-        transform.position = drawingArea.transform.position + positioning + anchoringOffset + offset; ;
+        // Adjust the placement offset based on the placement setting
+        bool isLeft = placement == ResetButtonPlacement.TopLeft || placement == ResetButtonPlacement.BottomLeft;
+        bool isBottom = placement == ResetButtonPlacement.BottomLeft || placement == ResetButtonPlacement.BottomRight;
+        Vector3 placementOffset =
+            Vector3.Scale(
+                positioning + anchoringOffset,
+                new Vector3(isLeft ? -1 : 1, isBottom ? -1 : 1, 1)
+            );
+
+        transform.position =
+            // Start with the drawing area world space position
+            drawingArea.transform.position +
+            // Apply the offset in the drawing area space, then convert to world space
+            drawingArea.transform.TransformDirection(placementOffset + offset);
     }
 
     private void OnMouseDown()
