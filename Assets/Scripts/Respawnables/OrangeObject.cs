@@ -6,6 +6,7 @@ public class OrangeObject : RespawnInterface
 {
     Rigidbody2D rb2d;
     [SerializeField] private bool staticBodyByDefault = true;
+    [SerializeField] private float activationTime = 0f;
     public Vector3 respawnPos;
     public float respawnRot;
     AudioSource audioSource;
@@ -33,8 +34,8 @@ public class OrangeObject : RespawnInterface
         if (rb2d.bodyType != RigidbodyType2D.Dynamic)
         {
             audioSource.Play();
-            rb2d.bodyType = RigidbodyType2D.Dynamic;
             achievementUnlocker.SetAchievement();
+            StartCoroutine(activateOrangeObject(activationTime));
         }
     }
 
@@ -51,5 +52,9 @@ public class OrangeObject : RespawnInterface
         rb2d.velocity = Vector2.zero;
         transform.position = respawnPos;
         transform.eulerAngles = new Vector3(0, 0, respawnRot);
+    }
+    IEnumerator activateOrangeObject(float wait) {
+        yield return new WaitForSeconds(wait);
+        rb2d.bodyType = RigidbodyType2D.Dynamic;
     }
 }
