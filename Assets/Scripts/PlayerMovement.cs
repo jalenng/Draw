@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce = 30f;
     [SerializeField] private float deferredJumpDelay = 0.1f;
     [SerializeField] private float coyoteJumpDelay = 0.1f;
+    [SerializeField] private float jumpCooldownTime = 0.2f;
     [SerializeField] private float quickFallGravityScale = 1.5f;
 
     [Header("Ground Check")]
@@ -46,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal = 0f;
     private float lastGroundContactTime = -1f;
     private float lastJumpRequestedTime = -1f;
+    private float lastJumpTime = -1f;
 
     // Consts
     private const int numRespawnsAtPointForAchievement = 10;
@@ -99,26 +101,31 @@ public class PlayerMovement : MonoBehaviour
 
         Walk();
 
-        // Check if the player is currently touching the ground
+        // Capture the time if the player is touching the ground.
         bool isTouchingGround = feetCollider.IsTouchingLayers(ground);
-        anim.SetBool("TouchingGround", isTouchingGround);
-
-        // Get the last time the values are true.
-        // We will use this for jump deferring and coyote jump
         if (isTouchingGround) lastGroundContactTime = Time.time;
-        if (jumpRequested) lastJumpRequestedTime = Time.time;
+        anim.SetBool("TouchingGround", isTouchingGround);   // update animator as well
+
+        // Capture the time if the player has requested to jump after the cooldown period
+        bool recentlyJumped = lastJumpTime > 0 && (Time.time - lastJumpTime) < jumpCooldownTime;
+        if (!recentlyJumped && jumpRequested) lastJumpRequestedTime = Time.time;
         jumpRequested = false;
 
+        // Negative time values are considered as invalid. Check to see if they're are positive.
         if (lastGroundContactTime > 0 && lastJumpRequestedTime > 0)
         {
+            // If so, get the time in which the values were last true.
+            // We will use this for jump deferring and coyote jump.
             bool recentlyContactedGround = (Time.time - lastGroundContactTime) < deferredJumpDelay;
             bool recentlyRequestedJump = (Time.time - lastJumpRequestedTime) < coyoteJumpDelay;
 
+            // Determine if we should jump
             bool shouldJumpNow = recentlyContactedGround && recentlyRequestedJump;
             if (shouldJumpNow)
             {
                 lastGroundContactTime = -1f;
                 lastJumpRequestedTime = -1f;
+                lastJumpTime = Time.time;
                 Jump();
             }
         }
