@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,11 +18,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask ground;
     [SerializeField] private Collider2D feetCollider;
 
-    [Header("Auto Respawn")]
-    [SerializeField] private float minY = -20f;
+    [Header("Respawn")]
+    [SerializeField] private float minY = -20f; // Respawn once past this level
+    [SerializeField] private UnityEvent onRespawn;
 
     [Header("Audio Sources")]
-    // Audio sources
     [SerializeField] private AudioSource jumpAudioSource;
     [SerializeField] private AudioSource footstepAudioSource;
     [SerializeField] private AudioSource deathAudioSource;
@@ -241,10 +242,12 @@ public class PlayerMovement : MonoBehaviour
         rb2d.velocity = Vector2.zero;
 
         respawner?.StartObjectRespawn();
+        onRespawn.Invoke();
 
         // Move the player to the respawn position
         spawnAudioSource.Play();
         transform.position = respawnPos;
+
 
         // Unlock achievement if respawned a given number of times at the same point
         numRespawnsAtRespawnPoint += 1;
