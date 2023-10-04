@@ -8,7 +8,6 @@ public class DialogueSystem : MonoBehaviour
 {
     // Configuration parameters
     [SerializeField] Dialogue dialogue;
-    [SerializeField] KeyCode advanceKey = KeyCode.Space;
     [SerializeField] GameObject dialogueCanvas;
     [SerializeField] Textbox textbox;
     [SerializeField] GameObject skipButton;
@@ -45,10 +44,10 @@ public class DialogueSystem : MonoBehaviour
     private bool CheckIfShouldAdvance()
     {
         // If the game is paused, do not advance
-        if (Time.timeScale <= 0) return false; 
+        if (Time.timeScale <= 0) return false;
 
         bool skipConfirmationVisible = skipConfirmationDialog.GetComponent<CanvasGroup>().interactable;
-        bool keyDown = !skipConfirmationVisible && Input.GetKeyDown(advanceKey);
+        bool keyDown = !skipConfirmationVisible && Input.GetButtonDown("Submit"); // Space or Enter
         return advanceRequested || keyDown;
     }
 

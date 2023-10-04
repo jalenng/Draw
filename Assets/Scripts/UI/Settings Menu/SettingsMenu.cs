@@ -28,7 +28,7 @@ public class SettingsMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown("Cancel")) // Esc
         {
             settingsMenuCanvas.SetVisibility(false);
         }

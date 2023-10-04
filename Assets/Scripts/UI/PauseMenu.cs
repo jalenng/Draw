@@ -9,15 +9,16 @@ public class PauseMenu : MonoBehaviour
 
     // State variables
     bool paused = false;    // Whether the game is paused
-    
-    void Start() {
+
+    void Start()
+    {
         pauseMenuCanvas = GetComponent<CanvasGroupVisibility>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown("Cancel")) // Esc
         {
             if (paused)
                 Resume();

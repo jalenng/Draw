@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MainMenu : MonoBehaviour
 {
     [Header("Game Objects")]
+    public GameObject playButton;
     public GameObject loadButton;
     public GameObject playConfirmation;
     public GameObject preEndBackground;
@@ -31,20 +33,24 @@ public class MainMenu : MonoBehaviour
         bool hasCompletedGame = storeManager.QueryLevelReached(Global.Level.THE_END);
         preEndBackground.SetActive(!hasCompletedGame);
         postEndBackground.SetActive(hasCompletedGame);
+
+        EventSystem.current.SetSelectedGameObject(playButton);
     }
 
     public void RequestPlay()
     {
         // If there is an existing game save, prompt for confirmation
-        if (canLoad) {
+        if (canLoad)
+        {
             playConfirmation.GetComponent<CanvasGroupVisibility>().SetVisibility(true);
         }
-        else {
+        else
+        {
             Play();
         }
     }
 
-    public void Play() 
+    public void Play()
     {
         levelLoader.StartGame();
     }
