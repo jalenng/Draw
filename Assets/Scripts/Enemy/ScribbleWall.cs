@@ -10,7 +10,6 @@ public class ScribbleWall : Enemy
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private float speedUpDistance = 40;
     [SerializeField] private float baseSpeed;
-    private bool respawning = false;
     void Update()
     {
         // Iterate through the points and connect them with a line in the editor.
@@ -28,37 +27,17 @@ public class ScribbleWall : Enemy
     }
     void FixedUpdate()
     {
-        // If we're respawning, don't do anything.
         UpdateSpeed();
-        if (!respawning)
-        {
-            // If the player is dead & wall is not respawning, respawn this
-            if (playerMovement.GetPlayerDead())
-            {
-                respawning = true;
-                StartRespawn();
-            }
-            else
-            {
-                // Otherwise, move forward
-                MoveStraight();
-            }
-        }
+        MoveStraight();
     }
     void Awake()
     {
         baseSpeed = speed;
     }
     // Vector3(-45,121.220001,0) OG Starting Position 
-    public void StartRespawn()
+    public void Respawn()
     {
-        StartCoroutine(Respawn(.99f));
-    }
-    IEnumerator Respawn(float wait)
-    {
-        yield return new WaitForSeconds(wait);
         transform.position = originalPosition;
-        respawning = false;
     }
     public void setRespawnPosition(Vector3 pos)
     {
