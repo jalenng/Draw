@@ -72,11 +72,23 @@ public class CutsceneData : MonoBehaviour
 
         if (cutsceneData == null)
             Debug.LogWarning($"[CutsceneData] Cutscene data not found for cutscene {ID}", gameObject);
-        else if (cutsceneData.hasPlayed)
+        else
         {
-            cutsceneTrigger.hasPlayed = true;
-            cutsceneTrigger.GoToEndState();
+            Debug.Log($"[CutsceneData] Loading cutscene data for cutscene {ID}", gameObject);
+            if (cutsceneData.hasPlayed)
+            {
+                cutsceneTrigger.hasPlayed = true;
+                StartCoroutine(GoToEndStateWhenReady());
+            }
         }
+    }
+
+    // Wait until the cutscenes that this cutscene depends on have been played. 
+    // Then evalue the last frame of the cutscene (fast forward to end).
+    IEnumerator GoToEndStateWhenReady()
+    {
+        yield return new WaitUntil(() => cutsceneTrigger.AllDependenciesMet());
+        cutsceneTrigger.GoToEndState();
     }
 
     // Returns a serializable version of the player's data

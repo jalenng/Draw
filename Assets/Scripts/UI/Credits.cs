@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -10,10 +9,6 @@ public class Credits : MonoBehaviour
   [Header("Speed multipliers")]
   [SerializeField] public float normalSpeedMultiplier = 1f;
   [SerializeField] public float speedUpMultiplier = 5f;
-
-  [Header("Inputs to activate speed-up")]
-  [SerializeField] public KeyCode[] speedUpKeys = { KeyCode.Space, KeyCode.Return };
-  [SerializeField] public int[] speedUpButtons = { 0, 1 };
 
   // Cached components
   private PlayableDirector timeline;
@@ -30,9 +25,7 @@ public class Credits : MonoBehaviour
   private void Update()
   {
     // Update isSpedUp
-    bool newIsSpedUp =
-      speedUpButtons.Any(button => Input.GetMouseButton(button)) ||
-      speedUpKeys.Any(keyCode => Input.GetKey(keyCode));
+    bool newIsSpedUp = Input.GetButton("Submit") || Input.GetButton("Advance");
 
     // If isSpedUp has changes, update the actual speed multiplier of the playable object
     if (newIsSpedUp != isSpedUp)
@@ -47,8 +40,8 @@ public class Credits : MonoBehaviour
   {
     if (timeline != null && timeline.playableGraph.IsValid())
     {
-        Playable playable = timeline.playableGraph.GetRootPlayable(0);
-        playable.SetSpeed(speed);
+      Playable playable = timeline.playableGraph.GetRootPlayable(0);
+      playable.SetSpeed(speed);
     }
   }
 }

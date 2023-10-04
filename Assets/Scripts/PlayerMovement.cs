@@ -67,8 +67,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0) return;
         if (isDead) return;
-
         if (isPaused)
         {
             anim.SetBool("Walking", false);
@@ -133,9 +133,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void GetInput()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
         if (Input.GetButtonDown("Jump")) // W, Up, or Space
             jumpRequested = true;
+
+        horizontal = Input.GetAxisRaw("Horizontal");
         if (horizontal == 0)
             footstepAudioSource.Stop();
     }
