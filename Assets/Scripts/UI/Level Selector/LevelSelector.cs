@@ -37,7 +37,8 @@ public class LevelSelector : MonoBehaviour
     {
         if (LevelReached(level))
         {
-            if (!Global.LevelToBuildIndexMap.TryGetValue(level, out int buildIndex)) {
+            if (!Global.LevelToBuildIndexMap.TryGetValue(level, out int buildIndex))
+            {
                 Debug.LogError($"[LevelSelector] Tried to load scene {level} from levels menu, but the build index couldn't be found");
             }
             sceneLoader.LoadScene(buildIndex);
@@ -50,7 +51,7 @@ public class LevelSelector : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown("Cancel")) // Esc
         {
             levelSelectorCanvas.SetVisibility(false);
         }

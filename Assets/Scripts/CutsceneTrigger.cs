@@ -16,8 +16,9 @@ public class CutsceneTrigger : MonoBehaviour
     private TimelineTrigger trigger;
 
     // State variables
-    public bool hasPlayed;
-    public bool hasTriggered;
+    public bool hasPlayed; // has this cutscene been marked as completed?
+    public bool hasReachedEnd; // has the last frame of this timeline been evaluated?
+    public bool hasTriggered; // has player triggered this collider this session?
 
     private void Start()
     {
@@ -36,7 +37,7 @@ public class CutsceneTrigger : MonoBehaviour
                 return;
             }
 
-            bool dependenciesMet = dependencies.All(dependency => dependency.hasPlayed);
+            bool dependenciesMet = AllDependenciesMet();
             if (!dependenciesMet)
             {
                 Debug.Log("[CutsceneTrigger] Tried to trigger cutscene but its dependencies have not been played", gameObject);
@@ -51,7 +52,11 @@ public class CutsceneTrigger : MonoBehaviour
     public void GoToEndState()
     {
         Debug.Log($"[CutsceneTrigger] Going to end state of a cutscene", gameObject);
-        trigger.GoToEndState(cutscene);
+        if (cutscene)
+        {
+            trigger.GoToEndState(cutscene);
+        }
+        hasReachedEnd = true;
         hasPlayed = true;
     }
 
@@ -72,7 +77,16 @@ public class CutsceneTrigger : MonoBehaviour
 
     public IEnumerator CutsceneCoroutine()
     {
-        yield return trigger.StartCutscene(cutscene);
+        if (cutscene)
+        {
+            yield return trigger.StartCutscene(cutscene);
+        }
+        hasReachedEnd = true;
         hasPlayed = true;
+    }
+
+    public bool AllDependenciesMet()
+    {
+        return dependencies.All(dependency => dependency.hasReachedEnd);
     }
 }
