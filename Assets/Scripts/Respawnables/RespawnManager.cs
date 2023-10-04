@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class RespawnManager : MonoBehaviour
 {
-    [SerializeReference] List<RespawnInterface> objects;
+    [SerializeReference] List<RespawnInterface> respawnOnDeath;
 
     public void StartObjectRespawn() {
-        foreach(RespawnInterface o in objects) {
+        foreach(RespawnInterface o in respawnOnDeath) {
             o.StartRespawn();
         }
     }
