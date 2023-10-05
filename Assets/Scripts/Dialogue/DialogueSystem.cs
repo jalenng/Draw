@@ -61,20 +61,12 @@ public class DialogueSystem : MonoBehaviour
     // Queue a dialogue to be displayed
     public void QueueDialogue(Dialogue dialogue)
     {
-        // If there is a playable director, pause the timeline/cutscene
-        if (director)
-            PauseTimeline();
-
         this.dialogue = dialogue;
         this.entryIndex = 0;
 
         StartCoroutine(DisplayDialogue());
     }
 
-    public void PauseTimeline()
-    {
-        director.playableGraph.GetRootPlayable(0).SetSpeed(0);
-    }
     public void ResumeTimeline()
     {
         director.playableGraph.GetRootPlayable(0).SetSpeed(1);
