@@ -17,6 +17,8 @@ public class CanvasGroupVisibility : MonoBehaviour
     private void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+
+        UpdateFocus();
     }
 
     public void SetVisibility(bool visibility)
@@ -26,10 +28,15 @@ public class CanvasGroupVisibility : MonoBehaviour
         canvasGroup.blocksRaycasts = visibility;
         canvasGroup.interactable = visibility;
 
+        UpdateFocus();
+    }
+
+    private void UpdateFocus()
+    {
         EventSystem currEventSys = EventSystem.current;
         // If showing this UI, focus on selectionOnShow if specified.
         // Also, remember the currently focused object for when this UI hides.
-        if (visibility)
+        if (canvasGroup.interactable)
         {
             selectionBeforeOpen = currEventSys.currentSelectedGameObject;
             if (selectionOnShow != null)
