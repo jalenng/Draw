@@ -167,7 +167,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1938844756}
     m_Modifications:
     - target: {fileID: 19695496635550507, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
       propertyPath: m_AnchorMax.y
@@ -273,6 +273,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6459940120406708764, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8723482651956380621, guid: d60c72154615d6647886d637e1c4cc67, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -357,11 +361,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5231622865541214400, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Events.m_Events.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5231622865541214400, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Events.m_Signals.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5231622865541214400, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Events.m_Signals.Array.data[0]
@@ -778,7 +782,7 @@ PrefabInstance:
     - target: {fileID: 5231622865541214430, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_SceneBindings.Array.data[7].value
       value: 
-      objectReference: {fileID: 545907889}
+      objectReference: {fileID: 1164739761}
     - target: {fileID: 5231622865541214430, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_SceneBindings.Array.data[8].value
       value: 
@@ -885,7 +889,7 @@ PrefabInstance:
       objectReference: {fileID: 338475155}
     - target: {fileID: 5231622865541214431, guid: 8ce87d920173343e6802c4010abfe07b, type: 3}
       propertyPath: m_Name
-      value: CutsceneManager
+      value: Cutscene Manager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -983,6 +987,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 754050860609470254, guid: 470372e135a1a9544b0065f458198135, type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 754050860609470254, guid: 470372e135a1a9544b0065f458198135, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 754050860790379156, guid: 470372e135a1a9544b0065f458198135, type: 3}
@@ -1421,6 +1429,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5547624386142424344, guid: 470372e135a1a9544b0065f458198135, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5652248776043254702, guid: 470372e135a1a9544b0065f458198135, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1713,6 +1725,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3666633371233344393, guid: c7c519c50ce8708409201879fa07a81f, type: 3}
   m_PrefabInstance: {fileID: 1164739759}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1164739761 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2281370674916611677, guid: c7c519c50ce8708409201879fa07a81f, type: 3}
+  m_PrefabInstance: {fileID: 1164739759}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1183834857
 GameObject:
   m_ObjectHideFlags: 0
@@ -2079,6 +2102,7 @@ Transform:
   - {fileID: 241826449}
   - {fileID: 1677920206}
   - {fileID: 545907891}
+  - {fileID: 338475157}
   - {fileID: 1164739760}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2220,7 +2244,6 @@ SceneRoots:
   - {fileID: 1183834860}
   - {fileID: 1915809254}
   - {fileID: 973324572}
-  - {fileID: 338475153}
   - {fileID: 2073511847}
   - {fileID: 938958728}
   - {fileID: 5649544194877134407}

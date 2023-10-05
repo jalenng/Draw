@@ -102,6 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b0ad11d4ea5df4eb602488cbf2ab5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionOnShow: {fileID: 0}
+  returnSelectionOnHide: 1
 --- !u!1 &588374554767598498
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,6 +192,7 @@ GameObject:
   - component: {fileID: 812614847556133331}
   - component: {fileID: 7867782448510822851}
   - component: {fileID: 8664171983572635319}
+  - component: {fileID: 5268217773874424646}
   m_Layer: 5
   m_Name: Dialogue System
   m_TagString: Untagged
@@ -300,6 +303,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5268217773874424646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937505186594551469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals: []
+    m_Events: []
 --- !u!1 &1219167158979956642
 GameObject:
   m_ObjectHideFlags: 0
