@@ -75,7 +75,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.375}
+  m_Size: {x: 0.235, y: 0.375}
   m_EdgeRadius: 0.1
 --- !u!1 &1450883229827684621
 GameObject:
@@ -136,11 +136,15 @@ MonoBehaviour:
   coyoteJumpDelay: 0.1
   jumpCooldownTime: 0.2
   quickFallGravityScale: 1.25
+  slopeWalkLimit: 1.25
   ground:
     serializedVersion: 2
     m_Bits: 33856
   feetCollider: {fileID: 6023388363452268022}
   minY: -10
+  onRespawn:
+    m_PersistentCalls:
+      m_Calls: []
   jumpAudioSource: {fileID: 3999589686566454524}
   footstepAudioSource: {fileID: 1089192759820579398}
   deathAudioSource: {fileID: 7989645283307328504}
