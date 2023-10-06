@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float coyoteJumpDelay = 0.1f;
     [SerializeField] private float jumpCooldownTime = 0.2f;
     [SerializeField] private float quickFallGravityScale = 1.5f;
+    [SerializeField] private float slopeWalkLimit = 1.5f;
 
     [Header("Ground Check")]
     [SerializeField] private LayerMask ground;
@@ -41,7 +43,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 lastUnpausedPos;
     private bool isDead = false;
     private bool isPaused = false;
+    private float lastNonZeroHorizontal = 0;
     private int numRespawnsAtRespawnPoint = 0;
+    private bool isTouchingGround = false;
+
+    // For detecting contacts and slopes
+    private ContactFilter2D contactFilter;
+    private float slope = 0;
 
     // Input variables
     private bool jumpRequested = false;
@@ -61,6 +69,10 @@ public class PlayerMovement : MonoBehaviour
         achievementUnlocker = GetComponent<AchievementUnlocker>();
 
         respawner = FindObjectOfType<RespawnManager>();
+
+        // Set up contact point filter to only filter ground points
+        ContactFilter2D contactFilter = new ContactFilter2D();
+        contactFilter.layerMask = ground;
 
         // Set initial respawn position
         SetRespawnPos(transform.position);
@@ -99,11 +111,8 @@ public class PlayerMovement : MonoBehaviour
         if (isDead || isPaused) return;
 
         UpdateGravityScale();
-
+        ComputeSlope();
         Walk();
-
-        // Capture the time if the player is touching the ground.
-        bool isTouchingGround = feetCollider.IsTouchingLayers(ground);
         if (isTouchingGround) lastGroundContactTime = Time.time;
         anim.SetBool("TouchingGround", isTouchingGround);   // update animator as well
 
@@ -140,6 +149,8 @@ public class PlayerMovement : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         if (horizontal == 0)
             footstepAudioSource.Stop();
+        else
+            lastNonZeroHorizontal = horizontal;
     }
 
     private void UpdateSpriteDirection()
@@ -170,19 +181,88 @@ public class PlayerMovement : MonoBehaviour
         rb2d.gravityScale = Mathf.Lerp(1, quickFallGravityScale, ratio);
     }
 
+    private void ComputeSlope()
+    {
+        // Get the contact points (up to five)
+        ContactPoint2D[] contacts = new ContactPoint2D[5];
+        int numContacts = feetCollider.GetContacts(contactFilter, contacts);
+
+        // Get the contact point and the normal vector of interest.
+        float furthestX = feetCollider.bounds.center.x;
+        Vector2 rayPoint = new Vector2(
+            feetCollider.bounds.center.x,
+            feetCollider.bounds.min.y // Center of bottom edge of collider
+        );
+        if (feetCollider is BoxCollider2D)
+            rayPoint.y -= ((BoxCollider2D)feetCollider).edgeRadius;
+        Vector2 rayDirection = Vector2.down;
+
+        // Try to find the contact point that is furthest out in the given direction.
+        for (int i = 0; i < numContacts; i++)
+        {
+            ContactPoint2D item = contacts[i];
+
+            float thisSlope = item.normal.x / -item.normal.y;
+            bool thisPointIsFurther =
+                lastNonZeroHorizontal < 0 && item.point.x < furthestX
+                || lastNonZeroHorizontal > 0 && item.point.x > furthestX;
+            if (thisPointIsFurther)
+            {
+                furthestX = item.point.x;
+                rayPoint = item.point;
+                rayDirection = -item.normal;
+            }
+        }
+
+        // Cast three rays from around the contact point in the direction of the normal
+        Debug.DrawRay(rayPoint, rayDirection, Color.cyan);
+        RaycastHit2D hit1 = Physics2D.Raycast(rayPoint, rayDirection, 0.5f, ground);
+        RaycastHit2D hit2 = Physics2D.Raycast(rayPoint + (Vector2.up * 0.1f), rayDirection, 0.33f, ground);
+        RaycastHit2D hit3 = Physics2D.Raycast(rayPoint + (Vector2.up * 0.2f), rayDirection, 0.33f, ground);
+        RaycastHit2D[] hits = { hit1, hit2, hit3 };
+
+        // Get the average ground slope from the normals.
+        if (hits.Any(hit => hit.collider != null))
+        {
+            slope = hits
+                .Where(hit => hit.collider != null)
+                .Select(hit => -hit.normal.x / hit.normal.y)
+                .Average();
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                Vector2 hitPoint = hits[i].point;
+                Vector2 hitNormal = hits[i].normal;
+                Debug.DrawRay(hitPoint, hitNormal, Color.magenta);
+            }
+        }
+        else
+        {
+            slope = 0;
+        }
+
+        // Check for ground touch
+        RaycastHit2D hit4 = Physics2D.Raycast(rayPoint, rayDirection, 0.25f, ground);
+        isTouchingGround = feetCollider.IsTouchingLayers(ground) || hit4.collider != null;
+    }
+
     private void Walk()
     {
         // The SFXDelay stuff is added so that it will only play sounds after the player
         // has been walking for a certaint amount of time, just so things like
         // walking up stairs doesnt spam a bunch of short audio clips.
         float targetVelocity = horizontal * speed;
+        bool tooSteep = Mathf.Abs(slope) > slopeWalkLimit;
+
         float velocityDiff = targetVelocity - rb2d.velocity.x;
         float movement = Mathf.Pow(Mathf.Abs(velocityDiff), 2) * Mathf.Sign(velocityDiff);
+        if (tooSteep) movement *= 0.1f;
+        movement = Mathf.Clamp(movement, -100, 100);
         rb2d.AddForce(movement * Vector2.right, ForceMode2D.Impulse);
 
         // The basic audio logic is: if not on ground, then stop footsteps.
         // If velocity isn't 0 and right now we aren't playing sound, then play a sound.
-        if (!feetCollider.IsTouchingLayers(ground))
+        if (!isTouchingGround)
         {
             footstepAudioSource.Stop();
             curSFXDelay = SFXDelay;
