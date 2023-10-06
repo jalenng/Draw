@@ -5,6 +5,7 @@ public class ScribbleWallCheckpoint : Checkpoint
 {
     private ScribbleWall wall;
     [SerializeField] Vector3 wallRespawnPos;
+    [SerializeField] Transform respawnTarget;
 
     private void Start() 
     {
@@ -18,6 +19,7 @@ public class ScribbleWallCheckpoint : Checkpoint
         if (!isActivated && other.CompareTag("Player")) 
         {
             wall.setRespawnPosition(wallRespawnPos);
+            wall.setRespawnTarget(respawnTarget);
 
             PlayerMovement playerMovement = other.GetComponent<PlayerMovement>();
             if (playerMovement)

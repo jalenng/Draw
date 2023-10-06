@@ -10,6 +10,7 @@ public class ScribbleWall : Enemy
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private float speedUpDistance = 40;
     [SerializeField] private float baseSpeed;
+    private Transform respawnTarget;
     void Update()
     {
         // Iterate through the points and connect them with a line in the editor.
@@ -38,6 +39,7 @@ public class ScribbleWall : Enemy
     public void Respawn()
     {
         transform.position = originalPosition;
+        if(respawnTarget) index = points.IndexOf(respawnTarget);
     }
     public void setRespawnPosition(Vector3 pos)
     {
@@ -60,5 +62,8 @@ public class ScribbleWall : Enemy
             // If the wall gets within the threshhold, set speed back to the original speed.
             this.speed = baseSpeed;
         }
+    }
+    public void setRespawnTarget(Transform target) {
+        respawnTarget = target;
     }
 }
