@@ -39,7 +39,7 @@ public class ScribbleWall : Enemy
     public void Respawn()
     {
         transform.position = originalPosition;
-        if(respawnTarget) index = points.IndexOf(respawnTarget);
+        if (respawnTarget) index = points.IndexOf(respawnTarget);
     }
     public void setRespawnPosition(Vector3 pos)
     {
@@ -47,6 +47,8 @@ public class ScribbleWall : Enemy
     }
     private void UpdateSpeed()
     {
+        if (!playerMovement) return;
+
         float distanceFromPlayer = Vector3.Distance(transform.position, playerMovement.transform.position);
         if (distanceFromPlayer > speedUpDistance)
         {
@@ -63,7 +65,8 @@ public class ScribbleWall : Enemy
             this.speed = baseSpeed;
         }
     }
-    public void setRespawnTarget(Transform target) {
+    public void setRespawnTarget(Transform target)
+    {
         respawnTarget = target;
     }
 }
