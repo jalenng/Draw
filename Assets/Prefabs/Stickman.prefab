@@ -94,6 +94,8 @@ GameObject:
   - component: {fileID: 1450883229827684611}
   - component: {fileID: 9021474605006994560}
   - component: {fileID: 6685939009530859009}
+  - component: {fileID: 3434777468549080772}
+  - component: {fileID: 853045643108103182}
   m_Layer: 8
   m_Name: Stickman
   m_TagString: Player
@@ -149,6 +151,13 @@ MonoBehaviour:
   footstepAudioSource: {fileID: 1089192759820579398}
   deathAudioSource: {fileID: 7989645283307328504}
   spawnAudioSource: {fileID: 4335315624671786684}
+  respawnAchievements:
+  - achievementUnlocker: {fileID: 6685939009530859009}
+    respawnCount: 10
+  - achievementUnlocker: {fileID: 3434777468549080772}
+    respawnCount: 20
+  - achievementUnlocker: {fileID: 853045643108103182}
+    respawnCount: 30
   respawner: {fileID: 0}
   respawnPos: {x: 0, y: 0, z: 0}
 --- !u!114 &1882610119951218810
@@ -381,6 +390,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   achievement: 8
+--- !u!114 &3434777468549080772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450883229827684621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b831a69ea18d5f438604183defc7831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achievement: 12
+--- !u!114 &853045643108103182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450883229827684621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b831a69ea18d5f438604183defc7831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achievement: 13
 --- !u!1 &3343981970825247549
 GameObject:
   m_ObjectHideFlags: 0
