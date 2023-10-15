@@ -5,6 +5,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
 
+[System.Serializable]
+public class RespawnAchievementEntry
+{
+    public AchievementUnlocker achievementUnlocker;
+    public int respawnCount;
+}
+
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
@@ -30,10 +37,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioSource deathAudioSource;
     [SerializeField] private AudioSource spawnAudioSource;
 
+    [Header("Achievements")]
+    [SerializeField] private List<RespawnAchievementEntry> respawnAchievements = new List<RespawnAchievementEntry>();
+
     // Cached components
     private Rigidbody2D rb2d;
     private Animator anim;
-    private AchievementUnlocker achievementUnlocker;
 
     // State variables
     private float SFXDelay = 0.09f;
@@ -58,15 +67,11 @@ public class PlayerMovement : MonoBehaviour
     private float lastJumpRequestedTime = -1f;
     private float lastJumpTime = -1f;
 
-    // Consts
-    private const int numRespawnsAtPointForAchievement = 10;
-
     private void Awake()
     {
         // Get components
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        achievementUnlocker = GetComponent<AchievementUnlocker>();
 
         respawner = FindObjectOfType<RespawnManager>();
 
@@ -331,11 +336,15 @@ public class PlayerMovement : MonoBehaviour
 
         // Unlock achievement if respawned a given number of times at the same point
         numRespawnsAtRespawnPoint += 1;
-        if (numRespawnsAtRespawnPoint >= numRespawnsAtPointForAchievement)
+        foreach (RespawnAchievementEntry entry in respawnAchievements)
         {
-            achievementUnlocker.SetAchievement();
+            AchievementUnlocker achievementUnlocker = entry.achievementUnlocker;
+            int respawnCount = entry.respawnCount;
+            if (numRespawnsAtRespawnPoint >= respawnCount)
+            {
+                achievementUnlocker.SetAchievement();
+            }
         }
-
         isDead = false;
     }
 
