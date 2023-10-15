@@ -48,7 +48,12 @@ public class Global
         CHECKPOINT_RESPAWN,
         LEAVE_MIKE_BEHIND,
         CHASE_FAKE_ROUTE,
-        CHASE_SHORTCUT
+        CHASE_SHORTCUT,
+        CHECKPOINT_RESPAWN_20,
+        CHECKPOINT_RESPAWN_30,
+        PRANK_CLAIRE,
+        ALTERNATE_PATH_MIKE,
+        NATHAN_GO_BACK
     }
 
     // Mappings
@@ -91,6 +96,11 @@ public class Global
         { Achievement.LEAVE_MIKE_BEHIND, "LEAVE_MIKE_BEHIND"},
         { Achievement.CHASE_FAKE_ROUTE, "CHASE_FAKE_ROUTE"},
         { Achievement.CHASE_SHORTCUT, "CHASE_SHORTCUT"},
+        { Achievement.CHECKPOINT_RESPAWN_20, "CHECKPOINT_RESPAWN_20"},
+        { Achievement.CHECKPOINT_RESPAWN_30, "CHECKPOINT_RESPAWN_30"},
+        { Achievement.PRANK_CLAIRE, "PRANK_CLAIRE"},
+        { Achievement.ALTERNATE_PATH_MIKE, "ALTERNATE_PATH_MIKE"},
+        { Achievement.NATHAN_GO_BACK, "NATHAN_GO_BACK"},
     };
 
     // Methods

@@ -26,6 +26,8 @@ public class ResetButton : MonoBehaviour
     private Animator anim;
     private BoxCollider2D drawingAreaCollider;
     private CircleCollider2D resetButtonCollider;
+    private SpriteRenderer spriteRenderer;
+    private bool enabled = true;
 
     private void Start()
     {
@@ -33,11 +35,21 @@ public class ResetButton : MonoBehaviour
         anim = GetComponent<Animator>();
         drawingAreaCollider = drawingArea.GetComponent<BoxCollider2D>();
         resetButtonCollider = GetComponent<CircleCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
+        UpdateEnabledStatus();
         SetUpPosition();
+    }
+
+    // Retrieve the enabled status from the drawing canvas
+    private void UpdateEnabledStatus()
+    {
+        enabled = drawingCanvas != null && drawingCanvas.resetButtonEnabled;
+        Color disabledColor = new Color(0.75f, 0.75f, 0.75f, 1);
+        spriteRenderer.color = enabled ? Color.black : disabledColor;
     }
 
     // Set up reset button position relative to the folder
@@ -81,7 +93,7 @@ public class ResetButton : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (Time.timeScale > 0)
+        if (enabled && Time.timeScale > 0)
         {
             audio.Play();
             drawingCanvas.Reset();
