@@ -25,27 +25,38 @@ public class CutsceneTrigger : MonoBehaviour
         trigger = FindObjectOfType<TimelineTrigger>();
     }
 
+    private bool CanTrigger()
+    {
+        if (hasTriggered) return false;
+
+        if (!gameObject.activeInHierarchy)
+        {
+            Debug.Log("[CutsceneTrigger] Tried to trigger cutscene but the trigger GameObject is inactive", gameObject);
+            return false;
+        }
+
+        if (hasPlayed)
+        {
+            Debug.Log("[CutsceneTrigger] Tried to trigger cutscene but it has already been played", gameObject);
+            return false;
+        }
+
+        if (!AllDependenciesMet())
+        {
+            Debug.Log("[CutsceneTrigger] Tried to trigger cutscene but its dependencies have not been played", gameObject);
+            return false;
+        }
+
+        return true;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         // See if all conditions are met before triggering
         bool layerIsTriggerable = triggerableLayers == (triggerableLayers | (1 << other.gameObject.layer));
-        if (!hasTriggered && layerIsTriggerable)
-        {
-            if (hasPlayed)
-            {
-                Debug.Log("[CutsceneTrigger] Tried to trigger cutscene but it has already been played", gameObject);
-                return;
-            }
+        if (!layerIsTriggerable) return;
 
-            bool dependenciesMet = AllDependenciesMet();
-            if (!dependenciesMet)
-            {
-                Debug.Log("[CutsceneTrigger] Tried to trigger cutscene but its dependencies have not been played", gameObject);
-                return;
-            }
-
-            TriggerCutscene();
-        }
+        TriggerCutscene();
     }
 
     [ContextMenu("Go to End State")]
@@ -63,6 +74,8 @@ public class CutsceneTrigger : MonoBehaviour
     [ContextMenu("Trigger Cutscene")]
     public void TriggerCutscene()
     {
+        if (!CanTrigger()) return;
+
         hasTriggered = true;
 
         Debug.Log($"[CutsceneTrigger] Cutscene triggered", gameObject);

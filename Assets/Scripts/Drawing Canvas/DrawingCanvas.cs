@@ -24,6 +24,9 @@ public class DrawingCanvas : MonoBehaviour
     [SerializeField] private float sfxIntensityToPitchScale = 5f;
     [SerializeField] private float sfxIntensityToVolumeScale = 5f;
 
+    [Header("Other Settings")]
+    [SerializeField] public bool resetButtonEnabled = true;
+
     // State variables
     Vector3 lastPointPos;
     float currentLineLength = 0f;
@@ -199,6 +202,11 @@ public class DrawingCanvas : MonoBehaviour
     public float GetInkRatio()
     {
         return totalDrawnLineLength / maxTotalLineLength;
+    }
+
+    public void SetResetButtonEnabled(bool enabled)
+    {
+        resetButtonEnabled = enabled;
     }
 
 }

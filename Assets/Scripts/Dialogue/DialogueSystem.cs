@@ -17,9 +17,10 @@ public class DialogueSystem : MonoBehaviour
     private PlayableDirector director;
 
     // State variables
-    int entryIndex = 0;
-    bool skip = false;
-    bool advanceRequested = false;
+    private IEnumerator dialogueCoroutine;
+    private int entryIndex = 0;
+    private bool skip = false;
+    private bool advanceRequested = false;
 
     private void Start()
     {
@@ -61,15 +62,31 @@ public class DialogueSystem : MonoBehaviour
     // Queue a dialogue to be displayed
     public void QueueDialogue(Dialogue dialogue)
     {
+        ResetDialogueSystem();
         this.dialogue = dialogue;
-        this.entryIndex = 0;
 
-        StartCoroutine(DisplayDialogue());
+        dialogueCoroutine = DisplayDialogue();
+        StartCoroutine(dialogueCoroutine);
     }
 
     public void ResumeTimeline()
     {
         director.playableGraph.GetRootPlayable(0).SetSpeed(1);
+    }
+
+    [ContextMenu("Reset Dialogue System")]
+    public void ResetDialogueSystem()
+    {
+        if (dialogueCoroutine != null)
+        {
+            StopCoroutine(dialogueCoroutine);
+        }
+        entryIndex = 0;
+        dialogue = null;
+        skip = false;
+
+        textbox.Clear();
+        SetTextboxVisibility(false);
     }
 
     // Display the next entry in the dialogue
