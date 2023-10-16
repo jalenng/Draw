@@ -5,12 +5,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[Serializable]
+public class FSModeDropdownEntry
+{
+    public FullScreenMode mode;
+    public string label;
+}
+
 public class DisplaySettings : MonoBehaviour
 {
     // Object references
     [Header("Option widgets")]
-    public TMP_Dropdown fullscreenModeDropdown;
-    public TMP_Dropdown resolutionDropdown;
+    [SerializeField] private TMP_Dropdown fullscreenModeDropdown;
+    [SerializeField] private TMP_Dropdown resolutionDropdown;
+
+    [SerializeField]
+    private List<FSModeDropdownEntry> fsModeDropdownEntries = new List<FSModeDropdownEntry>(){
+        new FSModeDropdownEntry() { mode = FullScreenMode.ExclusiveFullScreen, label = "Exclusive Fullscreen"},
+        new FSModeDropdownEntry() { mode = FullScreenMode.FullScreenWindow, label = "Fullscreen Window"},
+        new FSModeDropdownEntry() { mode = FullScreenMode.MaximizedWindow, label = "Maximized Window"},
+        new FSModeDropdownEntry() { mode = FullScreenMode.Windowed, label = "None (Windowed)"}
+    };
 
     // State variables
     private List<FullScreenMode> fullScreenModes;
@@ -52,23 +67,15 @@ public class DisplaySettings : MonoBehaviour
     }
 
     // Create the menu options for the fullscreen dropdown
-    private void CreateFullscreenModeOptions()
+    public void CreateFullscreenModeOptions()
     {
-        Dictionary<FullScreenMode, string> fullscreenModeToLabelMap = new Dictionary<FullScreenMode, string>()
-        {
-            { FullScreenMode.ExclusiveFullScreen, "Exclusive Fullscreen"},
-            { FullScreenMode.FullScreenWindow, "Fullscreen Window"},
-            { FullScreenMode.MaximizedWindow, "Maximized Window"},
-            { FullScreenMode.Windowed, "None (Windowed)"}
-        };
-
         // Create options based on the supported fullscreen modes
         List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
         for (int i = 0; i < fullScreenModes.Count; i++)
         {
             FullScreenMode fullscreenMode = fullScreenModes[i];
             TMP_Dropdown.OptionData newOption = new TMP_Dropdown.OptionData();
-            fullscreenModeToLabelMap.TryGetValue(fullscreenMode, out string fullScreenModeLabel);
+            string fullScreenModeLabel = fsModeDropdownEntries.Find((entry) => entry.mode == fullscreenMode).label;
             newOption.text = fullScreenModeLabel;
             optionsList.Add(newOption);
         }

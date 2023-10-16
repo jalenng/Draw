@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 8267472593071076231}
   - component: {fileID: 6531239901819009044}
   - component: {fileID: 731124447282160834}
+  - component: {fileID: 6598152534590136436}
   m_Layer: 5
   m_Name: Settings Menu
   m_TagString: Untagged
@@ -219,6 +220,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fullscreenModeDropdown: {fileID: 4814044210580590133}
   resolutionDropdown: {fileID: 1975557876569040840}
+  fsModeDropdownEntries:
+  - mode: 0
+    label: Exclusive Fullscreen
+  - mode: 1
+    label: Fullscreen Window
+  - mode: 2
+    label: Maximized Window
+  - mode: 3
+    label: None (Windowed)
 --- !u!225 &6531239901819009044
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -245,6 +255,101 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionOnShow: {fileID: 1583594590368427892}
   returnSelectionOnHide: 1
+--- !u!114 &6598152534590136436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461454065019411942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69beb381e244f92449b8c4cf954630e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjects:
+  - rid: 3719840614089228293
+  references:
+    version: 2
+    RefIds:
+    - rid: 3719840614089228293
+      type: {class: TrackedMonoBehaviourObject, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 8267472593071076231}
+        m_TrackedProperties:
+          items:
+          - rid: 3719840614089228294
+          - rid: 3719840614089228295
+          - rid: 3719840614089228296
+          - rid: 3719840614089228297
+        m_UpdateType: 1
+        m_Changed:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 8267472593071076231}
+              m_TargetAssemblyTypeName: DisplaySettings, Assembly-CSharp
+              m_MethodName: CreateFullscreenModeOptions
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+    - rid: 3719840614089228294
+      type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          m_TableReference:
+            m_TableCollectionName: GUID:6f5a4f2caf6501c45bcf8f6350eea632
+          m_TableEntryReference:
+            m_KeyId: 3126563666264064
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        m_PropertyPath: fsModeDropdownEntries.Array.data[0].label
+    - rid: 3719840614089228295
+      type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          m_TableReference:
+            m_TableCollectionName: GUID:6f5a4f2caf6501c45bcf8f6350eea632
+          m_TableEntryReference:
+            m_KeyId: 3126567013318656
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        m_PropertyPath: fsModeDropdownEntries.Array.data[1].label
+    - rid: 3719840614089228296
+      type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          m_TableReference:
+            m_TableCollectionName: GUID:6f5a4f2caf6501c45bcf8f6350eea632
+          m_TableEntryReference:
+            m_KeyId: 3126569215328256
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        m_PropertyPath: fsModeDropdownEntries.Array.data[2].label
+    - rid: 3719840614089228297
+      type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          m_TableReference:
+            m_TableCollectionName: GUID:6f5a4f2caf6501c45bcf8f6350eea632
+          m_TableEntryReference:
+            m_KeyId: 3126571606081536
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        m_PropertyPath: fsModeDropdownEntries.Array.data[3].label
 --- !u!1 &2539945635340520511
 GameObject:
   m_ObjectHideFlags: 0
