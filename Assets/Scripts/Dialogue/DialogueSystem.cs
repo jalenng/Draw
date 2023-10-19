@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class DialogueSystem : MonoBehaviour
 {
     // Configuration parameters
-    [SerializeField] Dialogue dialogue;
+    [SerializeField] private List<Dialogue> dialogueObjects;
+
+    [Header("Component References")]
     [SerializeField] GameObject dialogueCanvas;
     [SerializeField] Textbox textbox;
     [SerializeField] GameObject skipButton;
@@ -17,6 +19,7 @@ public class DialogueSystem : MonoBehaviour
     private PlayableDirector director;
 
     // State variables
+    private Dialogue dialogue;
     private IEnumerator dialogueCoroutine;
     private int entryIndex = 0;
     private bool skip = false;
@@ -59,7 +62,7 @@ public class DialogueSystem : MonoBehaviour
         entryIndex = dialogue.entries.Count;
     }
 
-    // Queue a dialogue to be displayed
+    // Queue a dialogue object to be displayed
     public void QueueDialogue(Dialogue dialogue)
     {
         ResetDialogueSystem();
@@ -67,6 +70,12 @@ public class DialogueSystem : MonoBehaviour
 
         dialogueCoroutine = DisplayDialogue();
         StartCoroutine(dialogueCoroutine);
+    }
+
+    // Queue a dialogue object to be displayed based on index
+    public void QueueDialogue(int index)
+    {
+        QueueDialogue(dialogueObjects[index]);
     }
 
     public void ResumeTimeline()
