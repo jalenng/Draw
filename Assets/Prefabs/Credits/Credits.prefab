@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 2230762205256756867}
   - component: {fileID: 7879174850968663604}
   m_Layer: 0
-  m_Name: Image (1)
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1081,7 +1081,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 7001.145}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8175647881578965669
@@ -1184,12 +1184,10 @@ PlayableDirector:
   - key: {fileID: -2478028247146724462, guid: d29105e6e95408746a0ecaa5dbf63d4c, type: 2}
     value: {fileID: 1295666289}
   - key: {fileID: 634214348443558211, guid: d29105e6e95408746a0ecaa5dbf63d4c, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 2180621683486004204}
   - key: {fileID: 3558416682999848690, guid: d29105e6e95408746a0ecaa5dbf63d4c, type: 2}
     value: {fileID: 1174214738}
   - key: {fileID: -283505885762606467, guid: d29105e6e95408746a0ecaa5dbf63d4c, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 7047985232501849217, guid: d29105e6e95408746a0ecaa5dbf63d4c, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
@@ -1225,13 +1223,13 @@ MonoBehaviour:
     m_Events:
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8175647882358297148}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: LevelEndTrigger, Assembly-CSharp
+          m_MethodName: LoadNextScene
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -1567,6 +1565,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2870968520061004928}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 621267779584
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: Avery Fesagaiga
@@ -1729,6 +1735,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7024369194059683032}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 747331780608
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: 'Natasha Lukmanto
@@ -1895,6 +1909,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 231484342822953202}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 673751105536
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: 
@@ -2071,6 +2093,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 231484342822953202}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 894656708608
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: 'Avery Fesagaiga
@@ -2239,6 +2269,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 231484342822953202}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 282191855616
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: Avery Fesagaiga
@@ -2413,6 +2451,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 231484342822953202}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 969952854016
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: Jonathan Luc
@@ -2583,6 +2629,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 231484342822953202}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 1111665803264
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: 
@@ -2761,6 +2815,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7024369194059683032}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 712804270080
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: 'Jalen Ng
@@ -2927,6 +2989,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 231484342822953202}
     m_Modifications:
+    - target: {fileID: 4103058987471130615, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 1129969745920
+      objectReference: {fileID: 0}
+    - target: {fileID: 4103058987471130615, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: Thank you for playing!
@@ -3109,6 +3179,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 231484342822953202}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 1029092540416
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: 
@@ -3293,6 +3371,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2870968520061004928}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 659826016256
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: Jalen Ng
@@ -3455,6 +3541,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 231484342822953202}
     m_Modifications:
+    - target: {fileID: 4103058987471130615, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 842110468096
+      objectReference: {fileID: 0}
+    - target: {fileID: 4103058987471130615, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 779514675200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: 'Main Menu
@@ -3641,6 +3743,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4617956775721627035}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 867297263616
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: Sheyn Muncada
@@ -3803,6 +3913,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4962789972642117789}
     m_Modifications:
+    - target: {fileID: 4103058987471130615, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 1057928380416
+      objectReference: {fileID: 0}
+    - target: {fileID: 4103058987471130615, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: 'San Jose State University
@@ -3983,6 +4101,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 231484342822953202}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 1002668425216
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: 
@@ -4137,7 +4263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8957195410667759292, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 212
+      value: 165.215
       objectReference: {fileID: 0}
     - target: {fileID: 8957195410667759292, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4164,6 +4290,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 231484342822953202}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 471757619200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: 
@@ -4343,6 +4477,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 231484342822953202}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 384616759296
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: Avery Fesagaiga
@@ -4517,6 +4659,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 231484342822953202}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 761579831296
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: 'Avery Fesagaiga
@@ -4685,6 +4835,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2870968520061004928}
     m_Modifications:
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 534974169088
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173422100606399460, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:f168655943e483544aa1cea83d3764e0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957195410269802160, guid: 46fa8a74a1c7d41419349d62038eabb3, type: 3}
       propertyPath: m_text
       value: 'Avery Fesagaiga
