@@ -66,8 +66,14 @@ public class DialogueSystem : MonoBehaviour
     public void QueueDialogue(Dialogue dialogue)
     {
         ResetDialogueSystem();
-        this.dialogue = dialogue;
 
+        if (dialogue == null)
+        {
+            Debug.LogError("[DialogueSystem] Tried to enqueue a dialogue object that does not exist");
+            return;
+        }
+
+        this.dialogue = dialogue;
         dialogueCoroutine = DisplayDialogue();
         StartCoroutine(dialogueCoroutine);
     }
@@ -80,7 +86,10 @@ public class DialogueSystem : MonoBehaviour
 
     public void ResumeTimeline()
     {
-        director.playableGraph.GetRootPlayable(0).SetSpeed(1);
+        if (director)
+        {
+            director.playableGraph.GetRootPlayable(0).SetSpeed(1);
+        }
     }
 
     [ContextMenu("Reset Dialogue System")]
@@ -134,8 +143,7 @@ public class DialogueSystem : MonoBehaviour
         SetTextboxVisibility(false);
 
         // If there is a playable director, resume the timeline/cutscene
-        if (director)
-            ResumeTimeline();
+        ResumeTimeline();
     }
 
     // Set the visibility of the textbox

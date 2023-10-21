@@ -69,6 +69,8 @@ public class DisplaySettings : MonoBehaviour
     // Create the menu options for the fullscreen dropdown
     public void CreateFullscreenModeOptions()
     {
+        if (fullScreenModes.Count == 0) return;
+
         // Create options based on the supported fullscreen modes
         List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
         for (int i = 0; i < fullScreenModes.Count; i++)
@@ -88,9 +90,10 @@ public class DisplaySettings : MonoBehaviour
     // Create the menu options for the resolution dropdown
     private void CreateResolutionOptions()
     {
-        List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
+        if (resolutions.Length == 0) return;
 
         // Create options based on the supported fullscreen resolutions
+        List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
         for (int i = 0; i < resolutions.Length; i++)
         {
             Resolution resolution = resolutions[i];
