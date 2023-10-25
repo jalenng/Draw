@@ -71,10 +71,9 @@ public class CutsceneTrigger : MonoBehaviour
         hasPlayed = true;
     }
 
-    [ContextMenu("Trigger Cutscene")]
-    public void TriggerCutscene()
+    public void TriggerCutscene(bool force = false)
     {
-        if (!CanTrigger()) return;
+        if (!CanTrigger() && !force) return;
 
         hasTriggered = true;
 
@@ -86,6 +85,13 @@ public class CutsceneTrigger : MonoBehaviour
         playerTransform.SetParent(cutsceneGroupTransform, true);
 
         StartCoroutine(CutsceneCoroutine());
+    }
+
+
+    [ContextMenu("Trigger Cutscene (Force)")]
+    public void ForceTriggerCutscene()
+    {
+        TriggerCutscene(true);
     }
 
     public IEnumerator CutsceneCoroutine()
