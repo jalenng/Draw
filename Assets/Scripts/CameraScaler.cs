@@ -6,14 +6,14 @@ public class CameraScaler : MonoBehaviour
 {
     public float aspectRatio = 1.5f; // 3:2
 
-    private Camera camera;
+    private Camera currCamera;
 
     private int lastScreenWidth = -1;
     private int lastScreenHeight = -1;
 
     void Start()
     {
-        camera = GetComponent<Camera>();
+        currCamera = GetComponent<Camera>();
     }
 
     void Update()
@@ -50,7 +50,7 @@ public class CameraScaler : MonoBehaviour
                 newY = (1f - newHeight) / 2;
             }
 
-            camera.rect = new Rect(newX, newY, newWidth, newHeight);
+            currCamera.rect = new Rect(newX, newY, newWidth, newHeight);
 
             // Remember width and height to track changes
             lastScreenWidth = screenWidth;
@@ -64,16 +64,16 @@ public class CameraScaler : MonoBehaviour
     void OnPreCull()
     {
         // Remember viewport rect
-        Rect oldViewportRect = camera.rect;
+        Rect oldViewportRect = currCamera.rect;
 
         // New viewport rect to clear the whole screen
         Rect newViewportRect = new Rect(0, 0, 1, 1);
 
         // Clear the pixels with black
-        camera.rect = newViewportRect;
+        currCamera.rect = newViewportRect;
         GL.Clear(true, true, Color.black);
 
         // Restore the previous viewport rect
-        camera.rect = oldViewportRect;
+        currCamera.rect = oldViewportRect;
     }
 }

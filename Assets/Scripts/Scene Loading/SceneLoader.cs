@@ -28,17 +28,19 @@ public class SceneLoader : MonoBehaviour
     {
         Global.Level gameStartLevel = Global.Level.IRL_DRAWING;
         bool buildIndexFound = Global.LevelToBuildIndexMap.TryGetValue(gameStartLevel, out int buildIndex);
-        if (buildIndexFound) {
+        if (buildIndexFound)
+        {
             LoadScene(buildIndex);
         }
     }
 
     // Loads the main menu
     public void LoadMainMenu()
-    {        
+    {
         Global.UIScene mainMenuScene = Global.UIScene.MAIN_MENU;
         bool buildIndexFound = Global.UISceneToBuildIndexMap.TryGetValue(mainMenuScene, out int buildIndex);
-        if (buildIndexFound) {
+        if (buildIndexFound)
+        {
             LoadScene(buildIndex);
         }
     }
@@ -108,7 +110,7 @@ public class SceneLoader : MonoBehaviour
 
         // Wait for the scene to finish loading
         yield return new WaitUntil(() => asyncLoad.progress >= 0.9f);
-        
+
         // Activate the scene
         asyncLoad.allowSceneActivation = true;
         yield return new WaitUntil(() => asyncLoad.isDone);
@@ -135,14 +137,7 @@ public class SceneLoader : MonoBehaviour
     private bool TrySetLevelReached(int buildIndex)
     {
         Global.Level level = Global.GetLevelFromBuildIndex(buildIndex);
-        if (level != null)
-        {
-            storeManager.AddLevelReached(level);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        storeManager.AddLevelReached(level);
+        return true;
     }
 }

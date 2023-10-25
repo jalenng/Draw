@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
+[ExecuteAlways]
 public class Credits : MonoBehaviour
 {
   // Configuration variables
   [Header("Speed multipliers")]
+  [SerializeField] public float progress = 0f;
   [SerializeField] public float normalSpeedMultiplier = 1f;
   [SerializeField] public float speedUpMultiplier = 5f;
+  [SerializeField] public RectTransform creditsContentRT;
+  [SerializeField] public RectTransform viewportRT;
 
   // Cached components
   private PlayableDirector timeline;
@@ -24,6 +28,12 @@ public class Credits : MonoBehaviour
 
   private void Update()
   {
+    // Update position based on progress
+    creditsContentRT.anchoredPosition = new Vector2(
+      0,
+      progress * (creditsContentRT.rect.height - viewportRT.rect.height)
+    );
+
     // Update isSpedUp
     bool newIsSpedUp = Input.GetButton("Submit") || Input.GetButton("Advance");
 

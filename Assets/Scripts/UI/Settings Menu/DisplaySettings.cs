@@ -69,7 +69,7 @@ public class DisplaySettings : MonoBehaviour
     // Create the menu options for the fullscreen dropdown
     public void CreateFullscreenModeOptions()
     {
-        if (fullScreenModes.Count == 0) return;
+        if (fullScreenModes == null || fullScreenModes.Count == 0) return;
 
         // Create options based on the supported fullscreen modes
         List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
@@ -90,7 +90,7 @@ public class DisplaySettings : MonoBehaviour
     // Create the menu options for the resolution dropdown
     private void CreateResolutionOptions()
     {
-        if (resolutions.Length == 0) return;
+        if (resolutions == null || resolutions.Length == 0) return;
 
         // Create options based on the supported fullscreen resolutions
         List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
@@ -125,7 +125,7 @@ public class DisplaySettings : MonoBehaviour
             resItem => (
                 resItem.width == resolution.width &&
                 resItem.height == resolution.height &&
-                resItem.refreshRate == resolution.refreshRate
+                resItem.refreshRateRatio.value == resolution.refreshRateRatio.value
             )
         );
         resolutionDropdown.SetValueWithoutNotify(resolutionIndex > -1 ? resolutionIndex : (resolutions.Length - 1));
@@ -177,7 +177,7 @@ public class DisplaySettings : MonoBehaviour
     {
         string resolutionToString = resolution.ToString();
         Debug.Log($"[DisplaySettings] Setting resolution to {resolutionToString} and fullscreen mode to {fullScreenMode}");
-        Screen.SetResolution(resolution.width, resolution.height, fullScreenMode, resolution.refreshRate);
+        Screen.SetResolution(resolution.width, resolution.height, fullScreenMode, resolution.refreshRateRatio);
 
         UpdateDropdownValues(resolution, fullScreenMode);
     }
