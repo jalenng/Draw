@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class SliderScript : MonoBehaviour
 {
-    public AudioSource audio;
+    public AudioSource audioSrc;
     // Start is called before the first frame update
     void Start()
     {
-        audio = GetComponent<AudioSource>();
+        audioSrc = GetComponent<AudioSource>();
     }
 
-    public void onPress() {
-        if(!audio.isPlaying) {
-            audio.Play();
+    public void onPress()
+    {
+        if (!audioSrc.isPlaying)
+        {
+            audioSrc.Play();
         }
     }
 }

@@ -16,7 +16,7 @@ public class DialogueAudio : MonoBehaviour
     void Start()
     {
         source = GetComponent<AudioSource>();
-        UnityEngine.Random.seed = (int)System.DateTime.Now.Ticks;
+        UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
     }
 
     public void SetSFXDirectory(string directory)

@@ -18,7 +18,6 @@ public class Textbox : MonoBehaviour
     string contentText;
     int CPS;
     string sfxDirectory;
-    bool sayRunning = false;
 
     int totalCharacters;
     int i;
@@ -65,8 +64,6 @@ public class Textbox : MonoBehaviour
     // Updates the textbox to show the current avatar and content
     public IEnumerator Say()
     {
-        sayRunning = true;
-
         // Set SFX path
         speaker.SetSFXDirectory(sfxDirectory);
 
@@ -116,8 +113,6 @@ public class Textbox : MonoBehaviour
 
         // Show the CTC indicator
         CTCAnimator.SetBool("Hidden", false);
-
-        sayRunning = false;
     }
 
 }
