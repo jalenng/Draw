@@ -259,6 +259,8 @@ MonoBehaviour:
     m_Signals:
     - {fileID: 11400000, guid: fef7b274fca63e4489af97a6ff569775, type: 2}
     - {fileID: 11400000, guid: e3f99ab2d2116c8418bbd3152c3a6afe, type: 2}
+    - {fileID: 11400000, guid: b36c192acbc02b543bb328c9f019a05f, type: 2}
+    - {fileID: 11400000, guid: a5cc59d1a41f2874cabcce90fd94a152, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -280,6 +282,34 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: FocusArea, Assembly-CSharp
           m_MethodName: SetLock
           m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6269567151593033706}
+          m_TargetAssemblyTypeName: FocusArea, Assembly-CSharp
+          m_MethodName: Focus
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6269567151593033706}
+          m_TargetAssemblyTypeName: FocusArea, Assembly-CSharp
+          m_MethodName: Unfocus
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

@@ -95,7 +95,7 @@ public class FocusArea : MonoBehaviour
         visibleAreaLineRenderer.endWidth = 0.1f;
     }
 
-    private void Focus()
+    public void Focus()
     {
         // Unity camera size is 1/2 of its height
         float camSizeByHeight = transform.lossyScale.y / 2;
@@ -105,7 +105,7 @@ public class FocusArea : MonoBehaviour
         blender.Focus(transform.position, camSize);
     }
 
-    private void Unfocus()
+    public void Unfocus()
     {
         blender.Unfocus();
     }
