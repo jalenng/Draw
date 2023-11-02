@@ -9,6 +9,7 @@ public class OrangeObject : RespawnInterface
     [SerializeField] private float activationTime = 0f;
     public Vector3 respawnPos;
     public float respawnRot;
+    private bool hasTriggered;
     AudioSource audioSource;
     AchievementUnlocker achievementUnlocker;
 
@@ -26,17 +27,14 @@ public class OrangeObject : RespawnInterface
         // Save original position as respawn position
         respawnPos = transform.position;
         respawnRot = transform.eulerAngles.z;
+
+        hasTriggered = rb2d.bodyType == RigidbodyType2D.Dynamic;
     }
 
     // Make object affected by gravity upon collision
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (rb2d.bodyType != RigidbodyType2D.Dynamic)
-        {
-            audioSource.Play();
-            achievementUnlocker.SetAchievement();
-            StartCoroutine(activateOrangeObject(activationTime));
-        }
+        ActivateOrangeObject();
     }
 
     public override void StartRespawn()
@@ -49,12 +47,29 @@ public class OrangeObject : RespawnInterface
         yield return new WaitForSeconds(wait);
 
         rb2d.bodyType = staticBodyByDefault ? RigidbodyType2D.Static : RigidbodyType2D.Dynamic;
-        rb2d.velocity = Vector2.zero;
+        if (!staticBodyByDefault)
+        {
+            rb2d.velocity = Vector2.zero;
+        }
         transform.position = respawnPos;
         transform.eulerAngles = new Vector3(0, 0, respawnRot);
+        hasTriggered = rb2d.bodyType == RigidbodyType2D.Dynamic;
     }
-    IEnumerator activateOrangeObject(float wait) {
+
+    public void ActivateOrangeObject()
+    {
+        if (!hasTriggered)
+        {
+            hasTriggered = true;
+            StartCoroutine(ActivateOrangeObjectCoroutine(activationTime));
+        }
+    }
+
+    IEnumerator ActivateOrangeObjectCoroutine(float wait)
+    {
         yield return new WaitForSeconds(wait);
+        audioSource.Play();
+        achievementUnlocker.SetAchievement();
         rb2d.bodyType = RigidbodyType2D.Dynamic;
     }
 }
