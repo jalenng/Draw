@@ -17,8 +17,7 @@ public class MenuManager : MonoBehaviour
     {
         // Show the "Feedback" canvas only if it is a debug or beta build
         string lowercaseVersion = Application.version.ToLower();
-        string[] betaSuffixes = { "beta", "b" };
-        bool isBeta = betaSuffixes.Any((suffix) => lowercaseVersion.EndsWith(suffix));
+        bool isBeta = lowercaseVersion.Contains('b');
 
         bool showFeedbackButton = Debug.isDebugBuild || isBeta;
         sendFeedbackCanvas?.SetActive(showFeedbackButton);
