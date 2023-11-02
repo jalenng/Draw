@@ -292,7 +292,7 @@ public class PlayerMovement : MonoBehaviour
         // Trigger any orange object that the player may have jumped on.
         // This is for if the ground detection is triggered by the raycast and not the collision,
         // which means the player hasn't actually collided with the orange object to make it fall.
-        OrangeObject orangeObject = groundRayHit.collider.gameObject.GetComponent<OrangeObject>();
+        OrangeObject orangeObject = groundRayHit.collider?.gameObject?.GetComponent<OrangeObject>();
         orangeObject?.ActivateOrangeObject();
 
         // Jump logic
