@@ -18,7 +18,7 @@ public class SerializableCheckpointData
 [RequireComponent(typeof(Checkpoint))]
 public class CheckpointData : MonoBehaviour
 {
-    // Configuration parameters
+    private static List<string> _guids = new List<string>();
 
     // Associates checkpoints with their save data
     [SerializeField] private string myID;
@@ -33,6 +33,15 @@ public class CheckpointData : MonoBehaviour
     void Reset()
     {
         RegenerateGUID();
+    }
+
+    void Awake()
+    {
+        // Check if GUID is unique
+        if (_guids.Contains(myID))
+            Debug.LogError($"[CheckpointData] Duplicated GUID detected: {myID}", gameObject);
+        else
+            _guids.Add(myID);
     }
 
     void Start()

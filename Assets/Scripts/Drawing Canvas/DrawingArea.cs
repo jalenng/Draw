@@ -71,13 +71,9 @@ public class DrawingArea : MonoBehaviour
         lineRenderer.endColor = outlineColor;
     }
 
-    // Update cursor conditionally when the mouse enters/exits the drawing area
     private void OnMouseEnter()
     {
-        if (drawingCanvas.CanDraw())
-        {
-            cursorManager.EnableCursor("pencil");
-        }
+        cursorManager.EnableCursor("pencil");
     }
 
     private void OnMouseExit()

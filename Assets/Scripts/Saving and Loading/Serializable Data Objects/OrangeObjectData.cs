@@ -21,6 +21,8 @@ public class SerializableOrangeObjectData
 [RequireComponent(typeof(OrangeObject))]
 public class OrangeObjectData : MonoBehaviour
 {
+    private static List<string> _guids = new List<string>();
+
     // Configuration parameters
     // Associates checkpoints with their save data
     [SerializeField] private string myID;
@@ -30,6 +32,15 @@ public class OrangeObjectData : MonoBehaviour
     private OrangeObject orangeObject;
     private GameManager gameManager;
     private Rigidbody2D rb2d;
+
+    void Awake()
+    {
+        // Check if GUID is unique
+        if (_guids.Contains(myID))
+            Debug.LogError($"[OrangeObjectData] Duplicated GUID detected: {myID}", gameObject);
+        else
+            _guids.Add(myID);
+    }
 
     void Start()
     {
