@@ -55,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
     private float lastNonZeroHorizontal = 0;
     private int numRespawnsAtRespawnPoint = 0;
     private bool isTouchingGround = false;
+    private RaycastHit2D groundRayHit;
 
     // For detecting contacts and slopes
     private ContactFilter2D contactFilter;
@@ -247,8 +248,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Check for ground touch
-        RaycastHit2D hit4 = Physics2D.Raycast(rayPoint, rayDirection, 0.25f, ground);
-        isTouchingGround = feetCollider.IsTouchingLayers(ground) || hit4.collider != null;
+        groundRayHit = Physics2D.Raycast(rayPoint, rayDirection, 0.25f, ground);
+        isTouchingGround = feetCollider.IsTouchingLayers(ground) || groundRayHit.collider != null;
     }
 
     private void Walk()
@@ -288,6 +289,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        // Trigger any orange object that the player may have jumped on.
+        // This is for if the ground detection is triggered by the raycast and not the collision,
+        // which means the player hasn't actually collided with the orange object to make it fall.
+        OrangeObject orangeObject = groundRayHit.collider?.gameObject?.GetComponent<OrangeObject>();
+        orangeObject?.ActivateOrangeObject();
+
+        // Jump logic
         rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
         rb2d.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
 
