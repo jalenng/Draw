@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 public enum ResetButtonPlacement
 {
     TopLeft,
@@ -15,11 +15,12 @@ public class ResetButton : MonoBehaviour
 {
     // Configuration parameters
     [SerializeField] private Vector3 offset;
+
+    [SerializeField] private bool isEnabled = true;
     [SerializeField] private ResetButtonPlacement placement = ResetButtonPlacement.TopRight;
 
     // Object references
-    [SerializeField] private DrawingCanvas drawingCanvas;
-    [SerializeField] private DrawingArea drawingArea;
+    [SerializeField] private GameObject drawingArea;
 
     // Cached components
     private AudioSource audioSrc;
@@ -27,7 +28,9 @@ public class ResetButton : MonoBehaviour
     private BoxCollider2D drawingAreaCollider;
     private CircleCollider2D resetButtonCollider;
     private SpriteRenderer spriteRenderer;
-    private bool isEnabled = true;
+
+    // Actions
+    [SerializeField] private UnityEvent onClick;
 
     private void Start()
     {
@@ -47,7 +50,6 @@ public class ResetButton : MonoBehaviour
     // Retrieve the enabled status from the drawing canvas
     private void UpdateEnabledStatus()
     {
-        isEnabled = drawingCanvas != null && drawingCanvas.resetButtonEnabled;
         Color disabledColor = new Color(0.75f, 0.75f, 0.75f, 1);
         spriteRenderer.color = isEnabled ? Color.black : disabledColor;
     }
@@ -96,9 +98,14 @@ public class ResetButton : MonoBehaviour
         if (isEnabled && Time.timeScale > 0)
         {
             audioSrc.Play();
-            drawingCanvas.Reset();
             anim.SetTrigger("Spin");
+            onClick.Invoke();
         }
+    }
+
+    public void SetEnabled(bool enabled)
+    {
+        this.isEnabled = enabled;
     }
 
 }
