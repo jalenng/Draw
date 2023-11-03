@@ -37,13 +37,20 @@ public class CutsceneData : MonoBehaviour
 
     void Awake()
     {
+        // Show warning if no GUID
+        if (myID == "")
+            Debug.LogError($"[CutsceneData] Cutscene data is missing a GUID!", gameObject);
         // Check if GUID is unique
-        if (_guids.Contains(myID))
+        else if (_guids.Contains(myID))
             Debug.LogError($"[CutsceneData] Duplicated GUID detected: {myID}", gameObject);
         else
             _guids.Add(myID);
     }
 
+    private void OnDestroy()
+    {
+        _guids.Remove(myID);
+    }
 
     void Start()
     {
@@ -52,12 +59,6 @@ public class CutsceneData : MonoBehaviour
         // Register the player with the GameManager
         gameManager = FindObjectOfType<GameManager>();
         gameManager.cutsceneData.Add(this);
-
-        // Show warning if no GUID
-        if (myID == "")
-        {
-            Debug.Log($"[CutsceneData] Cutscene data is missing a GUID!", gameObject);
-        }
 
         Load();
     }

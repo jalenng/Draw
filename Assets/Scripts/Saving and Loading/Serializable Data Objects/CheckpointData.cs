@@ -37,11 +37,19 @@ public class CheckpointData : MonoBehaviour
 
     void Awake()
     {
+        // Show warning if no GUID
+        if (myID == "")
+            Debug.LogError($"[CheckpointData] Cutscene data is missing a GUID!", gameObject);
         // Check if GUID is unique
-        if (_guids.Contains(myID))
+        else if (_guids.Contains(myID))
             Debug.LogError($"[CheckpointData] Duplicated GUID detected: {myID}", gameObject);
         else
             _guids.Add(myID);
+    }
+
+    private void OnDestroy()
+    {
+        _guids.Remove(myID);
     }
 
     void Start()
