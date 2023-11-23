@@ -121,10 +121,7 @@ public class DialogueSystem : MonoBehaviour
             textbox.setAvatar(dialogueEntry.avatar);
             textbox.setText(dialogueEntry.content);
             textbox.setSFXDirectory(dialogue.SFXDirectory);
-            if (dialogueEntry.useCPS)   // If the dialogue entry uses custom CPS, use it.
-                textbox.setCPS(dialogueEntry.CPS);
-            else                        // Otherwise, use the default CPS.
-                textbox.setCPS(dialogue.CPS);
+            textbox.setCPS(dialogue.CPS);
 
             // Show the content text
             yield return textbox.Say();

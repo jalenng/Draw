@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.IO;
+using System.Text;
 
 [System.Serializable]
 public class DialogueEntry
@@ -11,21 +14,36 @@ public class DialogueEntry
     // Content-related
     [TextArea(5, 5)]
     public string content;
-
-    [Tooltip("Check this box to use the CPS below. Otherwise, will use the default.")]
-    public bool useCPS;
-
-    [Range(0, 120)]
-    [Tooltip("Characters to reveal per second. Set this to 0 to disable the typewriting effect")]
-    public int CPS = 30;
-
 }
 
 [CreateAssetMenu(fileName = "Dialogue", menuName = "Dialogue", order = 1)]
 public class Dialogue : ScriptableObject
 {
+
+    [ContextMenu("Import JSON")]
+    void ImportJSON()
+    {
+        string path = EditorUtility.OpenFilePanel("Import", "", "json");
+        if (path.Length != 0)
+        {
+            string fileContent = File.ReadAllText(path);
+            JsonUtility.FromJsonOverwrite(fileContent, this);
+        }
+    }
+
+    [ContextMenu("Export JSON")]
+    void ExportJSON()
+    {
+        string path = EditorUtility.SaveFilePanel("Export", "", name, "json");
+        using (FileStream fs = File.Create(path))
+        {
+            string dataString = JsonUtility.ToJson(this, true);
+            byte[] info = new UTF8Encoding(true).GetBytes(dataString);
+            fs.Write(info, 0, info.Length);
+        }
+    }
+
     // Default parameters
-    [Header("Defaults")]
     [Range(0, 120)]
     [Tooltip("Set to 0 to disable typewriting effect")]
     public int CPS = 30;
