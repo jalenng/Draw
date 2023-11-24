@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using System.IO;
 using System.Text;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [System.Serializable]
 public class DialogueEntry
@@ -20,27 +23,40 @@ public class DialogueEntry
 public class Dialogue : ScriptableObject
 {
 
+#if UNITY_EDITOR
     [ContextMenu("Import JSON")]
-    void ImportJSON()
+    private void OpenInportJSON()
     {
+
         string path = EditorUtility.OpenFilePanel("Import", "", "json");
         if (path.Length != 0)
         {
             string fileContent = File.ReadAllText(path);
-            JsonUtility.FromJsonOverwrite(fileContent, this);
+            ImportJSON(fileContent);
         }
     }
 
     [ContextMenu("Export JSON")]
-    void ExportJSON()
+    private void OpenExportJSON()
     {
         string path = EditorUtility.SaveFilePanel("Export", "", name, "json");
         using (FileStream fs = File.Create(path))
         {
-            string dataString = JsonUtility.ToJson(this, true);
+            string dataString = ExportJSON();
             byte[] info = new UTF8Encoding(true).GetBytes(dataString);
             fs.Write(info, 0, info.Length);
         }
+    }
+#endif
+
+    public void ImportJSON(string data)
+    {
+        JsonUtility.FromJsonOverwrite(data, this);
+    }
+
+    public string ExportJSON()
+    {
+        return JsonUtility.ToJson(this, true);
     }
 
     // Default parameters

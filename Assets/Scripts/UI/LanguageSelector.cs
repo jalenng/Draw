@@ -13,7 +13,20 @@ public class LanguageSelector : MonoBehaviour
 
     void Start()
     {
-        // Instantiate the buttons in the dialogue.
+        UpdateOptions();
+    }
+
+    // Instantiate the options in the dialog
+    public void UpdateOptions()
+    {
+        // Delete old buttons
+        foreach (Transform button in footer.transform)
+        {
+            if (button.gameObject != template)
+                Destroy(button.gameObject);
+        }
+
+        // Create new buttons
         List<Locale> locales = LocalizationSettings.AvailableLocales.Locales;
         foreach (Locale l in locales)
         {
