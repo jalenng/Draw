@@ -48,7 +48,7 @@ public class CustomLocalizationImporter : MonoBehaviour
         {
             try
             {
-                Debug.Log($"[CustomLocalizationImporter] Importing custom translations from {localeDir}");
+                Debug.Log($"[CustomLocalizationImporter] Starting custom translations import from {localeDir}");
 
                 // Read the locale metadata file
                 string localeMetadataPath = Path.Combine(localeDir, metadataFilename);
@@ -61,9 +61,7 @@ public class CustomLocalizationImporter : MonoBehaviour
                 foreach (CsvToStringTableMapEntry entry in csvToTableMap)
                 {
                     string csvPath = Path.Combine(fullStringsDir, entry.filename);
-                    var uiMap = GetDictFromCsv(csvPath, keyHeader, valueHeader);
-                    SetStringTableToMap(entry.table, uiMap);
-                    Debug.Log($"[CustomLocalizationImporter] Updated string entries from {csvPath} to {entry.table}");
+                    UpdateStringTable(entry.table, csvPath, keyHeader, valueHeader);
                 }
 
                 // Set up dialogue asset table
@@ -71,12 +69,12 @@ public class CustomLocalizationImporter : MonoBehaviour
                 UpdateTableDialogues(dialogueTable, fullDialogueDir);
 
                 // Done
-                Debug.Log($"[CustomLocalizationImporter] Custom translations successfully imported");
+                Debug.Log($"[CustomLocalizationImporter] Custom translations finished imported");
                 SetCustomLocaleAvailability(true);
             }
             catch (Exception e)
             {
-                Debug.LogError($"[CustomLocalizationImporter] Failed to import custom translations: {e}");
+                Debug.LogError($"[CustomLocalizationImporter] [FATAL] Error importing custom translations: {e}");
                 SetCustomLocaleAvailability(false);
             }
         }
@@ -95,15 +93,21 @@ public class CustomLocalizationImporter : MonoBehaviour
         {
             // Show
             if (!LocalizationSettings.AvailableLocales.GetLocale(customLocale.Identifier))
+            {
                 LocalizationSettings.AvailableLocales.AddLocale(customLocale);
+            }
+            Debug.Log($"[CustomLocalizationImporter] Enabled availability for custom locale {customLocale}");
         }
         else
+        {
             // Hide
             LocalizationSettings.AvailableLocales.RemoveLocale(customLocale);
+            Debug.Log($"[CustomLocalizationImporter] Disabled availability for custom locale {customLocale}");
+        }
     }
 
     // Parse a CSV and return a dictionary mapping two specified columns
-    private Dictionary<string, string> GetDictFromCsv(string filePath, string keyHeader, string valueHeader)
+    private void UpdateStringTable(StringTable table, string filePath, string keyHeader, string valueHeader)
     {
         Dictionary<string, string> dict = new Dictionary<string, string>();
 
@@ -113,54 +117,66 @@ public class CustomLocalizationImporter : MonoBehaviour
         string[] firstLine = parsedCsv[0];
 
         int keyColumnIndex = Array.FindIndex(firstLine, (item) => item == keyHeader);
-        if (keyColumnIndex < 0)
-            throw new Exception($"Could not find column \"{keyHeader}\" in {filePath}");
-
         int valueColumnIndex = Array.FindIndex(firstLine, (item) => item == valueHeader);
-        if (valueColumnIndex < 0)
-            throw new Exception($"Could not find column \"{valueHeader}\" in {filePath}");
 
-        int minRowLength = Math.Max(keyColumnIndex, valueColumnIndex) + 1;
-        for (int i = 1; i < parsedCsv.Count; i++)
+        if (keyColumnIndex < 0)
+            Debug.LogError($"[CustomLocalizationImporter] [FAIL] {filePath}: Could not find column \"{keyHeader}\"");
+        else if (valueColumnIndex < 0)
+            Debug.LogError($"[CustomLocalizationImporter] [FAIL] {filePath}: Could not find column \"{valueHeader}\"");
+        else
         {
-            string[] line = parsedCsv[i];
-            // Skip row/line if not enough columns
-            if (line.Length < minRowLength) continue;
-            dict.Add(line[keyColumnIndex], line[valueColumnIndex]);
+            int minRowLength = Math.Max(keyColumnIndex, valueColumnIndex) + 1;
+            for (int i = 1; i < parsedCsv.Count; i++)
+            {
+                string[] line = parsedCsv[i];
+                // Skip row/line if not enough columns
+                if (line.Length < minRowLength) continue;
+                dict.Add(line[keyColumnIndex], line[valueColumnIndex]);
+            }
         }
 
-        return dict;
-    }
-
-    // Set the key-value pairs of a StringTable to match a dictionary
-    private void SetStringTableToMap(StringTable table, Dictionary<string, string> map)
-    {
+        // Set the key-value pairs of the StringTable to match the dictionary
         table.Clear();
-        foreach (KeyValuePair<string, string> pair in map)
+        foreach (KeyValuePair<string, string> pair in dict)
             table.AddEntry(pair.Key, pair.Value);
+
+        Debug.Log($"[CustomLocalizationImporter] [SUCCESS] {filePath} --> {table}");
     }
 
     // Update the dialogue objects in the dialogue table
-    private void UpdateTableDialogues(AssetTable table, string filePath)
+    private void UpdateTableDialogues(AssetTable table, string dir)
     {
-        DirectoryInfo dirInfo = new DirectoryInfo(filePath);
+        DirectoryInfo dirInfo = new DirectoryInfo(dir);
         foreach (FileInfo fileInfo in dirInfo.EnumerateFiles("*.json"))
         {
             // Get the table entry
             string tableKey = Path.GetFileNameWithoutExtension(fileInfo.Name);
-            string fullFilePath = fileInfo.FullName;
-            string jsonContent = File.ReadAllText(fullFilePath);
+            string filePath = fileInfo.FullName;
+            string jsonContent = File.ReadAllText(filePath);
 
-            // Get the dialogue object from the table entry...
-            AsyncOperationHandle<Dialogue> asyncOp = table.GetAssetAsync<Dialogue>(tableKey);
-            asyncOp.Completed += delegate (AsyncOperationHandle<Dialogue> opResult)
+            // Try to get the dialogue object from the table entry
+            AsyncOperationHandle<Dialogue> asyncOperation = table.GetAssetAsync<Dialogue>(tableKey);
+            Dialogue dialogueObj = asyncOperation.WaitForCompletion();
+
+            // If found, import the translations from the JSON
+            if (dialogueObj != null)
             {
-                // ...then import the translations from the JSON
-                Dialogue dialogue = opResult.Result;
-                dialogue.ImportJSON(jsonContent);
-            };
-
-            Debug.Log($"[CustomLocalizationImporter] Updated dialogue entry from {fullFilePath} to {table}.{tableKey}");
-        };
+                // Handle JSON parse error
+                try
+                {
+                    dialogueObj.ImportJson(jsonContent);
+                    Debug.Log($"[CustomLocalizationImporter] [SUCCESS] {filePath} --> {table}.{tableKey}");
+                }
+                catch (Exception)
+                {
+                    Debug.LogError($"[CustomLocalizationImporter] [FAIL] {filePath}: JSON parse error");
+                }
+            }
+            // Else, report error
+            else
+            {
+                Debug.LogError($"[CustomLocalizationImporter] [FAIL] {filePath}: Bad file name");
+            }
+        }
     }
 }
