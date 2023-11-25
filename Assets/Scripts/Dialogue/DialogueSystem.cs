@@ -112,27 +112,35 @@ public class DialogueSystem : MonoBehaviour
     {
         SetTextboxVisibility(true);
 
-        while (true)
+        if (dialogue.entries.Count > 0)
         {
-            // Get the dialogue entry
-            DialogueEntry dialogueEntry = dialogue.entries[entryIndex];
+            while (true)
+            {
+                // Get the dialogue entry
+                DialogueEntry dialogueEntry = dialogue.entries[entryIndex];
 
-            // Update the textbox properties
-            textbox.setAvatar(dialogueEntry.avatar);
-            textbox.setText(dialogueEntry.content);
-            textbox.setSFXDirectory(dialogue.SFXDirectory);
-            textbox.setCPS(dialogue.CPS);
+                // Update the textbox properties
+                textbox.setAvatar(dialogueEntry.avatar);
+                textbox.setText(dialogueEntry.content);
+                textbox.setSFXDirectory(dialogue.SFXDirectory);
+                textbox.setCPS(dialogue.CPS);
 
-            // Show the content text
-            yield return textbox.Say();
+                // Show the content text
+                yield return textbox.Say();
 
-            // Wait for the user to advance the dialogue
-            yield return new WaitUntil(() => CheckIfShouldAdvance() || skip);
-            skip = false;
+                // Wait for the user to advance the dialogue
+                yield return new WaitUntil(() => CheckIfShouldAdvance() || skip);
+                skip = false;
 
-            // Move to the next entry, or end the dialogue if we're at the end
-            if (++entryIndex >= dialogue.entries.Count)
-                break;
+                // Move to the next entry, or end the dialogue if we're at the end
+                if (++entryIndex >= dialogue.entries.Count)
+                    break;
+            }
+        }
+        else
+        {
+            yield return new WaitForSeconds(1f);
+            Debug.LogError("[DialogueSystem] Enqueued dialogue has no entries");
         }
 
         // Clear and hide the textbox
