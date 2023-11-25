@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5362676172102316444}
   - component: {fileID: 8732730664951761806}
+  - component: {fileID: 5104408013582990572}
   m_Layer: 0
   m_Name: Custom Localization Importer
-  m_TagString: Untagged
+  m_TagString: CustomLocalizationImporter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57,3 +58,16 @@ MonoBehaviour:
     table: {fileID: 11400000, guid: aafc37cbfdb114247b6072f3181df88b, type: 2}
   dialogueDir: dialogue
   dialogueTable: {fileID: 11400000, guid: a67eb05314a6cbb4caab04472bb376c5, type: 2}
+--- !u!114 &5104408013582990572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5660339093221326347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2af5cfe4ca2fc44dba4489db92df11f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyImmediately: 1
