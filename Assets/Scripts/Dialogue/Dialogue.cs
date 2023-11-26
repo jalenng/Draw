@@ -25,13 +25,12 @@ public class Dialogue : ScriptableObject
 
 #if UNITY_EDITOR
     [ContextMenu("Import JSON")]
-    private void OpenInportJson()
+    private void OpenImportJson()
     {
-
-        string path = EditorUtility.OpenFilePanel("Import", "", "json");
-        if (path.Length != 0)
+        string filePath = EditorUtility.OpenFilePanel("Import", "", "json");
+        if (filePath.Length != 0)
         {
-            string fileContent = File.ReadAllText(path);
+            string fileContent = File.ReadAllText(filePath);
             ImportJson(fileContent);
         }
     }
@@ -39,26 +38,26 @@ public class Dialogue : ScriptableObject
     [ContextMenu("Export JSON")]
     private void OpenExportJson()
     {
-        string path = EditorUtility.SaveFilePanel("Export", "", name, "json");
-        ExportJsonToFile(path);
+        string filePath = EditorUtility.SaveFilePanel("Export", "", name, "json");
+        ExportJsonToFile(filePath);
     }
+#endif
 
-    [ContextMenu("Export JSON to Assets > ..")]
-    private void ExportJsonToAssets()
+    public void ImportJsonFromFile(string filePath)
     {
-        string path = Path.Combine(Application.dataPath, "..", $"{name}.json");
-        ExportJsonToFile(path);
+        string fileContent = File.ReadAllText(filePath);
+        ImportJson(fileContent);
     }
 
-    private void ExportJsonToFile(string path) {
-        using (FileStream fs = File.Create(path))
+    public void ExportJsonToFile(string filePath)
+    {
+        using (FileStream fs = File.Create(filePath))
         {
             string dataString = ExportJson();
             byte[] info = new UTF8Encoding(true).GetBytes(dataString);
             fs.Write(info, 0, info.Length);
         }
     }
-#endif
 
     public void ImportJson(string data)
     {

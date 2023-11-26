@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5362676172102316444}
   - component: {fileID: 8732730664951761806}
+  - component: {fileID: 506560207386762627}
   - component: {fileID: 5104408013582990572}
   m_Layer: 0
   m_Name: Custom Localization Importer
@@ -45,19 +46,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae060ea57ae04db4f891877d094290d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customLocaleDir: CustomLocale~
-  customLocale: {fileID: 11400000, guid: 96f48c4e70c93dd43b1375fff7c5ce0b, type: 2}
-  metadataFilename: index.txt
-  stringsDir: strings
-  keyHeader: Key
-  valueHeader: Value
-  csvToTableMap:
-  - filename: ui.csv
-    table: {fileID: 11400000, guid: 98202bacc331d28409358465d7987981, type: 2}
-  - filename: credits.csv
-    table: {fileID: 11400000, guid: aafc37cbfdb114247b6072f3181df88b, type: 2}
-  dialogueDir: dialogue
-  dialogueTable: {fileID: 11400000, guid: a67eb05314a6cbb4caab04472bb376c5, type: 2}
+  importOnStart: 1
+  options: {fileID: 11400000, guid: ca96a4724a0590541865324c1ffb3b0c, type: 2}
+--- !u!114 &506560207386762627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5660339093221326347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c24d0f46c076c41838f941e40d3528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  options: {fileID: 11400000, guid: 953a37116c997a54781588d4fec0584c, type: 2}
 --- !u!114 &5104408013582990572
 MonoBehaviour:
   m_ObjectHideFlags: 0
