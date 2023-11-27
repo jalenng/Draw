@@ -8,6 +8,8 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Tables;
 using UnityEngine.Localization.Settings;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.AddressableAssets;
+using UnityEngine.Events;
 using System.IO;
 
 public class LocalizationImporter : MonoBehaviour
@@ -15,40 +17,54 @@ public class LocalizationImporter : MonoBehaviour
     [SerializeField] private bool importOnStart = true;
     [SerializeField] private LocaleOptions options;
 
+    [SerializeField] private UnityEvent onCompletedStart;
+
     private void Start()
     {
         if (importOnStart)
-            ImportLocale();
+        {
+            StartCoroutine(ImportLocaleRoutine(true));
+        }
     }
 
     [ContextMenu("Import Locale")]
-    private void ImportLocale()
+    public void ImportLocale()
     {
-        // Initially make the locale unavailable
-        SetCustomLocaleAvailability(false);
+        StartCoroutine(ImportLocaleRoutine(false));
+    }
 
+    public IEnumerator ImportLocaleRoutine(bool isFromStart)
+    {
         string localeDir = GetLocaleDir();
         if (Directory.Exists(localeDir))
         {
+            Debug.Log($"[LocalizationImporter] Starting import from {localeDir}");
+
             try
             {
-                Debug.Log($"[LocalizationImporter] Starting import from {localeDir}");
                 ImportMetadata();
-                ImportStringTables();
-                ImportDialogueObjects();
-                Debug.Log($"[LocalizationImporter] Finished import from {localeDir}");
-
-                // Make the locale available
-                SetCustomLocaleAvailability(true);
             }
             catch (Exception e)
             {
                 Debug.LogError($"[LocalizationImporter] [FATAL] Error importing translations: {e}");
             }
+            yield return ImportStringTables();
+            ImportDialogueObjects();
+
+            Debug.Log($"[LocalizationImporter] Finished import from {localeDir}");
+
+            SetLocaleAvailability(true);
         }
         else
         {
             Debug.Log($"[LocalizationImporter] Directory not found: {localeDir}");
+
+            SetLocaleAvailability(false);
+        }
+
+        if (isFromStart)
+        {
+            onCompletedStart.Invoke();
         }
     }
 
@@ -61,14 +77,32 @@ public class LocalizationImporter : MonoBehaviour
         options.locale.LocaleName = splitLocaleMetadata[0];
     }
 
-    public void ImportStringTables()
+    public IEnumerator ImportStringTables()
     {
         string fullStringsDir = Path.Combine(GetLocaleDir(), options.stringsDir);
         foreach (FileToStringTableMapEntry entry in options.fileToTableMap)
         {
+            StringTable table = entry.table;
+
+            // If the game is running (not in the editor)...
+            if (!Application.isEditor)
+            {
+                // We need to load the table from the DB by name instead of 
+                // directly from the option entires
+                LocalizedStringDatabase stringDb = LocalizationSettings.StringDatabase;
+                AsyncOperationHandle<StringTable> asyncOp = stringDb.GetTableAsync(entry.table.TableCollectionName);
+                yield return asyncOp;
+
+                table = asyncOp.Result;
+
+                // Prevent the table from being unloaded
+                Addressables.ResourceManager.Acquire(asyncOp);
+            }
+
+            // Import the contents from the JSON to the table
             string filePath = Path.Combine(fullStringsDir, entry.filename);
-            LocalizationTableSerializerUtils.ImportJsonFromFile(filePath, entry.table);
-            Debug.Log($"[LocalizationImporter] [SUCCESS] {filePath} --> {entry.table}");
+            LocalizationTableSerializerUtils.ImportJsonFromFile(filePath, table);
+            Debug.Log($"[LocalizationImporter] [SUCCESS] {filePath} --> {table}");
         }
     }
 
@@ -113,22 +147,39 @@ public class LocalizationImporter : MonoBehaviour
     }
 
     // Add/remove the locale to/from the list of available locales
-    private void SetCustomLocaleAvailability(bool value)
+    private void SetLocaleAvailability(bool value)
     {
+        ILocalesProvider availableLocales = LocalizationSettings.AvailableLocales;
+
         if (value)
         {
             // Show
-            if (!LocalizationSettings.AvailableLocales.GetLocale(options.locale.Identifier))
+            if (!availableLocales.GetLocale(options.locale.Identifier))
             {
-                LocalizationSettings.AvailableLocales.AddLocale(options.locale);
+                availableLocales.AddLocale(options.locale);
             }
             Debug.Log($"[LocalizationImporter] Enabled availability for locale {options.locale}");
         }
         else
         {
+            // Switch locale if it is currently selected
+            if (LocalizationSettings.SelectedLocale == options.locale)
+            {
+                LocalizationSettings.SelectedLocale = availableLocales.Locales[0];
+            }
+
             // Hide
-            LocalizationSettings.AvailableLocales.RemoveLocale(options.locale);
+            availableLocales.RemoveLocale(options.locale);
             Debug.Log($"[LocalizationImporter] Disabled availability for locale {options.locale}");
+        }
+    }
+
+    [ContextMenu("Clear String Tables")]
+    private void ClearStringTables()
+    {
+        foreach (FileToStringTableMapEntry entry in options.fileToTableMap)
+        {
+            entry.table.Clear();
         }
     }
 

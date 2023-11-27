@@ -14,9 +14,11 @@ public class LocalizationExporter : MonoBehaviour
     public void ExportLocale()
     {
         Debug.Log($"[LocalizationExporter] Starting export for {options.locale}");
+
         ExportMetadata();
         ExportStringTables();
         ExportDialogueObjects();
+
         Debug.Log($"[LocalizationExporter] Finished export of {options.locale}");
     }
 
