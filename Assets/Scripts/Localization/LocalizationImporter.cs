@@ -87,10 +87,11 @@ public class LocalizationImporter : MonoBehaviour
             // If the game is running (not in the editor)...
             if (!Application.isEditor)
             {
-                // We need to load the table from the DB by name instead of 
-                // directly from the option entires
+                // We need to load the table from the DB by name and locale
+                // instead of directly from the option entires
                 LocalizedStringDatabase stringDb = LocalizationSettings.StringDatabase;
-                AsyncOperationHandle<StringTable> asyncOp = stringDb.GetTableAsync(entry.table.TableCollectionName);
+                Locale locale = LocalizationSettings.AvailableLocales.GetLocale(table.LocaleIdentifier);
+                AsyncOperationHandle<StringTable> asyncOp = stringDb.GetTableAsync(table.TableCollectionName, locale);
                 yield return asyncOp;
 
                 table = asyncOp.Result;
@@ -121,8 +122,8 @@ public class LocalizationImporter : MonoBehaviour
             string jsonContent = File.ReadAllText(filePath);
 
             // Try to get the dialogue object from the table entry
-            AsyncOperationHandle<Dialogue> asyncOperation = table.GetAssetAsync<Dialogue>(tableKey);
-            Dialogue dialogueObj = asyncOperation.WaitForCompletion();
+            AsyncOperationHandle<Dialogue> asyncOp = table.GetAssetAsync<Dialogue>(tableKey);
+            Dialogue dialogueObj = asyncOp.WaitForCompletion();
 
             // If found, import the translations from the JSON
             if (dialogueObj != null)
