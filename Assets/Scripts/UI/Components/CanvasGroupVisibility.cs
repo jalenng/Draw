@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Canvas))]
@@ -10,6 +11,10 @@ public class CanvasGroupVisibility : MonoBehaviour
 {
     [SerializeField] private GameObject selectionOnShow;
     [SerializeField] private bool returnSelectionOnHide = true;
+
+    // Actions
+    [SerializeField] private UnityEvent onShow;
+    [SerializeField] private UnityEvent onHide;
 
     private CanvasGroup canvasGroup;
     private GameObject selectionBeforeOpen;
@@ -29,6 +34,11 @@ public class CanvasGroupVisibility : MonoBehaviour
         canvasGroup.interactable = visibility;
 
         UpdateFocus();
+
+        if (visibility)
+            onShow.Invoke();
+        else
+            onHide.Invoke();
     }
 
     private void UpdateFocus()
