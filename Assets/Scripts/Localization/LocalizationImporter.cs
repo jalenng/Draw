@@ -74,7 +74,18 @@ public class LocalizationImporter : MonoBehaviour
         string localeMetadataPath = Path.Combine(GetLocaleDir(), options.metadataFilename);
         string localeMetadata = File.ReadAllText(localeMetadataPath);
         string[] splitLocaleMetadata = localeMetadata.Split("\n");
-        options.locale.LocaleName = splitLocaleMetadata[0];
+
+        Locale locale = options.locale;
+
+        // If the game is running (not in the editor)...
+        if (!Application.isEditor)
+        {
+            // We need to load the locale from the locale provider
+            locale = LocalizationSettings.AvailableLocales.GetLocale(options.locale.Identifier);
+        }
+
+        // Update the locale name
+        locale.LocaleName = splitLocaleMetadata[0];
     }
 
     public IEnumerator ImportStringTables()
