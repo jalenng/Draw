@@ -11,8 +11,9 @@ public class LanguageSelector : MonoBehaviour
     [SerializeField] GameObject template;
     [SerializeField] GameObject footer;
 
-    void Start()
+    private IEnumerator Start()
     {
+        yield return LocalizationSettings.InitializationOperation;
         UpdateOptions();
     }
 

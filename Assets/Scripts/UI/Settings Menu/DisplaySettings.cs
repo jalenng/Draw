@@ -34,6 +34,26 @@ public class DisplaySettings : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CreateFullscreenModeOptions();
+        CreateResolutionOptions();
+
+        // Update selection values
+        UpdateDropdownValues(Screen.currentResolution, Screen.fullScreenMode);
+    }
+
+    void Update()
+    {
+        // Show dropdowns only if there are options to select
+        fullscreenModeDropdown.gameObject.SetActive(fullScreenModes.Count > 0);
+        resolutionDropdown.gameObject.SetActive(resolutions.Length > 0);
+
+        // Only make resolution dropdown interactable in fullscreen mode
+        resolutionDropdown.interactable = Screen.fullScreen;
+    }
+
+    // Create the menu options for the fullscreen dropdown
+    public void CreateFullscreenModeOptions()
+    {
         // Create list of fullscreen modes based on current platform's support
         fullScreenModes = new List<FullScreenMode>();
         // Windows only
@@ -50,26 +70,6 @@ public class DisplaySettings : MonoBehaviour
         // Desktop platforms only
         if (SystemInfo.deviceType == DeviceType.Desktop)
             fullScreenModes.Add(FullScreenMode.Windowed);
-
-        // Retrieve list of supported resolutions
-        resolutions = Screen.resolutions;
-
-        // Populate dropdown menu with options and update its selection values
-        CreateFullscreenModeOptions();
-        CreateResolutionOptions();
-        UpdateDropdownValues(Screen.currentResolution, Screen.fullScreenMode);
-    }
-
-    void Update()
-    {
-        // Only enable resolution picker if in fullscreen mode
-        resolutionDropdown.interactable = Screen.fullScreen;
-    }
-
-    // Create the menu options for the fullscreen dropdown
-    public void CreateFullscreenModeOptions()
-    {
-        if (fullScreenModes == null || fullScreenModes.Count == 0) return;
 
         // Create options based on the supported fullscreen modes
         List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
@@ -90,7 +90,8 @@ public class DisplaySettings : MonoBehaviour
     // Create the menu options for the resolution dropdown
     private void CreateResolutionOptions()
     {
-        if (resolutions == null || resolutions.Length == 0) return;
+        // Retrieve list of supported resolutions
+        resolutions = Screen.resolutions;
 
         // Create options based on the supported fullscreen resolutions
         List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
