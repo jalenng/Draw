@@ -1,3 +1,7 @@
+#if !(UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX || UNITY_STANDALONE_OSX || STEAMWORKS_WIN || STEAMWORKS_LIN_OSX)
+#define DISABLELOCALIZATIONIMPORT
+#endif
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,26 +18,25 @@ using System.IO;
 
 public class LocalizationImporter : MonoBehaviour
 {
+#if !DISABLELOCALIZATIONIMPORT
     [SerializeField] private bool importOnStart = true;
     [SerializeField] private LocaleOptions options;
-
-    [SerializeField] private UnityEvent onCompletedStart;
 
     private void Start()
     {
         if (importOnStart)
         {
-            StartCoroutine(ImportLocaleRoutine(true));
+            ImportLocale()
         }
     }
 
     [ContextMenu("Import Locale")]
     public void ImportLocale()
     {
-        StartCoroutine(ImportLocaleRoutine(false));
+        StartCoroutine(ImportLocaleRoutine());
     }
 
-    public IEnumerator ImportLocaleRoutine(bool isFromStart)
+    public IEnumerator ImportLocaleRoutine()
     {
         string localeDir = GetLocaleDir();
         if (Directory.Exists(localeDir))
@@ -60,11 +63,6 @@ public class LocalizationImporter : MonoBehaviour
             Debug.Log($"[LocalizationImporter] Directory not found: {localeDir}");
 
             SetLocaleAvailability(false);
-        }
-
-        if (isFromStart)
-        {
-            onCompletedStart.Invoke();
         }
     }
 
@@ -199,4 +197,5 @@ public class LocalizationImporter : MonoBehaviour
     {
         return Path.Combine(Application.streamingAssetsPath, options.localeDir);
     }
+#endif //!DISABLELOCALIZATIONIMPORT
 }
