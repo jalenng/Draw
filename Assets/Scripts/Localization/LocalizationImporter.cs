@@ -24,18 +24,23 @@ using UnityEngine.Events;
 
 public class LocalizationImporter : MonoBehaviour
 {
-#if !DISABLELOCALIZATIONIMPORT
     [SerializeField] private bool importOnStart = true;
     [SerializeField] private LocaleOptions options;
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return LocalizationSettings.InitializationOperation;
         if (importOnStart)
         {
-            ImportLocale()
+#if !DISABLELOCALIZATIONIMPORT
+            ImportLocale();
+#else
+            SetLocaleAvailability(false);
+#endif
         }
     }
 
+#if !DISABLELOCALIZATIONIMPORT
     [ContextMenu("Import Locale")]
     public void ImportLocale()
     {
@@ -202,6 +207,21 @@ public class LocalizationImporter : MonoBehaviour
         }
     }
 
+    [ContextMenu("Clear String Tables")]
+    private void ClearStringTables()
+    {
+        foreach (FileToStringTableMapEntry entry in options.fileToTableMap)
+        {
+            entry.table.Clear();
+        }
+    }
+
+    private string GetLocaleDir()
+    {
+        return Path.Combine(Application.streamingAssetsPath, options.localeDir);
+    }
+#endif //!DISABLELOCALIZATIONIMPORT
+
     // Add/remove the locale to/from the list of available locales
     private void SetLocaleAvailability(bool value)
     {
@@ -219,7 +239,7 @@ public class LocalizationImporter : MonoBehaviour
         else
         {
             // Switch locale if it is currently selected
-            if (LocalizationSettings.SelectedLocale == options.locale)
+            if (LocalizationSettings.SelectedLocale == availableLocales.GetLocale(options.locale.Identifier))
             {
                 LocalizationSettings.SelectedLocale = availableLocales.Locales[0];
             }
@@ -229,19 +249,4 @@ public class LocalizationImporter : MonoBehaviour
             Debug.Log($"[LocalizationImporter] Disabled availability for locale {options.locale}");
         }
     }
-
-    [ContextMenu("Clear String Tables")]
-    private void ClearStringTables()
-    {
-        foreach (FileToStringTableMapEntry entry in options.fileToTableMap)
-        {
-            entry.table.Clear();
-        }
-    }
-
-    private string GetLocaleDir()
-    {
-        return Path.Combine(Application.streamingAssetsPath, options.localeDir);
-    }
-#endif //!DISABLELOCALIZATIONIMPORT
 }
