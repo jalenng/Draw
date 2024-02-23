@@ -2,6 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+
+using UnityEditor;
+using UnityEditor.Localization;
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Localization;
@@ -10,7 +15,6 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
-using System.IO;
 
 public class LocalizationImporter : MonoBehaviour
 {
@@ -40,14 +44,7 @@ public class LocalizationImporter : MonoBehaviour
         {
             Debug.Log($"[LocalizationImporter] Starting import from {localeDir}");
 
-            try
-            {
-                ImportMetadata();
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[LocalizationImporter] [FATAL] Error importing translations: {e}");
-            }
+            ImportMetadata();
             yield return ImportStringTables();
             ImportDialogueObjects();
 
@@ -57,7 +54,7 @@ public class LocalizationImporter : MonoBehaviour
         }
         else
         {
-            Debug.Log($"[LocalizationImporter] Directory not found: {localeDir}");
+            Debug.Log($"[LocalizationImporter] Main directory not found: {localeDir}");
 
             SetLocaleAvailability(false);
         }
@@ -72,6 +69,12 @@ public class LocalizationImporter : MonoBehaviour
     {
         // Read the locale metadata file
         string localeMetadataPath = Path.Combine(GetLocaleDir(), options.metadataFilename);
+        if (!Directory.Exists(localeMetadataPath))
+        {
+            Debug.Log($"[LocalizationImporter] [FAIL] Metadata file not found: {localeMetadataPath}");
+            return;
+        }
+
         string localeMetadata = File.ReadAllText(localeMetadataPath);
         string[] splitLocaleMetadata = localeMetadata.Split("\n");
 
@@ -91,6 +94,12 @@ public class LocalizationImporter : MonoBehaviour
     public IEnumerator ImportStringTables()
     {
         string fullStringsDir = Path.Combine(GetLocaleDir(), options.stringsDir);
+        if (!Directory.Exists(fullStringsDir))
+        {
+            Debug.Log($"[LocalizationImporter] [FAIL] Strings directory not found: {fullStringsDir}");
+            yield return null;
+        }
+
         foreach (FileToStringTableMapEntry entry in options.fileToTableMap)
         {
             StringTable table = entry.table;
@@ -122,6 +131,11 @@ public class LocalizationImporter : MonoBehaviour
     {
         AssetTable table = options.dialogueTable;
         string fullDialogueDir = Path.Combine(GetLocaleDir(), options.dialogueDir);
+        if (!Directory.Exists(fullDialogueDir))
+        {
+            Debug.Log($"[LocalizationImporter] [FAIL] Dialogue objects directory not found: {fullDialogueDir}");
+            return;
+        };
 
         // Iterate through the json files in the directory
         DirectoryInfo dirInfo = new DirectoryInfo(fullDialogueDir);
@@ -136,7 +150,37 @@ public class LocalizationImporter : MonoBehaviour
             AsyncOperationHandle<Dialogue> asyncOp = table.GetAssetAsync<Dialogue>(tableKey);
             Dialogue dialogueObj = asyncOp.WaitForCompletion();
 
-            // If found, import the translations from the JSON
+#if UNITY_EDITOR
+            // If not found and we're running in the editor,
+            // create one and add it to the table.
+            // This asset will be persisted.
+            if (dialogueObj == null && Application.isEditor)
+            {
+                // Create the object
+                dialogueObj = ScriptableObject.CreateInstance<Dialogue>();
+
+                // Create the directory for the asset file
+                Locale locale = options.locale;
+                string assetParentDir = Path.Combine("Assets", "Localization", "Translated Dialogues", $"{locale.Identifier.Code}");
+                if (!Directory.Exists(assetParentDir))
+                {
+                    Directory.CreateDirectory(assetParentDir);
+                    AssetDatabase.Refresh();
+                    Debug.Log($"[LocalizationImporter] Created directory {assetParentDir}");
+                }
+
+                // Create the asset file
+                string assetPath = Path.Combine(assetParentDir, $"{tableKey}.asset");
+                AssetDatabase.CreateAsset(dialogueObj, assetPath);
+                Debug.Log($"[LocalizationImporter] Created asset file in {assetPath}");
+
+                // Add the asset to the table collection
+                AssetTableCollection tableCollection = LocalizationEditorSettings.GetAssetTableCollection(table.TableCollectionName);
+                tableCollection.AddAssetToTable(table, tableKey, dialogueObj);
+            }
+#endif
+
+            // If we successfully found or created a dialogue object...
             if (dialogueObj != null)
             {
                 // Handle JSON parse error
