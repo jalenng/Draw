@@ -8,6 +8,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1077399001968531543, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
+      propertyPath: m_Spacing.y
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 1077399001968531543, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
+      propertyPath: m_CellSize.x
+      value: 480
+      objectReference: {fileID: 0}
+    - target: {fileID: 1077399001968531543, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
+      propertyPath: m_Constraint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1597782827213221618, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1597782827213221618, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -22,6 +38,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1687580320629493489, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687580320629493489, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687580320629493489, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1687580320629493489, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
@@ -62,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2670697074764464968, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 704
+      value: 992
       objectReference: {fileID: 0}
     - target: {fileID: 2670697074764464968, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
       propertyPath: m_SizeDelta.y
@@ -70,15 +94,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2670697074764464968, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 400
+      value: 544
       objectReference: {fileID: 0}
     - target: {fileID: 2670697074764464968, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3620921764516645670, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
+    - target: {fileID: 4723730598933835400, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
       propertyPath: m_HorizontalFit
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4749053178779069027, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
       propertyPath: m_fontColor32.rgba
@@ -298,9 +322,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5973712880560140211, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3908439317433803589}
-    - targetCorrespondingSourceObject: {fileID: 4630052402080599366, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4921928004587587373}
   m_SourcePrefab: {fileID: 100100000, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
 --- !u!1 &4720669010482022724 stripped
 GameObject:
@@ -340,32 +361,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4630052402080599366, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
   m_PrefabInstance: {fileID: 1397746747254482679}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4921928004587587373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5991066658297015217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 4
-  m_Spacing: 32
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &7685706739310149084 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8776625953425562411, guid: 86e1acbe207d26f44b804661eeb7914a, type: 3}
