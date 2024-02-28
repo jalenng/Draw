@@ -2,10 +2,15 @@ using System;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+
 using UnityEngine;
 using UnityEngine.Localization.Tables;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using System.IO;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [Serializable]
 public class SerializableStringTable
@@ -31,6 +36,10 @@ public class LocalizationTableSerializerUtils
         {
             table.AddEntry(serializedEntry.key, serializedEntry.value);
         }
+
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(table);
+#endif
     }
 
     public static void ImportJsonFromFile(string filePath, StringTable table)

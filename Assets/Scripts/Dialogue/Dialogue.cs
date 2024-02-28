@@ -62,6 +62,9 @@ public class Dialogue : ScriptableObject
     public void ImportJson(string data)
     {
         JsonUtility.FromJsonOverwrite(data, this);
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+#endif
     }
 
     public string ExportJson()

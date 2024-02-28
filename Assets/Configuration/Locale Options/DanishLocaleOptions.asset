@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7f8741ff7a7d54ba309071a6d0d5b1, type: 3}
+  m_Name: DanishLocaleOptions
+  m_EditorClassIdentifier: 
+  locale: {fileID: 11400000, guid: 24486c7ad370d88428a94ca83d8d9ee1, type: 2}
+  localeDir: DanishLocale
+  metadataFilename: index.txt
+  stringsDir: strings
+  fileToTableMap:
+  - filename: ui.json
+    table: {fileID: 11400000, guid: 474c212026225994dbc4db98fc3f1bd3, type: 2}
+  - filename: credits.json
+    table: {fileID: 11400000, guid: cbff7173d1da8d944bee22fb7015ff34, type: 2}
+  dialogueDir: dialogue
+  dialogueTable: {fileID: 11400000, guid: dc218dd9db7b56846adec7f5c50cc143, type: 2}
