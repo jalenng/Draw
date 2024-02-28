@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Localization;
+#endif
 
 using UnityEngine;
 using UnityEngine.UI;
