@@ -12,18 +12,18 @@ public class DialogueEntry_Property : PropertyDrawer
     {
         // Calculate the positions and sizes of the rects
         float width = position.width - 5;
-        Rect avatarRect = new Rect(position.x, position.y, width, 18);
-        Rect contentRect = new Rect(position.x, position.y + 20, width, 72);
+        Rect avatarNameRect = new Rect(position.x, position.y + 20, width, 18);
+        Rect contentRect = new Rect(position.x, position.y + 40, width, 72);
 
         // Begin drawing the property in the Editor GUI
         EditorGUI.BeginProperty(position, label, property);
 
         // Get properties
-        SerializedProperty avatarProp = property.FindPropertyRelative("avatar");
+        SerializedProperty avatarNameProp = property.FindPropertyRelative("avatarName");
         SerializedProperty contentProp = property.FindPropertyRelative("content");
 
         // Populate the editor with the properties
-        EditorGUI.PropertyField(avatarRect, avatarProp, new GUIContent("Avatar"));
+        EditorGUI.PropertyField(avatarNameRect, avatarNameProp, new GUIContent("Avatar Name"));
         EditorGUI.PropertyField(contentRect, contentProp, new GUIContent("Content"));
 
         // End drawing the property in the Editor GUI
@@ -36,11 +36,11 @@ public class DialogueEntry_Property : PropertyDrawer
         float height = 0;
 
         // Get properties
-        SerializedProperty avatarProp = property.FindPropertyRelative("avatar");
+        SerializedProperty avatarNameProp = property.FindPropertyRelative("avatarName");
         SerializedProperty contentProp = property.FindPropertyRelative("content");
 
         // Add the height of each property
-        height += EditorGUI.GetPropertyHeight(avatarProp);
+        height += EditorGUI.GetPropertyHeight(avatarNameProp);
         height += EditorGUI.GetPropertyHeight(contentProp);
 
         // Return the height

@@ -104,6 +104,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionOnShow: {fileID: 0}
   returnSelectionOnHide: 1
+  onShow:
+    m_PersistentCalls:
+      m_Calls: []
+  onHide:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &588374554767598498
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,6 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffed4749569d745409c8cb0b6fb5e7bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  avatarOptions: {fileID: 11400000, guid: 2db8c4cc214c62344b375a0b01e1bdf6, type: 2}
   dialogueObjects: []
   dialogueCanvas: {fileID: 170163530068015359}
   textbox: {fileID: 1743173846837283768}
