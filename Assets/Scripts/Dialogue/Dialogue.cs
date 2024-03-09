@@ -12,7 +12,7 @@ using UnityEditor;
 [System.Serializable]
 public class DialogueEntry
 {
-    public Sprite avatar;
+    public string avatarName;
 
     // Content-related
     [TextArea(5, 5)]

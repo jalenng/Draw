@@ -71,7 +71,7 @@ public class LocalizationImporter : MonoBehaviour
     {
         // Read the locale metadata file
         string localeMetadataPath = Path.Combine(GetLocaleDir(), options.metadataFilename);
-        if (!Directory.Exists(localeMetadataPath))
+        if (!File.Exists(localeMetadataPath))
         {
             Debug.Log($"[LocalizationImporter] [FAIL] Metadata file not found: {localeMetadataPath}");
             return;

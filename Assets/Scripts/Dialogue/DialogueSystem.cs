@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class DialogueSystem : MonoBehaviour
 {
     // Configuration parameters
+
+    [SerializeField] private DialogueAvatarOptions avatarOptions;
     [SerializeField] private List<Dialogue> dialogueObjects;
 
     [Header("Component References")]
@@ -120,7 +122,8 @@ public class DialogueSystem : MonoBehaviour
                 DialogueEntry dialogueEntry = dialogue.entries[entryIndex];
 
                 // Update the textbox properties
-                textbox.setAvatar(dialogueEntry.avatar);
+                Sprite avatar = avatarOptions.nameToSpriteMap.Find((entry) => entry.name == dialogueEntry.avatarName).sprite;
+                textbox.setAvatar(avatar);
                 textbox.setText(dialogueEntry.content);
                 textbox.setSFXDirectory(dialogue.SFXDirectory);
                 textbox.setCPS(dialogue.CPS);
