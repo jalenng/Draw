@@ -1,7 +1,14 @@
+#if !(UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX || UNITY_STANDALONE_OSX || STEAMWORKS_WIN || STEAMWORKS_LIN_OSX)
+#define DISABLESTEAMWORKS
+#endif
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if !DISABLESTEAMWORKS
 using Steamworks;
+#endif 
 
 public class AchievementUnlocker : MonoBehaviour
 {
@@ -29,6 +36,7 @@ public class AchievementUnlocker : MonoBehaviour
             return;
         }
 
+#if !DISABLESTEAMWORKS
         // See if achievement is already unlocked
         Steamworks.SteamUserStats.GetAchievement(achievementId, out bool achievementUnlocked);
 
@@ -43,5 +51,6 @@ public class AchievementUnlocker : MonoBehaviour
             SteamUserStats.SetAchievement(achievementId);
             SteamUserStats.StoreStats();
         }
+#endif // !DISABLESTEAMWORKS
     }
 }

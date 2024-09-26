@@ -1,3 +1,7 @@
+#if !(UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX || UNITY_STANDALONE_OSX || STEAMWORKS_WIN || STEAMWORKS_LIN_OSX)
+#define DISABLELOCALIZATIONIMPORT
+#endif
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,23 +27,27 @@ public class LocalizationImporter : MonoBehaviour
     [SerializeField] private bool importOnStart = true;
     [SerializeField] private LocaleOptions options;
 
-    [SerializeField] private UnityEvent onCompletedStart;
-
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return LocalizationSettings.InitializationOperation;
         if (importOnStart)
         {
-            StartCoroutine(ImportLocaleRoutine(true));
+#if !DISABLELOCALIZATIONIMPORT
+            ImportLocale();
+#else
+            SetLocaleAvailability(false);
+#endif
         }
     }
 
+#if !DISABLELOCALIZATIONIMPORT
     [ContextMenu("Import Locale")]
     public void ImportLocale()
     {
-        StartCoroutine(ImportLocaleRoutine(false));
+        StartCoroutine(ImportLocaleRoutine());
     }
 
-    public IEnumerator ImportLocaleRoutine(bool isFromStart)
+    public IEnumerator ImportLocaleRoutine()
     {
         string localeDir = GetLocaleDir();
         if (Directory.Exists(localeDir))
@@ -59,11 +67,6 @@ public class LocalizationImporter : MonoBehaviour
             Debug.Log($"[LocalizationImporter] Main directory not found: {localeDir}");
 
             SetLocaleAvailability(false);
-        }
-
-        if (isFromStart)
-        {
-            onCompletedStart.Invoke();
         }
     }
 
@@ -204,6 +207,21 @@ public class LocalizationImporter : MonoBehaviour
         }
     }
 
+    [ContextMenu("Clear String Tables")]
+    private void ClearStringTables()
+    {
+        foreach (FileToStringTableMapEntry entry in options.fileToTableMap)
+        {
+            entry.table.Clear();
+        }
+    }
+
+    private string GetLocaleDir()
+    {
+        return Path.Combine(Application.streamingAssetsPath, options.localeDir);
+    }
+#endif //!DISABLELOCALIZATIONIMPORT
+
     // Add/remove the locale to/from the list of available locales
     private void SetLocaleAvailability(bool value)
     {
@@ -221,7 +239,7 @@ public class LocalizationImporter : MonoBehaviour
         else
         {
             // Switch locale if it is currently selected
-            if (LocalizationSettings.SelectedLocale == options.locale)
+            if (LocalizationSettings.SelectedLocale == availableLocales.GetLocale(options.locale.Identifier))
             {
                 LocalizationSettings.SelectedLocale = availableLocales.Locales[0];
             }
@@ -230,19 +248,5 @@ public class LocalizationImporter : MonoBehaviour
             availableLocales.RemoveLocale(options.locale);
             Debug.Log($"[LocalizationImporter] Disabled availability for locale {options.locale}");
         }
-    }
-
-    [ContextMenu("Clear String Tables")]
-    private void ClearStringTables()
-    {
-        foreach (FileToStringTableMapEntry entry in options.fileToTableMap)
-        {
-            entry.table.Clear();
-        }
-    }
-
-    private string GetLocaleDir()
-    {
-        return Path.Combine(Application.streamingAssetsPath, options.localeDir);
     }
 }

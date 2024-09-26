@@ -1,12 +1,19 @@
+#if !(UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX || UNITY_STANDALONE_OSX || STEAMWORKS_WIN || STEAMWORKS_LIN_OSX)
+#define DISABLEDISCORD
+#endif
+
 using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+#if !DISABLEDISCORD
 using Discord;
+#endif
 
 public class DiscordController : MonoBehaviour
 {
 
+#if !DISABLEDISCORD
     public Discord.Discord discord;
     private bool alreadyLoggedInitError = false;
 
@@ -98,4 +105,5 @@ public class DiscordController : MonoBehaviour
         discord = null;
         Debug.Log("[DiscordController] Discord instance destroyed");
     }
+#endif
 }
